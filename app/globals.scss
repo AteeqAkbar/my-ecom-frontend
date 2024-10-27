@@ -52,6 +52,10 @@ html {
     -0.2rem -0.2rem 1.8rem var(--white);
   background: var(--greyLight-1);
 }
+.shadow3 {
+  box-shadow: 0.8rem 0.8rem 1.4rem var(--greyLight-2),
+    -0.2rem -0.2rem 1.8rem var(--white);
+}
 .dropdown-menu {
   opacity: 0;
   max-height: 0;

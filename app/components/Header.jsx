@@ -76,27 +76,29 @@ const Header = () => {
             Contact
           </a>
         </nav> */}
-        <ul class="flex items-center justify-center font-semibold">
-          <li class="relative group px-3 py-2">
-            <button class="hover:opacity-50 cursor-default">Products</button>
-            <div class="absolute top-0 -left-48 transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-500 ease-in-out group-hover:transform z-50 min-w-[560px] transform">
-              <div class="relative top-6 p-6 bg-white rounded-xl shadow-xl w-full">
-                <div class="w-10 h-10 bg-white transform rotate-45 absolute top-0 z-0 translate-x-0 transition-transform group-hover:translate-x-[12rem] duration-500 ease-in-out rounded-sm"></div>
+        <ul className="flex items-center justify-center font-semibold">
+          <li className="relative group px-3 py-2">
+            <button className="hover:opacity-50 cursor-default">
+              Products
+            </button>
+            <div className="absolute top-0 -left-48 transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-500 ease-in-out group-hover:transform z-50 min-w-[560px] transform">
+              <div className="relative top-6 p-6 bg-white rounded-xl shadow-xl w-full">
+                <div className="w-10 h-10 bg-white transform rotate-45 absolute top-0 z-0 translate-x-0 transition-transform group-hover:translate-x-[12rem] duration-500 ease-in-out rounded-sm"></div>
 
-                <div class="relative z-10">
-                  <div class="grid grid-cols-2 gap-6">
+                <div className="relative z-10">
+                  <div className="grid grid-cols-2 gap-6">
                     <div>
-                      <p class="uppercase tracking-wider text-gray-500 font-medium text-[13px]">
+                      <p className="uppercase tracking-wider text-gray-500 font-medium text-[13px]">
                         The Suite
                       </p>
-                      <ul class="mt-3 text-[15px]">
+                      <ul className="mt-3 text-[15px]">
                         <li>
                           <a
                             href="#"
-                            class="block p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
+                            className="block p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
                           >
                             Course Editor
-                            <p class="text-gray-500 font-normal">
+                            <p className="text-gray-500 font-normal">
                               All-in-one editor
                             </p>
                           </a>
@@ -104,10 +106,10 @@ const Header = () => {
                         <li>
                           <a
                             href="#"
-                            class="block p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
+                            className="block p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
                           >
                             Accept payments
-                            <p class="text-gray-500 font-normal">
+                            <p className="text-gray-500 font-normal">
                               Pre-build payments page
                             </p>
                           </a>
@@ -115,10 +117,10 @@ const Header = () => {
                         <li>
                           <a
                             href="#"
-                            class="block p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
+                            className="block p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
                           >
                             Closed Captioning
-                            <p class="text-gray-500 font-normal">
+                            <p className="text-gray-500 font-normal">
                               Use AI to generate captions
                             </p>
                           </a>
@@ -126,17 +128,17 @@ const Header = () => {
                       </ul>
                     </div>
                     <div>
-                      <p class="uppercase tracking-wider text-gray-500 font-medium text-[13px]">
+                      <p className="uppercase tracking-wider text-gray-500 font-medium text-[13px]">
                         Extensions
                       </p>
-                      <ul class="mt-3 text-[15px]">
+                      <ul className="mt-3 text-[15px]">
                         <li>
                           <a
                             href="#"
-                            class="block p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
+                            className="block p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
                           >
                             Plugins
-                            <p class="text-gray-500 font-normal">
+                            <p className="text-gray-500 font-normal">
                               Tweak existing functionality
                             </p>
                           </a>
@@ -144,10 +146,10 @@ const Header = () => {
                         <li>
                           <a
                             href="#"
-                            class="block p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
+                            className="block p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
                           >
                             Batch uploads
-                            <p class="text-gray-500 font-normal">
+                            <p className="text-gray-500 font-normal">
                               Get your time back
                             </p>
                           </a>
@@ -155,10 +157,10 @@ const Header = () => {
                         <li>
                           <a
                             href="#"
-                            class="block p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
+                            className="block p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
                           >
                             Social sharing
-                            <p class="text-gray-500 font-normal">
+                            <p className="text-gray-500 font-normal">
                               Generate content for socials
                             </p>
                           </a>
@@ -170,20 +172,22 @@ const Header = () => {
               </div>
             </div>
           </li>
-          <li class="relative group px-3 py-2">
-            <button class="hover:opacity-50 cursor-default">Solutions</button>
-            <div class="absolute top-0 -left-2 transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-500 ease-in-out group-hover:transform z-50 min-w-[260px] transform">
-              <div class="relative top-6 p-6 bg-white rounded-xl shadow-xl w-full">
-                <div class="w-10 h-10 bg-white transform rotate-45 absolute top-0 z-0 -translate-x-4 transition-transform group-hover:translate-x-3 duration-500 ease-in-out rounded-sm"></div>
-                <div class="relative z-10">
-                  <p class="uppercase tracking-wider text-gray-500 font-medium text-[13px]">
+          <li className="relative group px-3 py-2">
+            <button className="hover:opacity-50 cursor-default">
+              Solutions
+            </button>
+            <div className="absolute top-0 -left-2 transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-500 ease-in-out group-hover:transform z-50 min-w-[260px] transform">
+              <div className="relative top-6 p-6 bg-white rounded-xl shadow-xl w-full">
+                <div className="w-10 h-10 bg-white transform rotate-45 absolute top-0 z-0 -translate-x-4 transition-transform group-hover:translate-x-3 duration-500 ease-in-out rounded-sm"></div>
+                <div className="relative z-10">
+                  <p className="uppercase tracking-wider text-gray-500 font-medium text-[13px]">
                     Use cases
                   </p>
-                  <ul class="mt-3 text-[15px]">
+                  <ul className="mt-3 text-[15px]">
                     <li>
                       <a
                         href="#"
-                        class="bg-transparent bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 font-semibold hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 py-1 block"
+                        className="bg-transparent bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 font-semibold hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 py-1 block"
                       >
                         Creators
                       </a>
@@ -191,7 +195,7 @@ const Header = () => {
                     <li>
                       <a
                         href="#"
-                        class="bg-transparent bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 font-semibold hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 py-1 block"
+                        className="bg-transparent bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 font-semibold hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 py-1 block"
                       >
                         Streamers
                       </a>
@@ -199,7 +203,7 @@ const Header = () => {
                     <li>
                       <a
                         href="#"
-                        class="bg-transparent bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 font-semibold hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 py-1 block"
+                        className="bg-transparent bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 font-semibold hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 py-1 block"
                       >
                         Influence
                       </a>
@@ -207,7 +211,7 @@ const Header = () => {
                     <li>
                       <a
                         href="#"
-                        class="bg-transparent bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 font-semibold hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 py-1 block"
+                        className="bg-transparent bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 font-semibold hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 py-1 block"
                       >
                         Programming
                       </a>
@@ -215,7 +219,7 @@ const Header = () => {
                     <li>
                       <a
                         href="#"
-                        class="bg-transparent bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 font-semibold hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 py-1 block"
+                        className="bg-transparent bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 font-semibold hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 py-1 block"
                       >
                         Design
                       </a>
@@ -225,32 +229,34 @@ const Header = () => {
               </div>
             </div>
           </li>
-          <li class="relative group px-3 py-2">
-            <button class="hover:opacity-50 cursor-default">Developers</button>
-            <div class="absolute top-0 -left-48 transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-500 ease-in-out group-hover:transform z-50 min-w-[560px] transform">
-              <div class="relative top-6 p-6 bg-white rounded-xl shadow-xl w-full">
-                <div class="w-10 h-10 bg-white transform rotate-45 absolute top-0 z-0 translate-x-0 transition-transform group-hover:translate-x-[12.65rem] duration-500 ease-in-out rounded-sm"></div>
+          <li className="relative group px-3 py-2">
+            <button className="hover:opacity-50 cursor-default">
+              Developers
+            </button>
+            <div className="absolute top-0 -left-48 transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-500 ease-in-out group-hover:transform z-50 min-w-[560px] transform">
+              <div className="relative top-6 p-6 bg-white rounded-xl shadow-xl w-full">
+                <div className="w-10 h-10 bg-white transform rotate-45 absolute top-0 z-0 translate-x-0 transition-transform group-hover:translate-x-[12.65rem] duration-500 ease-in-out rounded-sm"></div>
 
-                <div class="relative z-10">
+                <div className="relative z-10">
                   <a
                     href="#"
-                    class="block p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
+                    className="block p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
                   >
                     Documentation
-                    <p class="text-gray-500 font-normal">
+                    <p className="text-gray-500 font-normal">
                       Start integrating in no time
                     </p>
                   </a>
-                  <div class="mt-6 grid grid-cols-2 gap-6">
+                  <div className="mt-6 grid grid-cols-2 gap-6">
                     <div>
-                      <p class="uppercase tracking-wider text-gray-500 font-medium text-[13px]">
+                      <p className="uppercase tracking-wider text-gray-500 font-medium text-[13px]">
                         Get started
                       </p>
-                      <ul class="mt-3 text-[15px]">
+                      <ul className="mt-3 text-[15px]">
                         <li>
                           <a
                             href="#"
-                            class="text-gray-600 hover:text-gray-800 py-1 block font-normal"
+                            className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
                           >
                             Libraries and SDKs
                           </a>
@@ -258,7 +264,7 @@ const Header = () => {
                         <li>
                           <a
                             href="#"
-                            class="text-gray-600 hover:text-gray-800 py-1 block font-normal"
+                            className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
                           >
                             Plugins
                           </a>
@@ -266,7 +272,7 @@ const Header = () => {
                         <li>
                           <a
                             href="#"
-                            class="text-gray-600 hover:text-gray-800 py-1 block font-normal"
+                            className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
                           >
                             Code samples
                           </a>
@@ -274,7 +280,7 @@ const Header = () => {
                         <li>
                           <a
                             href="#"
-                            class="text-gray-600 hover:text-gray-800 py-1 block font-normal"
+                            className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
                           >
                             Tutorials
                           </a>
@@ -282,14 +288,14 @@ const Header = () => {
                       </ul>
                     </div>
                     <div>
-                      <p class="uppercase tracking-wider text-gray-500 font-medium text-[13px]">
+                      <p className="uppercase tracking-wider text-gray-500 font-medium text-[13px]">
                         Guides
                       </p>
-                      <ul class="mt-3 text-[15px]">
+                      <ul className="mt-3 text-[15px]">
                         <li>
                           <a
                             href="#"
-                            class="text-gray-600 hover:text-gray-800 py-1 block font-normal"
+                            className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
                           >
                             Accept online payments
                           </a>
@@ -297,7 +303,7 @@ const Header = () => {
                         <li>
                           <a
                             href="#"
-                            class="text-gray-600 hover:text-gray-800 py-1 block font-normal"
+                            className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
                           >
                             Editing video like a pro
                           </a>
@@ -305,7 +311,7 @@ const Header = () => {
                         <li>
                           <a
                             href="#"
-                            class="text-gray-600 hover:text-gray-800 py-1 block font-normal"
+                            className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
                           >
                             Automation techniques
                           </a>
@@ -313,7 +319,7 @@ const Header = () => {
                         <li>
                           <a
                             href="#"
-                            class="text-gray-600 hover:text-gray-800 py-1 block font-normal"
+                            className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
                           >
                             Create stunning effects
                           </a>
@@ -325,17 +331,19 @@ const Header = () => {
               </div>
             </div>
           </li>
-          <li class="relative group px-3 py-2">
-            <button class="hover:opacity-50 cursor-default">Resources</button>
-            <div class="absolute top-0 -left-2 transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-500 ease-in-out group-hover:transform z-50 min-w-[200px] transform">
-              <div class="relative top-6 p-6 bg-white rounded-xl shadow-xl w-full">
-                <div class="w-10 h-10 bg-white transform rotate-45 absolute top-0 z-0 -translate-x-4 transition-transform group-hover:translate-x-3 duration-500 ease-in-out rounded-sm"></div>
-                <div class="relative z-10">
-                  <ul class="text-[15px]">
+          <li className="relative group px-3 py-2">
+            <button className="hover:opacity-50 cursor-default">
+              Resources
+            </button>
+            <div className="absolute top-0 -left-2 transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-500 ease-in-out group-hover:transform z-50 min-w-[200px] transform">
+              <div className="relative top-6 p-6 bg-white rounded-xl shadow-xl w-full">
+                <div className="w-10 h-10 bg-white transform rotate-45 absolute top-0 z-0 -translate-x-4 transition-transform group-hover:translate-x-3 duration-500 ease-in-out rounded-sm"></div>
+                <div className="relative z-10">
+                  <ul className="text-[15px]">
                     <li>
                       <a
                         href="#"
-                        class="text-gray-600 hover:text-gray-800 py-1 block font-normal"
+                        className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
                       >
                         Get Support
                       </a>
@@ -343,7 +351,7 @@ const Header = () => {
                     <li>
                       <a
                         href="#"
-                        class="text-gray-600 hover:text-gray-800 py-1 block font-normal"
+                        className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
                       >
                         Blog
                       </a>
@@ -351,7 +359,7 @@ const Header = () => {
                     <li>
                       <a
                         href="#"
-                        class="text-gray-600 hover:text-gray-800 py-1 block font-normal"
+                        className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
                       >
                         Case Studies
                       </a>
@@ -359,7 +367,7 @@ const Header = () => {
                     <li>
                       <a
                         href="#"
-                        class="text-gray-600 hover:text-gray-800 py-1 block font-normal"
+                        className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
                       >
                         Guides
                       </a>
@@ -367,7 +375,7 @@ const Header = () => {
                     <li>
                       <a
                         href="#"
-                        class="text-gray-600 hover:text-gray-800 py-1 block font-normal"
+                        className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
                       >
                         News &amp; Events
                       </a>
@@ -377,8 +385,8 @@ const Header = () => {
               </div>
             </div>
           </li>
-          <li class="relative group px-3 py-2">
-            <a href="#" class="hover:opacity-50 cursor-default">
+          <li className="relative group px-3 py-2">
+            <a href="#" className="hover:opacity-50 cursor-default">
               Pricing
             </a>
           </li>
@@ -394,7 +402,10 @@ const Header = () => {
       </div>
 
       {/* Mobile Menu Toggle Button */}
-      <div className="flex lg:hidden items-center justify-between rounded-2xl p-3 bg-white shadow1">
+      <div
+        className="flex lg:hidden items-center justify-between rounded-2xl p-3 bg-transparent mx-2"
+        id="mobnav"
+      >
         {/* Logo */}
         <a
           href="index.html"
@@ -442,7 +453,7 @@ const Header = () => {
           ref={mobileRef}
           id="mobile-menu"
           //w-full sm:w-64
-          className="fixed bottom-0 start-0 top-0 z-[60] h-full w-64 transform overflow-y-auto bg-white transition-all duration-300 translate-x-0 shadow1"
+          className="fixed bottom-0 start-0 top-0 z-[60] h-full w-64 transform overflow-y-auto bg-white transition-all duration-300 translate-x-0 shadow3 bg-opacity-30 backdrop-blur-lg"
         >
           <div className="flex h-full flex-col justify-between gap-5 p-5">
             <div>

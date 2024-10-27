@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import img1 from "../../image/img1.jpg";
-import img2 from "../../image/img2.jpg";
+import img2 from "../../image/img5.jpg";
 import img3 from "../../image/img3.jpg";
 import img4 from "../../image/img4.jpg";
 const items = [
@@ -49,13 +49,13 @@ const Slider = () => {
 
     return () => clearTimeout(timer);
   }, [animation]);
-  useEffect(() => {
-    const timer = setInterval(() => {
-      nextSlide();
-    }, 3000);
+  //   useEffect(() => {
+  //     const timer = setInterval(() => {
+  //       nextSlide();
+  //     }, 3000);
 
-    return () => clearInterval(timer);
-  }, []);
+  //     return () => clearInterval(timer);
+  //   }, []);
 
   // Function to handle previous slide
   const prevSlide = () => {
@@ -121,7 +121,14 @@ const Slider = () => {
         <div className="thumbnail">
           {items.map((item, i) => {
             return (
-              <div className={`item `}>
+              <div
+                onClick={() => {
+                  setAnimation("next");
+                  setCurrentIndex(i);
+                }}
+                key={item.id + item.author}
+                className={`item cursor-pointer`}
+              >
                 <img src={item.image} />
                 <div className="content">
                   <div className="title">{item.title}</div>
