@@ -45,7 +45,7 @@ function ExploreCategories() {
                     >
                       <div
                         className="owl-item cloned"
-                        style={{ width: "172.238px", marginRight: "24px;" }}
+                        style={{ width: "172.238px", marginRight: "24px" }}
                       >
                         <div
                           className="bb-category-box p-[30px] rounded-[20px] flex flex-col items-center text-center max-[1399px]:p-[20px] category-items-1 bg-[#fef1f1] aos-init aos-animate"

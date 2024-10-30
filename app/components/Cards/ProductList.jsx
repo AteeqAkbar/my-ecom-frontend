@@ -17,9 +17,12 @@ function ProductList() {
   return (
     <BoxLayout>
       <div className=" w-full px-[12px] mb-[24px]">
-        <div className="bb-shop-pro-inner">
-          <div className="flex flex-wrap mx-[-12px] mb-[-24px]">
-            <div className="w-full px-[12px]">
+        <div key={Math.random() + 1002} className="bb-shop-pro-inner">
+          <div
+            key={Math.random() + 1002}
+            className="flex flex-wrap mx-[-12px] mb-[-24px]"
+          >
+            <div key={Math.random() + 100} className="w-full px-[12px]">
               <div className="bb-pro-list-top mb-[24px] rounded-[20px] flex bg-[#f8f8fb] border-[1px] border-solid border-[#eee] justify-between">
                 <div className="flex flex-wrap w-full">
                   <div className="w-[50%] px-[12px] max-[420px]:w-full">
@@ -67,14 +70,14 @@ function ProductList() {
             {loading
               ? [...Array(12)].map((value) => {
                   return (
-                    <Fragment key={value}>
+                    <Fragment key={Math.random()}>
                       <ProductCardSkeleton />
                     </Fragment>
                   );
                 })
               : [...Array(12)].map((value) => {
                   return (
-                    <Fragment key={value}>
+                    <Fragment key={Math.random()}>
                       <ProductCard />
                     </Fragment>
                   );

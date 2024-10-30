@@ -403,7 +403,7 @@ const Header = () => {
 
       {/* Mobile Menu Toggle Button */}
       <div
-        className="flex lg:hidden items-center justify-between rounded-2xl p-3 bg-transparent mx-2"
+        className="flex lg:hidden items-center justify-between rounded-2xl p-3 bg-transparent mx-8"
         id="mobnav"
       >
         {/* Logo */}
@@ -453,7 +453,7 @@ const Header = () => {
           ref={mobileRef}
           id="mobile-menu"
           //w-full sm:w-64
-          className="fixed bottom-0 start-0 top-0 z-[60] h-full w-64 transform overflow-y-auto bg-white transition-all duration-300 translate-x-0 shadow3 bg-opacity-30 backdrop-blur-lg"
+          className="fixed bottom-0 start-0 top-0 z-[60] h-full w-64 transform overflow-y-auto bg-white transition-all duration-300 translate-x-0 bg-opacity-30 backdrop-blur-lg"
         >
           <div className="flex h-full flex-col justify-between gap-5 p-5">
             <div>
