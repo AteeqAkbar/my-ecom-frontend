@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import Tag from "./Tag";
 import cart from "../../image/icons/cart.png";
@@ -7,12 +8,21 @@ import star from "../../image/icons/star.png";
 import ModalCard from "./ModalCard";
 
 import CustomModal from "../CustomModal";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/app/store/cartSlice";
+import { openCart } from "@/app/store/cartVisibilitySlice";
 
-function ProductCard({ style = {} }) {
+function ProductCard({ style = {}, product }) {
+  const handleAddToCart = (product) => {
+    console.log(product);
+    dispatch(addToCart(product));
+    dispatch(openCart());
+  };
   const phoneNumber = "1234567890"; // Replace with the recipient's phone number in international format
   const message = encodeURIComponent("Hello"); // URL-encoded message
   const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${message}`;
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const toggleModal = () => setIsOpen(!isOpen);
   const closeModal = () => setIsOpen(false);
@@ -85,7 +95,10 @@ function ProductCard({ style = {} }) {
                   ></img>
                 </a>
               </li>
-              <li className="bb-btn-group transition-all duration-[0.3s] ease-in-out w-[35px] h-[35px] mx-[2px] my-4 cursor-pointer flex items-center justify-center text-[#fff] bg-white bg-opacity-30  backdrop-blur-lg border-[1px] border-solid border-[#eee] rounded-[10px] hover:backdrop-blur-none">
+              <li
+                onClick={() => handleAddToCart(product)}
+                className="bb-btn-group transition-all duration-[0.3s] ease-in-out w-[35px] h-[35px] mx-[2px] my-4 cursor-pointer flex items-center justify-center text-[#fff] bg-white bg-opacity-30  backdrop-blur-lg border-[1px] border-solid border-[#eee] rounded-[10px] hover:backdrop-blur-none"
+              >
                 <a
                   title="Add To Cart"
                   className="w-[35px] h-[35px] flex items-center justify-center"
@@ -122,14 +135,14 @@ function ProductCard({ style = {} }) {
                 href="product-left-sidebar.html"
                 className="transition-all duration-[0.3s] ease-in-out font-quicksand w-full block whitespace-nowrap overflow-hidden text-ellipsis text-[15px] leading-[18px] text-[#3d4750] font-semibold tracking-[0.03rem]"
               >
-                Small Cardamom Spice Pack
+                {product?.name || "Small Cardamom Spice Pack"}
               </a>
             </h4>
             <div className="bb-price flex flex-wrap justify-between ">
               {/* <Tag tagclassName="shadow2"> */}
               <div className="inner-price mx-[-3px]">
                 <span className="new-price px-[3px] text-[16px] text-[#686e7d] font-bold">
-                  $4100
+                  {product?.price || "$4100"}
                 </span>
                 <span className="old-price px-[3px] text-[14px] text-[#686e7d] line-through">
                   $4522

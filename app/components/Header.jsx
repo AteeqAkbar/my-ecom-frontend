@@ -3,13 +3,24 @@ import React, { useEffect, useRef, useState } from "react";
 // import Tagline from "./Tagline";
 
 import Cross from "./SVG/Cross";
+import cart from "../image/icons/cart.png";
+import cross from "../image/icons/cross.png";
+import menu from "../image/icons/menu.png";
 import useScroll from "../hook/useScroll";
+import { useDispatch, useSelector } from "react-redux";
+import { openCart } from "../store/cartVisibilitySlice";
+import Loader from "./Loader";
+
 const Header = () => {
   useScroll();
+  const isCartOpen = useSelector((state) => state.cartVisibility.isCartOpen);
+  const cartItems = useSelector((state) => state.cart.items);
+  const dispatch = useDispatch();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   const toggleMobileMenu = () => {
-    setMobileMenuOpen(!isMobileMenuOpen);
+    setMobileMenuOpen((prev) => !prev);
   };
   const mobileRef = useRef(null);
 
@@ -19,12 +30,12 @@ const Header = () => {
     }
   };
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  // useEffect(() => {
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
 
   return (
     <header className="z-[101] fixed inset-x-0 top-0 mx-auto w-full max-w-screen-md py-3 md:top-6 md:rounded-3xl lg:max-w-screen-lg">
@@ -39,7 +50,8 @@ const Header = () => {
           href="index.html"
           className="inline-flex items-center gap-3 px-3 text-2xl font-semibold text-dark"
         >
-          <svg
+          <Loader size="20px" />
+          {/* <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -49,9 +61,10 @@ const Header = () => {
               fill="currentColor"
               d="M0 1.5A1.5 1.5 0 0 1 1.5 0H9a1.5 1.5 0 0 1 1.5 1.5v21A1.5 1.5 0 0 1 9 24H1.5A1.5 1.5 0 0 1 0 22.5v-21Zm13.5 0A1.5 1.5 0 0 1 15 0h7.5A1.5 1.5 0 0 1 24 1.5V9a1.5 1.5 0 0 1-1.5 1.5H15A1.5 1.5 0 0 1 13.5 9V1.5Zm0 13.5a1.5 1.5 0 0 1 1.5-1.5h7.5A1.5 1.5 0 0 1 24 15v7.5a1.5 1.5 0 0 1-1.5 1.5H15a1.5 1.5 0 0 1-1.5-1.5V15Z"
             ></path>
-          </svg>
+          </svg> */}
           <span>
-            Bento<span className="text-primary">Folio</span>
+            Dico
+            {/* <span className="text-primary">Folio</span> */}
           </span>
         </a>
 
@@ -392,13 +405,23 @@ const Header = () => {
           </li>
         </ul>
 
-        {/* Call to Action */}
+        {/* Cart */}
         <a
-          href="contact.html"
-          className="bg-dark text-white px-6 py-4 rounded-lg font-semibold leading-tight"
+          onClick={() => dispatch(openCart())}
+          title="View Cart"
+          className="w-[35px] h-[35px] cursor-pointer flex items-center justify-center relative"
         >
-          Let&apos;s Talk
+          {cartItems.length > 0 && (
+            <div className="absolute -top-1 -right-2 w-5 h-5 flex items-center justify-center rounded-full  bg-red-600 text-[10px] text-[#fff]">
+              {totalItems}
+            </div>
+          )}
+          <img
+            src={cart.src}
+            className=" ri-shopping-bag-4-line transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
+          ></img>
         </a>
+        {/* <li className="bb-btn-group transition-all duration-[0.3s] ease-in-out w-[35px] h-[35px] mx-[2px] my-4 cursor-pointer flex items-center justify-center text-[#fff] bg-white bg-opacity-30  backdrop-blur-lg border-[1px] border-solid border-[#eee] rounded-[10px] hover:backdrop-blur-none"></li> */}
       </div>
 
       {/* Mobile Menu Toggle Button */}
@@ -411,7 +434,8 @@ const Header = () => {
           href="index.html"
           className="inline-flex items-center gap-3 px-3 text-2xl font-semibold text-dark"
         >
-          <svg
+          <Loader size="20px" />
+          {/* <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -421,30 +445,50 @@ const Header = () => {
               fill="currentColor"
               d="M0 1.5A1.5 1.5 0 0 1 1.5 0H9a1.5 1.5 0 0 1 1.5 1.5v21A1.5 1.5 0 0 1 9 24H1.5A1.5 1.5 0 0 1 0 22.5v-21Zm13.5 0A1.5 1.5 0 0 1 15 0h7.5A1.5 1.5 0 0 1 24 1.5V9a1.5 1.5 0 0 1-1.5 1.5H15A1.5 1.5 0 0 1 13.5 9V1.5Zm0 13.5a1.5 1.5 0 0 1 1.5-1.5h7.5A1.5 1.5 0 0 1 24 15v7.5a1.5 1.5 0 0 1-1.5 1.5H15a1.5 1.5 0 0 1-1.5-1.5V15Z"
             ></path>
-          </svg>
+          </svg> */}
           <span>
-            Bento<span className="text-primary">Folio</span>
+            Dico
+            {/* <span className="text-primary">Folio</span> */}
           </span>
         </a>
-
-        {/* Menu Toggle */}
-        <button onClick={toggleMobileMenu} className="text-dark">
-          {isMobileMenuOpen ? (
-            <Cross />
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              className="h-6 w-6"
-            >
-              <path
-                fill="currentColor"
-                d="M4 5h16a1 1 0 010 2H4a1 1 0 010-2zm0 6h16a1 1 0 010 2H4a1 1 0 010-2zm0 6h16a1 1 0 010 2H4a1 1 0 010-2z"
-              ></path>
-            </svg>
-          )}
-        </button>
+        <div className="flex items-center gap-3">
+          {/* Cart */}
+          <a
+            onClick={() => dispatch(openCart())}
+            title="View Cart"
+            className="w-[30px] h-[30px] cursor-pointer flex items-center justify-center relative"
+          >
+            {cartItems.length > 0 && (
+              <div className="absolute -top-1 -right-2 w-5 h-5 flex items-center justify-center rounded-full  bg-red-600 text-[10px] text-[#fff]">
+                {totalItems}
+              </div>
+            )}
+            <img
+              src={cart.src}
+              className=" ri-shopping-bag-4-line transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
+            ></img>
+          </a>
+          {/* Menu Toggle */}
+          <button
+            // onClick={toggleMobileMenu}
+            className="text-dark"
+          >
+            {/* <Cross /> */}
+            {isMobileMenuOpen ? (
+              <img
+                onClick={() => setMobileMenuOpen(false)}
+                src={cross.src}
+                className=" h-7 w-7 transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
+              ></img>
+            ) : (
+              <img
+                onClick={() => setMobileMenuOpen(true)}
+                src={menu.src}
+                className=" h-8 w-8 transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
+              ></img>
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -462,7 +506,9 @@ const Header = () => {
                 href="index.html"
                 className="inline-flex items-center gap-3 px-3 text-2xl font-semibold text-dark"
               >
-                <svg
+                {" "}
+                <Loader size="20px" />
+                {/* <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -472,9 +518,10 @@ const Header = () => {
                     fill="currentColor"
                     d="M0 1.5A1.5 1.5 0 0 1 1.5 0H9a1.5 1.5 0 0 1 1.5 1.5v21A1.5 1.5 0 0 1 9 24H1.5A1.5 1.5 0 0 1 0 22.5v-21Zm13.5 0A1.5 1.5 0 0 1 15 0h7.5A1.5 1.5 0 0 1 24 1.5V9a1.5 1.5 0 0 1-1.5 1.5H15A1.5 1.5 0 0 1 13.5 9V1.5Zm0 13.5a1.5 1.5 0 0 1 1.5-1.5h7.5A1.5 1.5 0 0 1 24 15v7.5a1.5 1.5 0 0 1-1.5 1.5H15a1.5 1.5 0 0 1-1.5-1.5V15Z"
                   ></path>
-                </svg>
+                </svg> */}
                 <span>
-                  Bento<span className="text-primary">Folio</span>
+                  Dico
+                  {/* <span className="text-primary">Folio</span> */}
                 </span>
               </a>
             </div>
@@ -541,70 +588,19 @@ const Header = () => {
           </div>
           <div
             onClick={toggleMobileMenu}
-            className="absolute right-4 top-4 rounded-2xl p-1 shadow2 cursor-pointer"
+            className="absolute right-4 top-4 rounded-2xl p-1 cursor-pointer"
           >
-            <Cross />
+            {/* <Cross /> */}
+            <img
+              // onClick={() => setMobileMenuOpen(false)}
+              src={cross.src}
+              className=" h-6 w-6 transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
+            ></img>
           </div>
         </div>
       )}
     </header>
   );
 };
-
-// const Header = () => {
-//   useScroll();
-//   return (
-//     <>
-//       <header
-//         id="topnav"
-//         className="fixed inset-x-0 top-0 z-30 mx-auto w-full max-w-screen-md shadow1 py-3 md:top-6 md:rounded-3xl lg:max-w-screen-lg"
-//       >
-//         <div className="px-4">
-//           <div className="flex items-center justify-between">
-//             <div className="flex shrink-0">
-//               <a aria-current="page" className="flex items-center" href="/">
-//                 <img
-//                   className="h-7 w-auto"
-//                   src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"
-//                   alt=""
-//                 />
-//                 <p className="sr-only">Website Title</p>
-//               </a>
-//             </div>
-//             <div className="hidden md:flex md:items-center md:justify-center md:gap-5">
-//               <a
-//                 aria-current="page"
-//                 className="inline-block rounded-lg px-2 py-1 text-sm font-medium text-gray-900 transition-all duration-200 hover:bg-gray-100 hover:text-gray-900"
-//                 href="#"
-//               >
-//                 How it works
-//               </a>
-//               <a
-//                 className="inline-block rounded-lg px-2 py-1 text-sm font-medium text-gray-900 transition-all duration-200 hover:bg-gray-100 hover:text-gray-900"
-//                 href="#"
-//               >
-//                 Pricing
-//               </a>
-//             </div>
-//             <div className="flex items-center justify-end gap-3">
-//               <a
-//                 className="hidden items-center justify-center rounded-xl bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-all duration-150 hover:bg-gray-50 sm:inline-flex"
-//                 href="/login"
-//               >
-//                 Sign in
-//               </a>
-//               <a
-//                 className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-150 hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-//                 href="/login"
-//               >
-//                 Login
-//               </a>
-//             </div>
-//           </div>
-//         </div>
-//       </header>
-//     </>
-//   );
-// };
 
 export default Header;

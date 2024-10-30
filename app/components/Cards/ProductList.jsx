@@ -4,8 +4,12 @@ import ProductCard from "./ProductCard";
 import BoxLayout from "../BoxLayout";
 import ProductCardSkeleton from "./ProductCardSkeleton";
 import Countdown from "../Countdown";
+import { useSelector, useDispatch } from "react-redux";
+import { addToCart } from "@/app/store/cartSlice";
 
 function ProductList() {
+  const products = useSelector((state) => state.products.items);
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -75,10 +79,10 @@ function ProductList() {
                     </Fragment>
                   );
                 })
-              : [...Array(12)].map((value) => {
+              : products.map((product) => {
                   return (
                     <Fragment key={Math.random()}>
-                      <ProductCard />
+                      <ProductCard product={product} />
                     </Fragment>
                   );
                 })}

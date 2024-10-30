@@ -32,7 +32,7 @@ function ExploreCategories() {
                     Explore Categories
                   </h2>
                 </div>
-                <div className="bb-category-block owl-carousel  ml-[-150px] w-[calc(100%+150px)] pt-[30px] pl-[30px] bg-[#fff] rounded-tl-[30px] relative max-[991px]:ml-[0] max-[991px]:w-full max-[991px]:p-[0] owl-loaded owl-drag">
+                {/* <div className="bb-category-block owl-carousel  ml-[-150px] w-[calc(100%+150px)] pt-[30px] pl-[30px] bg-[#fff] rounded-tl-[30px] relative max-[991px]:ml-[0] max-[991px]:w-full max-[991px]:p-[0] owl-loaded owl-drag">
                   <div className="owl-stage-outer">
                     <div
                       className="owl-stage"
@@ -77,7 +77,7 @@ function ExploreCategories() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
