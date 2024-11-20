@@ -5,6 +5,7 @@ import cross from "../../image/icons/cross.png";
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart } from "../../store/cartSlice";
 import { closeCart } from "../../store/cartVisibilitySlice";
+import { addToCart } from "@/app/store/cartSlice";
 
 const ShoppingCart = () => {
   const isCartOpen = useSelector((state) => state.cartVisibility.isCartOpen);
@@ -45,7 +46,6 @@ const RelatedItems = () => {
           {/* Related item component */}
 
           <ProductCard style={{ width: "100%" }} />
-          <ProductCard style={{ width: "100%" }} />
         </li>
       </ul>
     </div>
@@ -85,14 +85,23 @@ const Cart = () => {
         </div>
       </div>
       {/* Cart content */}
+
       <div className="bb-cart-box item h-full flex flex-col max-[767px]:justify-start">
-        <ul>
-          {/* Cart item component */}
-          {cartItems.map((item) => (
-            <CartItem item={item} />
-          ))}
-        </ul>
+        {cartItems?.length > 0 ? (
+          <ul>
+            {/* Cart item component */}
+
+            {cartItems.map((item) => (
+              <CartItem item={item} />
+            ))}
+          </ul>
+        ) : (
+          <div className="title font-medium text-[#777] p-[.5rem]">
+            Your Cart is empty!
+          </div>
+        )}
       </div>
+
       <div className="bb-bottom-cart">
         <div className="cart-sub-total mt-[20px] pb-[8px] flex flex-wrap justify-between border-t-[1px] border-solid border-[#eee]">
           <table className="table cart-table mt-[10px] w-full align-top">
@@ -102,7 +111,7 @@ const Cart = () => {
                   Sub-Total :
                 </td>
                 <td className="price text-[#777] text-right p-[.5rem]">
-                  {totals || "$300"}
+                  {totals || "0.00"}
                 </td>
               </tr>
               {/* <tr>
@@ -118,7 +127,7 @@ const Cart = () => {
                   Total :
                 </td>
                 <td className="price text-[#777] text-right p-[.5rem]">
-                  {totals || "$300"}
+                  {totals || "0.00"}
                 </td>
               </tr>
             </tbody>
@@ -145,15 +154,7 @@ const Cart = () => {
 
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
-  const [quantity, setQuantity] = useState(1);
 
-  const increaseQuantity = () => {
-    setQuantity((prevQuantity) => prevQuantity + 1);
-  };
-
-  const decreaseQuantity = () => {
-    setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
-  };
   return (
     <li
       key={item?.id + Math.random()}
@@ -192,14 +193,14 @@ const CartItem = ({ item }) => {
         <div className=" relative flex items-center justify-between  ">
           <a className=" transition-all duration-[0.3s] ease-in-out w-[70px] cursor-pointer h-[32px] font-normal text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-around items-center rounded-[10px] border-[1px] border-solid border-[#eee]  ">
             <span
-              onClick={decreaseQuantity}
+              onClick={() => dispatch(removeFromCart(item.id))}
               className=" w-full select-none overflow-hidden rounded-s-[10px]  transition-all duration-[0.3s] ease-in-out hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white"
             >
               -
             </span>
-            <span className="w-full">{quantity}</span>
+            <span className="w-full">{item?.quantity}</span>
             <span
-              onClick={increaseQuantity}
+              onClick={() => dispatch(addToCart(item))}
               className="w-full select-none overflow-hidden rounded-e-[10px]  transition-all duration-[0.3s] ease-in-out hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white"
             >
               +

@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Cross from "./SVG/Cross";
 import cart from "../image/icons/cart.png";
 import cross from "../image/icons/cross.png";
-import menu from "../image/icons/menu.png";
+import menu from "../image/icons/menu1.png";
 import useScroll from "../hook/useScroll";
 import { useDispatch, useSelector } from "react-redux";
 import { openCart } from "../store/cartVisibilitySlice";

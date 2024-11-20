@@ -5,6 +5,7 @@ import cart from "../../image/icons/cart.png";
 import eye from "../../image/icons/eye.png";
 import whatsapp from "../../image/icons/whatsapp.png";
 import star from "../../image/icons/star.png";
+import starhalf from "../../image/icons/halfstar.png";
 import ModalCard from "./ModalCard";
 
 import CustomModal from "../CustomModal";
@@ -14,12 +15,13 @@ import { openCart } from "@/app/store/cartVisibilitySlice";
 
 function ProductCard({ style = {}, product }) {
   const handleAddToCart = (product) => {
-    console.log(product);
+    // console.log(product);
     dispatch(addToCart(product));
     dispatch(openCart());
   };
-  const phoneNumber = "1234567890"; // Replace with the recipient's phone number in international format
-  const message = encodeURIComponent("Hello"); // URL-encoded message
+  const phoneNumber = "03114900152"; // Replace with the recipient's phone number in international format
+  const message = encodeURIComponent(`Aoa i want buy ${product?.name}
+    `); // URL-encoded message
   const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${message}`;
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
@@ -77,7 +79,7 @@ function ProductCard({ style = {}, product }) {
                 >
                   <img
                     src={eye.src}
-                    className=" ri-shopping-bag-4-line transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
+                    className=" ri-shopping-bag-4-line transition-all  duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
                   ></img>
                 </a>
               </li>
@@ -120,13 +122,18 @@ function ProductCard({ style = {}, product }) {
                 Spices
               </a>
               <span className="bb-pro-rating">
-                {[...Array(5)].map((_, i) => (
+                {[...Array(4)].map((_, i) => (
                   <img
                     key={i}
                     src={star.src}
                     className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
                   ></img>
                 ))}
+                <img
+                  key={Math.random() + 100}
+                  src={starhalf.src}
+                  className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+                ></img>
               </span>
             </div>
             <h4 className="bb-pro-title mb-[8px] text-[16px] leading-[18px]">
@@ -159,7 +166,7 @@ function ProductCard({ style = {}, product }) {
         </div>
       </div>
       <CustomModal state={isOpen} close={closeModal}>
-        <ModalCard />
+        <ModalCard product={product} close={closeModal} />
       </CustomModal>
     </>
   );

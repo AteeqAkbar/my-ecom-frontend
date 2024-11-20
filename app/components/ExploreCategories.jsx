@@ -1,4 +1,5 @@
 import React from "react";
+import CategoriesSlider from "./Swiper/CategoriesSlider";
 
 function ExploreCategories() {
   return (
@@ -28,10 +29,11 @@ function ExploreCategories() {
                   data-aos-duration="1000"
                   data-aos-delay="600"
                 >
-                  <h2 className="bg-transparent bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500  hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400  text-[124px] font-bold max-[1399px]:text-[95px] max-[1202px]:text-[70px] max-[767px]:text-[142px]">
+                  <h2 className="bg-transparent bg-clip-text leading-[1.3] text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500  hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400  text-[124px] font-bold max-[1399px]:text-[95px] max-[1202px]:text-[70px] max-[767px]:text-[142px]">
                     Explore Categories
                   </h2>
                 </div>
+                <CategoriesSlider />
                 {/* <div className="bb-category-block owl-carousel  ml-[-150px] w-[calc(100%+150px)] pt-[30px] pl-[30px] bg-[#fff] rounded-tl-[30px] relative max-[991px]:ml-[0] max-[991px]:w-full max-[991px]:p-[0] owl-loaded owl-drag">
                   <div className="owl-stage-outer">
                     <div

@@ -6,7 +6,7 @@ import img3 from "../../image/img3.jpg";
 import img4 from "../../image/img4.jpg";
 const items = [
   {
-    id: 1,
+    id: 0,
     image: img1?.src,
     author: "LUNDEV",
     title: "DESIGN SLIDER 1",
@@ -14,7 +14,7 @@ const items = [
     description: "Lorem ipsum dolor sit amet...",
   },
   {
-    id: 2,
+    id: 1,
     image: img2?.src,
     author: "LUNDEV",
     title: "DESIGN SLIDER 2",
@@ -22,7 +22,7 @@ const items = [
     description: "Lorem ipsum dolor sit amet...",
   },
   {
-    id: 3,
+    id: 2,
     image: img3?.src,
     author: "LUNDEV",
     title: "DESIGN SLIDER 3",
@@ -30,7 +30,7 @@ const items = [
     description: "Lorem ipsum dolor sit amet...",
   },
   {
-    id: 4,
+    id: 3,
     image: img4?.src,
     author: "LUNDEV",
     title: "DESIGN SLIDER 4",

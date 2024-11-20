@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import star from "../../image/icons/star.png";
 import cart from "../../image/icons/cart.png";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/app/store/cartSlice";
 
-export default function ModalCard() {
+export default function ModalCard({ product, close }) {
+  const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
 
   const increaseQuantity = () => {
@@ -11,6 +14,10 @@ export default function ModalCard() {
 
   const decreaseQuantity = () => {
     setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
+  };
+  const handleAddToCart = (product) => {
+    dispatch(addToCart({ ...product, qty: quantity }));
+    close();
   };
 
   return (
@@ -58,7 +65,8 @@ export default function ModalCard() {
                     href="product-left-sidebar.html"
                     className="font-Poppins tracking-[0.03rem] mb-[10px] block text-[#3d4750] text-[20px] leading-[30px] font-medium"
                   >
-                    Mix nuts premium quality organic dried fruit 250g pack
+                    {product?.name ||
+                      " Mix nuts premium quality organic dried fruit 250g pack"}
                   </a>
                 </h5>
                 <div className="bb-pro-rating flex mb-[10px]">
@@ -79,10 +87,10 @@ export default function ModalCard() {
                 </div>
                 <div className="bb-quickview-price pt-[5px] pb-[10px] flex items-center justify-left">
                   <span className="new-price px-[3px] text-[16px] text-[#686e7d] font-bold">
-                    $50.00
+                    {product?.price || " $50.00"}
                   </span>
                   <span className="old-price px-[3px] text-[14px] text-[#686e7d] line-through">
-                    $62.00
+                    {product?.price || " $50.00"}
                   </span>
                 </div>
                 <div className="bb-pro-variation mt-[15px] mb-[25px]">
@@ -129,7 +137,10 @@ export default function ModalCard() {
                     </a>
                   </div>
                   <div className="bb-quickview-cart ml-[4px] max-[360px]:mt-[15px] max-[360px]:ml-[0] max-[360px]:flex max-[360px]:justify-center">
-                    <div className="leading-[28px]">
+                    <div
+                      onClick={() => handleAddToCart(product)}
+                      className="leading-[28px]"
+                    >
                       <a
                         title="Add To Cart"
                         className="transition-all  select-none px-[13px] duration-[0.3s] ease-in-out w-auto cursor-pointer h-[32px] font-light text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow1"

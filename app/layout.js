@@ -3,6 +3,7 @@ import "./globals.scss";
 import Header from "./components/Header";
 import BackToTop from "./components/BackToTop";
 import App from "./App";
+import Footer from "./components/Footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,6 +31,7 @@ export default function RootLayout({ children }) {
           <Header />
           {children}
           <BackToTop />
+          <Footer />
         </App>
       </body>
     </html>

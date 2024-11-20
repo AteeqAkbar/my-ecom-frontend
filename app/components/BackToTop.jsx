@@ -1,34 +1,46 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import up from "../image/icons/up.png";
+import up from "../image/icons/arrow-up3.png";
+// import up from "../image/icons/up.svg";
 
 const BackToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const toggleVisibility = () => {
-      if (window.pageYOffset > 300) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
-    };
+    let animationFrame;
 
-    const updateProgress = () => {
+    const smoothProgressUpdate = () => {
       const scrolled = window.pageYOffset;
       const scrollableHeight =
         document.documentElement.scrollHeight - window.innerHeight;
-      const newProgress = (scrolled / scrollableHeight) * 100;
-      setProgress(newProgress);
+      const targetProgress = (scrolled / scrollableHeight) * 100;
+
+      setProgress((prevProgress) => {
+        if (Math.abs(prevProgress - targetProgress) < 0.5) {
+          return targetProgress; // Snap to target if close enough
+        }
+        return prevProgress + (targetProgress - prevProgress) * 0.1; // Smooth increment
+      });
+
+      animationFrame = requestAnimationFrame(smoothProgressUpdate);
     };
 
-    window.addEventListener("scroll", toggleVisibility);
-    window.addEventListener("scroll", updateProgress);
+    const toggleVisibility = () => {
+      setIsVisible(window.pageYOffset > 300);
+    };
+
+    const handleScroll = () => {
+      toggleVisibility();
+      cancelAnimationFrame(animationFrame); // Cancel any previous animation
+      smoothProgressUpdate(); // Restart smooth progress animation
+    };
+
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", toggleVisibility);
-      window.removeEventListener("scroll", updateProgress);
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(animationFrame);
     };
   }, []);
 
@@ -40,40 +52,31 @@ const BackToTop = () => {
   };
 
   return (
-    <a
-      href="#Top"
-      onClick={(e) => {
-        e.preventDefault();
-        scrollToTop();
-      }}
-      className={`back-to-top result-placeholder transition-all duration-[0.3s] ease-in-out w-[38px] h-[38px] fixed right-[15px] bottom-[15px] z-[10] rounded-[20px] cursor-pointer bg-[#fff] text-[#6c7fd8] border-[1px] border-solid border-[#6c7fd8] text-center text-[22px] leading-[1.6] ${
-        isVisible ? "inline" : "hidden"
+    <button
+      onClick={scrollToTop}
+      aria-label="Back to top"
+      className={`transition-opacity duration-300 ease-in-out w-[38px] h-[38px] fixed right-[15px] bottom-[15px] z-[10] rounded-full bg-white text-[#6c7fd8] border border-solid border-[#6c7fd8] flex items-center justify-center ${
+        isVisible ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}
     >
-      <div className="w-full h-full flex items-center justify-center">
-        <img
-          src={up.src}
-          className=" w-9 h-9 text-center ri-shopping-bag-4-line transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
-        ></img>
-      </div>
-
-      <div className="back-to-top-wrap active-progress">
-        <svg
-          viewBox="-1 -1 102 102"
-          className="w-[36px] h-[36px] fixed right-[16px] bottom-[16px]"
-        >
-          <path
-            d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"
-            className="fill-transparent stroke-[5px] stroke-[#6c7fd8]"
+      <img src={up.src} alt="Scroll up" className="w-full h-full" />
+      <div className="absolute w-full h-full">
+        <svg viewBox="0 0 100 100" className="w-[36px] h-[36px]">
+          {/* <circle
+            cx="50"
+            cy="50"
+            r="49"
+            className="fill-transparent stroke-[#6c7fd8]"
             style={{
-              transition: "stroke-dashoffset 10ms linear",
-              strokeDasharray: "307.919, 307.919",
+              transition: "stroke-dashoffset 0.1s linear",
+              strokeDasharray: "307.919",
               strokeDashoffset: 307.919 - (progress / 100) * 307.919,
+              strokeWidth: 6, // Decreased stroke width
             }}
-          ></path>
+          ></circle> */}
         </svg>
       </div>
-    </a>
+    </button>
   );
 };
 

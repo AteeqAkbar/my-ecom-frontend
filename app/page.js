@@ -8,6 +8,7 @@ import ModalCard from "./components/Cards/ModalCard";
 import Services from "./components/Services";
 import CartSidebar from "./components/Cart/CartSidebar";
 import Loader from "./components/Loader";
+import ProductSlider from "./components/Swiper/ProductSlider";
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,10 +32,11 @@ export default function Home() {
         <ModalCard />
       </Modal>
       <Services />
-      <CartSidebar />
+
       <div className="w-[200px] h-[200px]">
         <Loader />
       </div>
+      <ProductSlider />
     </>
   );
 }
