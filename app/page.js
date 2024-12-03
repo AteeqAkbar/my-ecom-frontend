@@ -9,6 +9,7 @@ import Services from "./components/Services";
 import CartSidebar from "./components/Cart/CartSidebar";
 import Loader from "./components/Loader";
 import ProductSlider from "./components/Swiper/ProductSlider";
+import GalleryCarousel from "./components/CarouselThumbnails/GalleryCarousel";
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,6 +38,7 @@ export default function Home() {
         <Loader />
       </div>
       <ProductSlider />
+      <GalleryCarousel />
     </>
   );
 }

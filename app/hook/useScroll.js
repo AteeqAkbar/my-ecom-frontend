@@ -6,7 +6,7 @@ const useScroll = () => {
       const navbar = document.getElementById("topnav");
       const mobnav = document.getElementById("mobnav");
       if (navbar) {
-        if (window.scrollY >= 200) {
+        if (window.scrollY >= 50) {
           navbar.classList.add("shadow");
           navbar.classList.add("bg-white");
           navbar.classList.add("bg-opacity-30");

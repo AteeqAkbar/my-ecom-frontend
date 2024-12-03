@@ -4,83 +4,182 @@ import Breadcrumb from "../components/Breadcrumb";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../store/cartSlice";
 import ProductSlider from "../components/Swiper/ProductSlider";
+import done from "../image/icons/done.png";
+import star from "../image/icons/star.png";
+import starhalf from "../image/icons/halfstar.png";
+
+function ProductItem({ item }) {
+  return (
+    <div className="pro-items p-[15px] bg-[#f8f8fb] border-[1px] border-solid border-[#eee] rounded-[20px] flex mb-[24px] max-[420px]:flex-col">
+      <div className="image mr-[15px] max-[420px]:mr-[0] max-[420px]:mb-[15px]">
+        <img
+          src="https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/new-product/4.jpg"
+          alt="new-product-1"
+          className="max-w-max w-[100px] h-[100px] border-[1px] border-solid border-[#eee] rounded-[20px] max-[1399px]:h-[80px] max-[1399px]:w-[80px]"
+        />
+      </div>
+      <div className="items-contact">
+        <h4 className="text-[16px]">
+          <a
+            href="javascript:void(0)"
+            className="font-Poppins tracking-[0.03rem] text-[15px] font-medium leading-[18px] text-[#3d4750]"
+          >
+            {item.name || " Ground Nuts Oil Pack"}
+          </a>
+        </h4>
+        <div className="inner-price flex items-center justify-left mb-[4px]">
+          <span className="new-price font-Poppins text-[#3d4750] font-normal leading-[26px] tracking-[0.02rem] text-[15px]">
+            {item?.price || "0.00"}
+          </span>
+          <span className="old-price ml-[10px] font-Poppins text-[#777] font-normal leading-[26px] tracking-[0.02rem] text-[15px] ">
+            {" x "} {item?.quantity}
+          </span>
+        </div>
+        <span className="bb-pro-rating flex">
+          {[...Array(4)].map((_, i) => (
+            <img
+              key={i}
+              src={star.src}
+              className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+            ></img>
+          ))}
+          <img
+            key={Math.random() + 100}
+            src={starhalf.src}
+            className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+          ></img>
+        </span>
+      </div>
+    </div>
+  );
+}
 
 export default function Checkout() {
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
   const [totals, setTotals] = useState(0);
+
+  const [formValues, setFormValues] = useState({
+    fullName: "",
+    phone: "",
+    address: "",
+    email: "",
+    password: "",
+    comment: "",
+  });
+
+  const [formErrors, setFormErrors] = useState({});
+
   useEffect(() => {
     setTotals(
       cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
     );
   }, [cartItems]);
+
+  const validate = () => {
+    const errors = {};
+    if (!formValues.fullName) errors.fullName = "Full Name is required";
+    if (!formValues.phone) errors.phone = "Phone Number is required";
+    if (!formValues.address) errors.address = "Address is required";
+    if (!formValues.email) {
+      errors.email = "Email Address is required";
+    } else if (!/\S+@\S+\.\S+/.test(formValues.email)) {
+      errors.email = "Email Address is invalid";
+    }
+    if (!formValues.password) errors.password = "Password is required";
+    return errors;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const errors = validate();
+    setFormErrors(errors);
+    if (Object.keys(errors).length === 0) {
+      // Proceed with form submission
+      alert("Form submitted successfully!");
+      // Reset form
+      setFormValues({
+        fullName: "",
+        phone: "",
+        address: "",
+        email: "",
+        password: "",
+        comment: "",
+      });
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+    if (formErrors[name]) {
+      setFormErrors({ ...formErrors, [name]: "" });
+    }
+  };
+
   return (
     <>
       <Breadcrumb title="Checkout" />
-      <section class="section-checkout py-[50px] max-[1199px]:py-[35px]">
-        <div class="flex flex-wrap justify-between relative items-center mx-auto min-[1400px]:max-w-[1320px] min-[1200px]:max-w-[1140px] min-[992px]:max-w-[960px] min-[768px]:max-w-[720px] min-[576px]:max-w-[540px]">
-          <div class="flex flex-wrap w-full mb-[-24px]">
-            <div class="min-[992px]:w-[33.33%] w-full px-[12px] mb-[24px]">
-              <div class="bb-checkout-sidebar mb-[-24px]">
-                <div
-                  class="checkout-items border-[1px] border-solid border-[#eee] p-[20px] rounded-[20px] mb-[24px] aos-init aos-animate"
-                  data-aos="fade-up"
-                  data-aos-duration="1000"
-                  data-aos-delay="200"
-                >
-                  <div class="sub-title mb-[12px]">
-                    <h4 class="font-quicksand tracking-[0.03rem] leading-[1.2] text-[20px] font-bold text-[#3d4750]">
-                      summary
+      <section className="section-checkout py-[50px] max-[1199px]:py-[35px]">
+        <div className="flex flex-wrap justify-between relative items-center mx-auto min-[1400px]:max-w-[1320px] min-[1200px]:max-w-[1140px] min-[992px]:max-w-[960px] min-[768px]:max-w-[720px] min-[576px]:max-w-[540px]">
+          <div className="flex flex-wrap w-full mb-[-24px]">
+            <div className="min-[992px]:w-[33.33%] w-full  px-[12px] mb-[24px]">
+              <div className="bb-checkout-sidebar mb-[-24px]">
+                <div className="checkout-items border-[1px] border-solid bg-[#f8f8fb] border-[#eee] p-[20px] rounded-[20px] mb-[24px] aos-init aos-animate">
+                  <div className="sub-title mb-[12px]">
+                    <h4 className="font-quicksand tracking-[0.03rem] leading-[1.2] text-[20px] font-bold text-[#3d4750]">
+                      Summary
                     </h4>
                   </div>
-                  <div class="checkout-summary mb-[20px] border-b-[1px] border-solid border-[#eee]">
-                    <ul class="mb-[20px]">
-                      <li class="flex justify-between leading-[28px] mb-[8px]">
-                        <span class="left-item font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-medium text-[#686e7d]">
-                          sub-total
+                  <div className="checkout-summary mb-[20px] border-b-[1px] border-solid border-[#eee]">
+                    <ul className="mb-[20px]">
+                      <li className="flex justify-between leading-[28px] mb-[8px]">
+                        <span className="left-item font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-medium text-[#686e7d]">
+                          Sub-total
                         </span>
-                        <span class="font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-medium text-[#686e7d]">
-                          $56
+                        <span className="font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-medium text-[#686e7d]">
+                          {totals || "0.00"}
                         </span>
                       </li>
-                      <li class="flex justify-between leading-[28px] mb-[8px]">
-                        <span class="left-item font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-medium text-[#686e7d]">
+                      <li className="flex justify-between leading-[28px] mb-[8px]">
+                        <span className="left-item font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-medium text-[#686e7d]">
                           Delivery Charges
                         </span>
-                        <span class="font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-medium text-[#686e7d]">
-                          $56
+                        <span className="font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-medium text-[#686e7d]">
+                          {"250"}
                         </span>
                       </li>
-                      <li class="flex justify-between leading-[28px] mb-[8px]">
-                        <span class="left-item font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-medium text-[#686e7d]">
+                      <li className="flex justify-between leading-[28px] mb-[8px]">
+                        <span className="left-item font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-medium text-[#686e7d]">
+                          Total
+                        </span>
+                        <span className="font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-medium text-[#686e7d]">
+                          {totals ? totals + 250 : "0.00"}
+                        </span>
+                      </li>
+                      <li className="flex justify-between leading-[28px] mb-[8px]">
+                        <span className="left-item font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-medium text-[#686e7d]">
                           Coupon Discount
                         </span>
-                        <span class="font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-medium text-[#686e7d]">
+                        <span className="font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-medium text-[#686e7d]">
                           <a
                             href="javascript:void(0)"
-                            class="apply drop-coupon font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-medium text-[#ff0000]"
+                            className="apply drop-coupon font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-medium text-[#ff0000]"
                           >
                             Apply Coupon
                           </a>
                         </span>
                       </li>
-                      <li class="flex justify-between leading-[28px]">
-                        <div
-                          class="coupon-down-box w-full"
-                          // style="display: none;"
-                        >
-                          <form method="post" class="relative">
+                      <li className="flex justify-between leading-[28px]">
+                        <div className="coupon-down-box w-full">
+                          <form className="relative">
                             <input
-                              class="bb-coupon w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] outline-[0] rounded-[10px]"
+                              className="bb-coupon w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] outline-[0] rounded-[10px]"
                               type="text"
                               placeholder="Enter Your coupon Code"
                               name="bb-coupon"
-                              required=""
                             />
-                            <button
-                              class="bb-btn-2 transition-all duration-[0.3s] ease-in-out my-[8px] mr-[8px] flex justify-center items-center absolute right-[0] top-[0] bottom-[0] font-Poppins leading-[28px] tracking-[0.03rem] py-[2px] px-[12px] text-[13px] font-normal text-[#fff] bg-[#6c7fd8] rounded-[10px] border-[1px] border-solid border-[#6c7fd8] hover:bg-transparent hover:border-[#3d4750] hover:text-[#3d4750]"
-                              type="submit"
-                            >
+                            <button className="bb-btn-2 transition-all duration-[0.3s] ease-in-out my-[8px] mr-[8px] flex justify-center items-center absolute right-[0] top-[0] bottom-[0] font-Poppins leading-[28px] tracking-[0.03rem] py-[2px] px-[12px] text-[13px] font-normal text-[#fff] bg-[#6c7fd8] rounded-[10px] border-[1px] border-solid border-[#6c7fd8] hover:bg-transparent hover:border-[#3d4750] hover:text-[#3d4750]">
                               Apply
                             </button>
                           </form>
@@ -88,632 +187,180 @@ export default function Checkout() {
                       </li>
                     </ul>
                   </div>
-                  <div class="bb-checkout-pro mb-[-24px]">
-                    <div class="pro-items p-[15px] bg-[#f8f8fb] border-[1px] border-solid border-[#eee] rounded-[20px] flex mb-[24px] max-[420px]:flex-col">
-                      <div class="image mr-[15px] max-[420px]:mr-[0] max-[420px]:mb-[15px]">
-                        <img
-                          src="assets/img/new-product/1.jpg"
-                          alt="new-product-1"
-                          class="max-w-max w-[100px] h-[100px] border-[1px] border-solid border-[#eee] rounded-[20px] max-[1399px]:h-[80px] max-[1399px]:w-[80px]"
-                        />
+                  <div className="bb-checkout-pro mb-[-24px]">
+                    {cartItems?.length > 0 ? (
+                      <>
+                        {cartItems.map((item) => (
+                          <ProductItem key={item.id} item={item} />
+                        ))}
+                      </>
+                    ) : (
+                      <div className="title font-medium text-[#777] p-[.5rem] pb-10">
+                        Your Cart is empty!
                       </div>
-                      <div class="items-contact">
-                        <h4 class="text-[16px]">
-                          <a
-                            href="javascript:void(0)"
-                            class="font-Poppins tracking-[0.03rem] text-[15px] font-medium leading-[18px] text-[#3d4750]"
-                          >
-                            Ground Nuts Oil Pack
-                          </a>
-                        </h4>
-                        <span class="bb-pro-rating flex">
-                          <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                          <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                          <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                          <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                          <i class="ri-star-line float-left text-[15px] mr-[3px] text-[#777]"></i>
-                        </span>
-                        <div class="inner-price flex items-center justify-left mb-[4px]">
-                          <span class="new-price font-Poppins text-[#3d4750] font-semibold leading-[26px] tracking-[0.02rem] text-[15px]">
-                            $15
-                          </span>
-                          <span class="old-price ml-[10px] font-Poppins text-[#777] font-semibold leading-[26px] tracking-[0.02rem] text-[15px] line-through">
-                            $22
-                          </span>
-                        </div>
-                        <div class="bb-pro-variation">
-                          <ul class="flex flex-wrap m-[-2px]">
-                            <li class="h-[22px] m-[2px] py-[2px] px-[8px] cursor-pointer border-[1px] border-solid border-[#eee] text-[#777] flex items-center justify-center text-[12px] leading-[22px] rounded-[20px] font-normal active">
-                              <a
-                                href="javascript:void(0)"
-                                class="bb-opt-sz font-Poppins text-[12px] leading-[22px] font-normal text-[#777] tracking-[0.03rem]"
-                                data-tooltip="Small"
-                              >
-                                250g
-                              </a>
-                            </li>
-                            <li class="h-[22px] m-[2px] py-[2px] px-[8px] cursor-pointer border-[1px] border-solid border-[#eee] text-[#777] flex items-center justify-center text-[12px] leading-[22px] rounded-[20px] font-normal">
-                              <a
-                                href="javascript:void(0)"
-                                class="bb-opt-sz font-Poppins text-[12px] leading-[22px] font-normal text-[#777] tracking-[0.03rem]"
-                                data-tooltip="Medium"
-                              >
-                                500g
-                              </a>
-                            </li>
-                            <li class="h-[22px] m-[2px] py-[2px] px-[8px] cursor-pointer border-[1px] border-solid border-[#eee] text-[#777] flex items-center justify-center text-[12px] leading-[22px] rounded-[20px] font-normal">
-                              <a
-                                href="javascript:void(0)"
-                                class="bb-opt-sz font-Poppins text-[12px] leading-[22px] font-normal text-[#777] tracking-[0.03rem]"
-                                data-tooltip="Large"
-                              >
-                                1kg
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="pro-items p-[15px] bg-[#f8f8fb] border-[1px] border-solid border-[#eee] rounded-[20px] flex mb-[24px] max-[420px]:flex-col">
-                      <div class="image mr-[15px] max-[420px]:mr-[0] max-[420px]:mb-[15px]">
-                        <img
-                          src="assets/img/new-product/2.jpg"
-                          alt="new-product-2"
-                          class="max-w-max w-[100px] h-[100px] border-[1px] border-solid border-[#eee] rounded-[20px] max-[1399px]:h-[80px] max-[1399px]:w-[80px]"
-                        />
-                      </div>
-                      <div class="items-contact">
-                        <h4 class="text-[16px]">
-                          <a
-                            href="javascript:void(0)"
-                            class="font-Poppins tracking-[0.03rem] text-[15px] font-medium leading-[18px] text-[#3d4750]"
-                          >
-                            Organic Litchi Juice Pack
-                          </a>
-                        </h4>
-                        <span class="bb-pro-rating flex">
-                          <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                          <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                          <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                          <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                          <i class="ri-star-line float-left text-[15px] mr-[3px] text-[#777]"></i>
-                        </span>
-                        <div class="inner-price flex items-center justify-left mb-[4px]">
-                          <span class="new-price font-Poppins text-[#3d4750] font-semibold leading-[26px] tracking-[0.02rem] text-[15px]">
-                            $25
-                          </span>
-                          <span class="old-price ml-[10px] font-Poppins text-[#777] font-semibold leading-[26px] tracking-[0.02rem] text-[15px] line-through">
-                            $30
-                          </span>
-                        </div>
-                        <div class="bb-pro-variation">
-                          <ul class="flex flex-wrap m-[-2px]">
-                            <li class="h-[22px] m-[2px] py-[2px] px-[8px] cursor-pointer border-[1px] border-solid border-[#eee] text-[#777] flex items-center justify-center text-[12px] leading-[22px] rounded-[20px] font-normal active">
-                              <a
-                                href="javascript:void(0)"
-                                class="bb-opt-sz font-Poppins text-[12px] leading-[22px] font-normal text-[#777] tracking-[0.03rem]"
-                                data-tooltip="Small"
-                              >
-                                250g
-                              </a>
-                            </li>
-                            <li class="h-[22px] m-[2px] py-[2px] px-[8px] cursor-pointer border-[1px] border-solid border-[#eee] text-[#777] flex items-center justify-center text-[12px] leading-[22px] rounded-[20px] font-normal">
-                              <a
-                                href="javascript:void(0)"
-                                class="bb-opt-sz font-Poppins text-[12px] leading-[22px] font-normal text-[#777] tracking-[0.03rem]"
-                                data-tooltip="Medium"
-                              >
-                                500g
-                              </a>
-                            </li>
-                            <li class="h-[22px] m-[2px] py-[2px] px-[8px] cursor-pointer border-[1px] border-solid border-[#eee] text-[#777] flex items-center justify-center text-[12px] leading-[22px] rounded-[20px] font-normal">
-                              <a
-                                href="javascript:void(0)"
-                                class="bb-opt-sz font-Poppins text-[12px] leading-[22px] font-normal text-[#777] tracking-[0.03rem]"
-                                data-tooltip="Large"
-                              >
-                                1kg
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="pro-items p-[15px] bg-[#f8f8fb] border-[1px] border-solid border-[#eee] rounded-[20px] flex mb-[24px] max-[420px]:flex-col">
-                      <div class="image mr-[15px] max-[420px]:mr-[0] max-[420px]:mb-[15px]">
-                        <img
-                          src="assets/img/new-product/3.jpg"
-                          alt="new-product-3"
-                          class="max-w-max w-[100px] h-[100px] border-[1px] border-solid border-[#eee] rounded-[20px] max-[1399px]:h-[80px] max-[1399px]:w-[80px]"
-                        />
-                      </div>
-                      <div class="items-contact">
-                        <h4 class="text-[16px]">
-                          <a
-                            href="javascript:void(0)"
-                            class="font-Poppins tracking-[0.03rem] text-[15px] font-medium leading-[18px] text-[#3d4750]"
-                          >
-                            Crunchy Banana Chips
-                          </a>
-                        </h4>
-                        <span class="bb-pro-rating flex">
-                          <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                          <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                          <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                          <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                          <i class="ri-star-line float-left text-[15px] mr-[3px] text-[#777]"></i>
-                        </span>
-                        <div class="inner-price flex items-center justify-left mb-[4px]">
-                          <span class="new-price font-Poppins text-[#3d4750] font-semibold leading-[26px] tracking-[0.02rem] text-[15px]">
-                            $01
-                          </span>
-                          <span class="old-price ml-[10px] font-Poppins text-[#777] font-semibold leading-[26px] tracking-[0.02rem] text-[15px] line-through">
-                            $02
-                          </span>
-                        </div>
-                        <div class="bb-pro-variation">
-                          <ul class="flex flex-wrap m-[-2px]">
-                            <li class="h-[22px] m-[2px] py-[2px] px-[8px] cursor-pointer border-[1px] border-solid border-[#eee] text-[#777] flex items-center justify-center text-[12px] leading-[22px] rounded-[20px] font-normal active">
-                              <a
-                                href="javascript:void(0)"
-                                class="bb-opt-sz font-Poppins text-[12px] leading-[22px] font-normal text-[#777] tracking-[0.03rem]"
-                                data-tooltip="Small"
-                              >
-                                250g
-                              </a>
-                            </li>
-                            <li class="h-[22px] m-[2px] py-[2px] px-[8px] cursor-pointer border-[1px] border-solid border-[#eee] text-[#777] flex items-center justify-center text-[12px] leading-[22px] rounded-[20px] font-normal">
-                              <a
-                                href="javascript:void(0)"
-                                class="bb-opt-sz font-Poppins text-[12px] leading-[22px] font-normal text-[#777] tracking-[0.03rem]"
-                                data-tooltip="Medium"
-                              >
-                                500g
-                              </a>
-                            </li>
-                            <li class="h-[22px] m-[2px] py-[2px] px-[8px] cursor-pointer border-[1px] border-solid border-[#eee] text-[#777] flex items-center justify-center text-[12px] leading-[22px] rounded-[20px] font-normal">
-                              <a
-                                href="javascript:void(0)"
-                                class="bb-opt-sz font-Poppins text-[12px] leading-[22px] font-normal text-[#777] tracking-[0.03rem]"
-                                data-tooltip="Large"
-                              >
-                                1kg
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
+                    )}
                   </div>
                 </div>
-                <div
-                  class="checkout-items border-[1px] border-solid border-[#eee] p-[20px] rounded-[20px] mb-[24px] aos-init aos-animate"
-                  data-aos="fade-up"
-                  data-aos-duration="1000"
-                  data-aos-delay="400"
-                >
-                  <div class="sub-title mb-[12px]">
-                    <h4 class="font-quicksand tracking-[0.03rem] leading-[1.2] text-[20px] font-bold text-[#3d4750]">
-                      Delivery Method
-                    </h4>
-                  </div>
-                  <div class="checkout-method mb-[24px]">
-                    <span class="details font-Poppins leading-[26px] tracking-[0.02rem] text-[15px] font-medium text-[#686e7d]">
-                      Please select the preferred shipping method to use on this
-                      order.
-                    </span>
-                    <div class="bb-del-option flex mt-[12px] max-[480px]:flex-col">
-                      <div class="inner-del w-[50%] max-[480px]:w-full max-[480px]:mb-[8px]">
-                        <span class="bb-del-head font-Poppins leading-[26px] tracking-[0.02rem] text-[15px] font-semibold text-[#3d4750]">
-                          Free Shipping
-                        </span>
-                        <div class="radio-itens">
-                          <input
-                            type="radio"
-                            id="rate1"
-                            name="rate"
-                            class="w-full text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] outline-[0] rounded-[10px]"
-                            checked=""
-                          />
-                          <label
-                            for="rate1"
-                            class="relative pl-[26px] cursor-pointer leading-[16px] inline-block text-[#686e7d] tracking-[0]"
-                          >
-                            Rate - $0 .00
-                          </label>
-                        </div>
-                      </div>
-                      <div class="inner-del w-[50%] max-[480px]:w-full">
-                        <span class="bb-del-head font-Poppins leading-[26px] tracking-[0.02rem] text-[15px] font-semibold text-[#3d4750]">
-                          Flat Rate
-                        </span>
-                        <div class="radio-itens">
-                          <input
-                            type="radio"
-                            id="rate2"
-                            name="rate"
-                            class="w-full text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] outline-[0] rounded-[10px]"
-                          />
-                          <label
-                            for="rate2"
-                            class="relative pl-[26px] cursor-pointer leading-[16px] inline-block text-[#686e7d] tracking-[0]"
-                          >
-                            Rate - $5.00
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="about-order">
-                    <h5 class="font-quicksand tracking-[0.03rem] leading-[1.2] mb-[12px] text-[15px] font-medium text-[#686e7d]">
-                      Add Comments About Your Order
-                    </h5>
-                    <textarea
-                      name="your-commemt"
-                      placeholder="Comments"
-                      class="w-full h-[100px] p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] outline-[0] rounded-[10px]"
-                    ></textarea>
-                  </div>
-                </div>
-                <div
-                  class="checkout-items border-[1px] border-solid border-[#eee] p-[20px] rounded-[20px] mb-[24px] aos-init aos-animate"
-                  data-aos="fade-up"
-                  data-aos-duration="1000"
-                  data-aos-delay="600"
-                >
-                  <div class="sub-title mb-[12px]">
-                    <h4 class="font-quicksand tracking-[0.03rem] leading-[1.2] text-[20px] font-bold text-[#3d4750]">
+                <div className="checkout-items border-[1px] border-solid bg-[#f8f8fb] border-[#eee] p-[20px] rounded-[20px] mb-[24px] aos-init aos-animate">
+                  <div className="sub-title mb-[12px]">
+                    <h4 className="font-quicksand tracking-[0.03rem] leading-[1.2] text-[20px] font-bold text-[#3d4750]">
                       Payment Method
                     </h4>
                   </div>
-                  <div class="checkout-method mb-[24px]">
-                    <span class="details font-Poppins leading-[26px] tracking-[0.02rem] text-[15px] font-medium text-[#686e7d]">
-                      Please select the preferred shipping method to use on this
+                  <div className="checkout-method mb-[24px]">
+                    <span className="details font-Poppins leading-[26px] tracking-[0.02rem] text-[15px] font-medium text-[#686e7d]">
+                      Please select the preferred Payment method to use on this
                       order.
                     </span>
-                    <div class="bb-del-option mt-[12px] flex max-[480px]:flex-col">
-                      <div class="inner-del w-[50%] max-[480px]:w-full">
-                        <div class="radio-itens">
-                          <input
-                            type="radio"
-                            id="Cash1"
-                            name="radio-itens"
-                            class="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] outline-[0] rounded-[10px]"
-                          />
-                          <label
-                            for="Cash1"
-                            class="relative pl-[26px] cursor-pointer leading-[16px] inline-block text-[#686e7d] tracking-[0]"
-                          >
-                            Cash On Delivery
-                          </label>
+                    <div className="bb-del-option mt-[12px] flex max-[480px]:flex-col">
+                      <div className="inner-del w-[50%] max-[480px]:w-full">
+                        <div className="flex items-center gap-2">
+                          <img src={done.src} alt="done" className="w-8 " />
+                          <div className="text-[#686e7d]">Cash On Delivery</div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="about-order">
-                    <h5 class="font-quicksand tracking-[0.03rem] leading-[1.2] mb-[12px] text-[15px] font-medium text-[#686e7d]">
+                  <div className="about-order">
+                    <h5 className="font-quicksand tracking-[0.03rem] leading-[1.2] mb-[12px] text-[15px] font-medium text-[#686e7d]">
                       Add Comments About Your Order
                     </h5>
                     <textarea
-                      name="your-commemt"
+                      name="comment"
+                      value={formValues.comment}
+                      onChange={handleInputChange}
                       placeholder="Comments"
-                      class="w-full h-[100px] p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] outline-[0] rounded-[10px]"
+                      className="w-full h-[100px] p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] outline-[0] rounded-[10px]"
                     ></textarea>
-                  </div>
-                </div>
-                <div
-                  class="checkout-items border-[1px] border-solid border-[#eee] p-[20px] rounded-[20px] mb-[24px] aos-init aos-animate"
-                  data-aos="fade-up"
-                  data-aos-duration="1000"
-                  data-aos-delay="800"
-                >
-                  <div class="sub-title mb-[12px]">
-                    <h4 class="font-quicksand tracking-[0.03rem] leading-[1.2] text-[20px] font-bold text-[#3d4750]">
-                      Payment Method
-                    </h4>
-                  </div>
-                  <div class="payment-img">
-                    <img
-                      src="assets/img/payment/payment.png"
-                      alt="payment"
-                      class="w-full"
-                    />
                   </div>
                 </div>
               </div>
             </div>
-            <div class="min-[992px]:w-[66.66%] w-full px-[12px] mb-[24px]">
-              <div
-                class="bb-checkout-contact border-[1px] border-solid border-[#eee] p-[20px] rounded-[20px] aos-init aos-animate"
-                data-aos="fade-up"
-                data-aos-duration="1000"
-                data-aos-delay="400"
-              >
-                <div class="main-title mb-[20px]">
-                  <h4 class="font-quicksand tracking-[0.03rem] leading-[1.2] text-[20px] font-bold text-[#3d4750]">
-                    New Customer
+            <div className="min-[992px]:w-[66.66%] w-full px-[12px] mb-[24px]">
+              <div className="bb-checkout-contact border-[1px] border-solid bg-[#f8f8fb] border-[#eee] p-[20px] rounded-[20px] aos-init aos-animate">
+                <div className="main-title mb-[20px]">
+                  <h4 className="font-quicksand tracking-[0.03rem] leading-[1.2] text-[20px] font-bold text-[#3d4750]">
+                    Customer Details
                   </h4>
                 </div>
-                <label class="inner-title font-Poppins leading-[26px] tracking-[0.02rem] mb-[6px] text-[16px] inline-block font-medium text-[#3d4750]">
-                  Checkout Options
-                </label>
-                <div class="checkout-radio flex mb-[10px] max-[480px]:flex-col">
-                  <div class="radio-itens mr-[20px]">
-                    <input
-                      type="radio"
-                      id="del1"
-                      name="account"
-                      class="w-auto mr-[2px] p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] outline-[0] rounded-[10px]"
-                      checked=""
-                    />
-                    <label
-                      for="del1"
-                      class="text-[14px] font-normal text-[#686e7d] relative pl-[26px] cursor-pointer leading-[16px] inline-block tracking-[0]"
-                    >
-                      Register Account
-                    </label>
-                  </div>
-                  <div class="radio-itens">
-                    <input
-                      type="radio"
-                      id="del2"
-                      name="account"
-                      class="w-auto mr-[2px] p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] outline-[0] rounded-[10px]"
-                    />
-                    <label
-                      for="del2"
-                      class="text-[14px] font-normal text-[#686e7d] relative pl-[26px] cursor-pointer leading-[16px] inline-block tracking-[0]"
-                    >
-                      Guest Account
-                    </label>
-                  </div>
-                </div>
-                <p class="font-Poppins leading-[28px] tracking-[0.03rem] mb-[16px] text-[14px] font-light text-[#686e7d]">
+                <p className="font-Poppins leading-[28px] tracking-[0.03rem] mb-[16px] text-[14px] font-light text-[#686e7d]">
                   By creating an account you will be able to shop faster, be up
                   to date on an order's status, and keep track of the orders you
                   have previously made.
                 </p>
-                <div class="inner-button mb-[20px]">
-                  <a
-                    href="javascript:void(0)"
-                    class="bb-btn-2 inline-block items-center justify-center check-btn transition-all duration-[0.3s] ease-in-out font-Poppins leading-[28px] tracking-[0.03rem] py-[4px] px-[25px] text-[14px] font-normal text-[#fff] bg-[#6c7fd8] rounded-[10px] border-[1px] border-solid border-[#6c7fd8] hover:bg-transparent hover:border-[#3d4750] hover:text-[#3d4750]"
-                  >
-                    Continue
-                  </a>
-                </div>
-                <div class="main-title mb-[20px]">
-                  <h4 class="font-quicksand tracking-[0.03rem] leading-[1.2] text-[20px] font-bold text-[#3d4750]">
-                    Returning Customer
-                  </h4>
-                </div>
-                <form method="post">
-                  <div class="input-item mb-[24px]">
-                    <label class="inline-block font-Poppins leading-[26px] tracking-[0.02rem] mb-[8px] text-[14px] font-medium text-[#3d4750]">
+                <form onSubmit={handleSubmit}>
+                  <div className="flex flex-wrap mx-[-12px]">
+                    <div className="min-[992px]:w-[50%] w-full px-[12px]">
+                      <div className="input-item mb-[24px]">
+                        <label className="inline-block font-Poppins leading-[26px] tracking-[0.02rem] mb-[8px] text-[14px] font-medium text-[#3d4750]">
+                          Full Name *
+                        </label>
+                        <input
+                          type="text"
+                          name="fullName"
+                          value={formValues.fullName}
+                          onChange={handleInputChange}
+                          placeholder="Enter your Full Name"
+                          className="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] leading-[26px] outline-[0] rounded-[10px]"
+                          // required
+                        />
+                        {formErrors.fullName && (
+                          <span className="text-red-500">
+                            {formErrors.fullName}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="min-[992px]:w-[50%] w-full px-[12px]">
+                      <div className="input-item mb-[24px]">
+                        <label className="inline-block font-Poppins leading-[26px] tracking-[0.02rem] mb-[8px] text-[14px] font-medium text-[#3d4750]">
+                          Phone Number *
+                        </label>
+                        <input
+                          type="text"
+                          name="phone"
+                          value={formValues.phone}
+                          onChange={handleInputChange}
+                          placeholder="Enter your Phone Number"
+                          className="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] leading-[26px] outline-[0] rounded-[10px]"
+                          // required
+                        />
+                        {formErrors.phone && (
+                          <span className="text-red-500">
+                            {formErrors.phone}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="w-full px-[12px]">
+                      <div className="input-item mb-[24px]">
+                        <label className="inline-block font-Poppins leading-[26px] tracking-[0.02rem] mb-[8px] text-[14px] font-medium text-[#3d4750]">
+                          Address *
+                        </label>
+                        <input
+                          type="text"
+                          name="address"
+                          value={formValues.address}
+                          onChange={handleInputChange}
+                          placeholder="Address"
+                          className="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] leading-[26px] outline-[0] rounded-[10px]"
+                          // required
+                        />
+                        {formErrors.address && (
+                          <span className="text-red-500">
+                            {formErrors.address}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="input-item mb-[24px]">
+                    <label className="inline-block font-Poppins leading-[26px] tracking-[0.02rem] mb-[8px] text-[14px] font-medium text-[#3d4750]">
                       Email Address
                     </label>
                     <input
                       type="text"
-                      name="name"
+                      name="email"
+                      value={formValues.email}
+                      onChange={handleInputChange}
                       placeholder="Enter your email address"
-                      class="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] outline-[0] leading-[26px] rounded-[10px]"
-                      required=""
+                      className="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] outline-[0] leading-[26px] rounded-[10px]"
+                      // required
                     />
+                    {formErrors.email && (
+                      <span className="text-red-500">{formErrors.email}</span>
+                    )}
                   </div>
-                  <div class="input-item mb-[24px]">
-                    <label class="inline-block font-Poppins leading-[26px] tracking-[0.02rem] mb-[8px] text-[14px] font-medium text-[#3d4750]">
+                  <div className="input-item mb-[24px]">
+                    <label className="inline-block font-Poppins leading-[26px] tracking-[0.02rem] mb-[8px] text-[14px] font-medium text-[#3d4750]">
                       Password
                     </label>
                     <input
                       type="password"
                       name="password"
+                      value={formValues.password}
+                      onChange={handleInputChange}
                       placeholder="Enter your password"
-                      class="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] outline-[0] leading-[26px] rounded-[10px]"
-                      required=""
+                      className="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] outline-[0] leading-[26px] rounded-[10px]"
+                      // required
                     />
+                    {formErrors.password && (
+                      <span className="text-red-500">
+                        {formErrors.password}
+                      </span>
+                    )}
                   </div>
-                  <div class="input-button mb-[20px]">
-                    <button
-                      type="button"
-                      class="bb-btn-2 inline-block items-center justify-center check-btn transition-all duration-[0.3s] ease-in-out font-Poppins leading-[28px] tracking-[0.03rem] py-[4px] px-[25px] text-[14px] font-normal text-[#fff] bg-[#6c7fd8] rounded-[10px] border-[1px] border-solid border-[#6c7fd8] hover:bg-transparent hover:border-[#3d4750] hover:text-[#3d4750]"
-                    >
-                      Login
-                    </button>
+                  <div className="w-full px-[12px]">
+                    {cartItems?.length > 0 && (
+                      <button
+                        type="submit"
+                        className="select-none py-[4px] px-[25px] w-auto cursor-pointer text-[#777] bg-[#f8f8fb] font-Poppins text-center align-top border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow3 mt-[24px] inline-flex items-center justify-center check-btn transition-all duration-[0.3s] ease-in-out font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-normal rounded-[10px]"
+                      >
+                        Place Order
+                      </button>
+                    )}
                   </div>
                 </form>
-                <div class="main-title mb-[20px]">
-                  <h4 class="font-quicksand tracking-[0.03rem] leading-[1.2] text-[20px] font-bold text-[#3d4750]">
-                    Billing Details
-                  </h4>
-                </div>
-                <div class="checkout-radio flex mb-[10px] max-[480px]:flex-col">
-                  <div class="radio-itens mr-[20px]">
-                    <input
-                      type="radio"
-                      id="address1"
-                      name="address"
-                      class="w-auto mr-[2px] p-[10px]"
-                      checked=""
-                    />
-                    <label
-                      for="address1"
-                      class="relative font-normal text-[14px] text-[#686e7d] pl-[26px] cursor-pointer leading-[16px] inline-block tracking-[0]"
-                    >
-                      I want to use an existing address
-                    </label>
-                  </div>
-                  <div class="radio-itens">
-                    <input
-                      type="radio"
-                      id="address2"
-                      name="address"
-                      class="w-auto mr-[2px] p-[10px]"
-                    />
-                    <label
-                      for="address2"
-                      class="relative font-normal text-[14px] text-[#686e7d] pl-[26px] cursor-pointer leading-[16px] inline-block tracking-[0]"
-                    >
-                      I want to use new address
-                    </label>
-                  </div>
-                </div>
-                <div class="input-box-form mt-[20px]">
-                  <form method="post">
-                    <div class="flex flex-wrap mx-[-12px]">
-                      <div class="min-[992px]:w-[50%] w-full px-[12px]">
-                        <div class="input-item mb-[24px]">
-                          <label class="inline-block font-Poppins leading-[26px] tracking-[0.02rem] mb-[8px] text-[14px] font-medium text-[#3d4750]">
-                            First Name *
-                          </label>
-                          <input
-                            type="text"
-                            name="name"
-                            placeholder="Enter your First Name"
-                            class="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] leading-[26px] outline-[0] rounded-[10px]"
-                            required=""
-                          />
-                        </div>
-                      </div>
-                      <div class="min-[992px]:w-[50%] w-full px-[12px]">
-                        <div class="input-item mb-[24px]">
-                          <label class="inline-block font-Poppins leading-[26px] tracking-[0.02rem] mb-[8px] text-[14px] font-medium text-[#3d4750]">
-                            Last Name *
-                          </label>
-                          <input
-                            type="text"
-                            name="name"
-                            placeholder="Enter your Last Name"
-                            class="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] leading-[26px] outline-[0] rounded-[10px]"
-                            required=""
-                          />
-                        </div>
-                      </div>
-                      <div class="w-full px-[12px]">
-                        <div class="input-item mb-[24px]">
-                          <label class="inline-block font-Poppins leading-[26px] tracking-[0.02rem] mb-[8px] text-[14px] font-medium text-[#3d4750]">
-                            Address *
-                          </label>
-                          <input
-                            type="text"
-                            name="name"
-                            placeholder="Address Line 1"
-                            class="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] leading-[26px] outline-[0] rounded-[10px]"
-                            required=""
-                          />
-                        </div>
-                      </div>
-                      <div class="min-[992px]:w-[50%] w-full px-[12px]">
-                        <div class="input-item mb-[24px]">
-                          <label class="inline-block font-Poppins leading-[26px] tracking-[0.02rem] mb-[8px] text-[14px] font-medium text-[#3d4750]">
-                            City *
-                          </label>
-                          <div class="custom-select p-[10px] border-[1px] border-solid border-[#eee] leading-[26px] rounded-[10px]">
-                            <div class="select">
-                              <select class="hide-select">
-                                <option value="option1">City</option>
-                                <option value="option1">City 1</option>
-                                <option value="option2">City 2</option>
-                                <option value="option3">City 3</option>
-                                <option value="option4">City 4</option>
-                              </select>
-                              <div class="custom-select">City</div>
-                              <ul
-                                class="select-options" //style="display: none;"
-                              >
-                                <li rel="option1">City</li>
-                                <li rel="option1">City 1</li>
-                                <li rel="option2">City 2</li>
-                                <li rel="option3">City 3</li>
-                                <li rel="option4">City 4</li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="min-[992px]:w-[50%] w-full px-[12px]">
-                        <div class="input-item mb-[24px]">
-                          <label class="inline-block font-Poppins leading-[26px] tracking-[0.02rem] mb-[8px] text-[14px] font-medium text-[#3d4750]">
-                            Post Code *
-                          </label>
-                          <input
-                            type="text"
-                            name="name"
-                            placeholder="Post Code"
-                            class="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] leading-[26px] outline-[0] rounded-[10px]"
-                            required=""
-                          />
-                        </div>
-                      </div>
-                      <div class="min-[992px]:w-[50%] w-full px-[12px]">
-                        <div class="input-item mb-[24px]">
-                          <label class="inline-block font-Poppins leading-[26px] tracking-[0.02rem] mb-[8px] text-[14px] font-medium text-[#3d4750]">
-                            Country *
-                          </label>
-                          <div class="custom-select p-[10px] border-[1px] border-solid border-[#eee] leading-[26px] rounded-[10px]">
-                            <div class="select">
-                              <select class="hide-select">
-                                <option value="option1">Country</option>
-                                <option value="option1">Country 1</option>
-                                <option value="option2">Country 2</option>
-                                <option value="option3">Country 3</option>
-                                <option value="option4">Country 4</option>
-                              </select>
-                              <div class="custom-select">Country</div>
-                              <ul
-                                class="select-options"
-                                // style="display: none;"
-                              >
-                                <li rel="option1">Country</li>
-                                <li rel="option1">Country 1</li>
-                                <li rel="option2">Country 2</li>
-                                <li rel="option3">Country 3</li>
-                                <li rel="option4">Country 4</li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="min-[992px]:w-[50%] w-full px-[12px]">
-                        <div class="input-item mb-[24px]">
-                          <label class="inline-block font-Poppins leading-[26px] tracking-[0.02rem] mb-[8px] text-[14px] font-medium text-[#3d4750]">
-                            Region State *
-                          </label>
-                          <div class="custom-select p-[10px] border-[1px] border-solid border-[#eee] leading-[26px] rounded-[10px]">
-                            <div class="select">
-                              <select class="hide-select">
-                                <option value="option1">Region/State</option>
-                                <option value="option1">Region/State 1</option>
-                                <option value="option2">Region/State 2</option>
-                                <option value="option3">Region/State 3</option>
-                                <option value="option4">Region/State 4</option>
-                              </select>
-                              <div class="custom-select">Region/State</div>
-                              <ul
-                                class="select-options"
-                                // style="display: none;"
-                              >
-                                <li rel="option1">Region/State</li>
-                                <li rel="option1">Region/State 1</li>
-                                <li rel="option2">Region/State 2</li>
-                                <li rel="option3">Region/State 3</li>
-                                <li rel="option4">Region/State 4</li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="w-full px-[12px]">
-                        <div class="input-button">
-                          <button
-                            type="button"
-                            class="bb-btn-2 inline-block items-center justify-center check-btn transition-all duration-[0.3s] ease-in-out font-Poppins leading-[28px] tracking-[0.03rem] py-[4px] px-[25px] text-[14px] font-normal text-[#fff] bg-[#6c7fd8] rounded-[10px] border-[1px] border-solid border-[#6c7fd8] hover:bg-transparent hover:border-[#3d4750] hover:text-[#3d4750]"
-                          >
-                            Place Order
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </div>
               </div>
             </div>
           </div>
@@ -721,61 +368,5 @@ export default function Checkout() {
       </section>
       <ProductSlider />
     </>
-  );
-}
-
-function Cartitems({ item }) {
-  const dispatch = useDispatch();
-  return (
-    <tr className="border-b-[1px] border-solid border-[#eee]">
-      <td className="p-[12px]">
-        <a href="javascript:void(0)">
-          <div className="Product-cart flex items-center">
-            <img
-              src="https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/new-product/4.jpg"
-              alt="new-product-1"
-              className="w-[70px] border-[1px] border-solid border-[#eee] rounded-[10px]"
-            />
-            <span className="ml-[10px] font-Poppins text-[14px] font-normal leading-[28px] tracking-[0.03rem] text-[#686e7d]">
-              {item.name || " Ground Nuts Oil Pack"}
-            </span>
-          </div>
-        </a>
-      </td>
-      <td className="p-[12px]">
-        <span className="price font-Poppins text-[15px] font-medium leading-[26px] tracking-[0.02rem] text-[#686e7d]">
-          {item.price || "0.00"}
-        </span>
-      </td>
-      <td className="p-[12px]">
-        <a className=" transition-all duration-[0.3s] ease-in-out w-[70px] cursor-pointer h-[32px] font-normal text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-around items-center rounded-[10px] border-[1px] border-solid border-[#eee]  ">
-          <span
-            onClick={() => dispatch(removeFromCart(item.id))}
-            className=" w-full select-none overflow-hidden rounded-s-[10px]  transition-all duration-[0.3s] ease-in-out hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white"
-          >
-            -
-          </span>
-          <span className="w-full">{item?.quantity}</span>
-          <span
-            onClick={() => dispatch(addToCart(item))}
-            className="w-full select-none overflow-hidden rounded-e-[10px]  transition-all duration-[0.3s] ease-in-out hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white"
-          >
-            +
-          </span>
-        </a>
-      </td>
-      <td className="p-[12px]">
-        <span className="price font-Poppins text-[15px] font-medium leading-[26px] tracking-[0.02rem] text-[#686e7d]">
-          {item.price * item.quantity || "0.00"}
-        </span>
-      </td>
-      <td className="p-[12px]">
-        <div className="pro-remove">
-          <a href="javascript:void(0)">
-            <i className="ri-delete-bin-line transition-all duration-[0.3s] ease-in-out text-[20px] text-[#686e7d] hover:text-[#ff0000]"></i>
-          </a>
-        </div>
-      </td>
-    </tr>
   );
 }

@@ -4,6 +4,7 @@ import Breadcrumb from "../components/Breadcrumb";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../store/cartSlice";
 import ProductSlider from "../components/Swiper/ProductSlider";
+import Link from "next/link";
 
 export default function Cart() {
   const cartItems = useSelector((state) => state.cart.items);
@@ -141,14 +142,15 @@ export default function Cart() {
                 </table>
               </div>
               {cartItems?.length > 0 && (
-                <a
+                <Link
+                  href={"/checkout"}
                   className=" select-none   w-auto cursor-pointer text-[#777]  bg-[#f8f8fb] font-Poppins  text-center align-top  border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow3 mt-[24px] inline-flex items-center justify-center check-btn transition-all duration-[0.3s] ease-in-out font-Poppins leading-[28px] tracking-[0.03rem] py-[8px] px-[20px] text-[14px] font-normal  rounded-[10px] aos-init aos-animate"
                   data-aos="fade-up"
                   data-aos-duration="1000"
                   data-aos-delay="400"
                 >
                   Check Out
-                </a>
+                </Link>
               )}
             </div>
           </div>

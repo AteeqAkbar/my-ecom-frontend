@@ -10,6 +10,7 @@ import useScroll from "../hook/useScroll";
 import { useDispatch, useSelector } from "react-redux";
 import { openCart } from "../store/cartVisibilitySlice";
 import Loader from "./Loader";
+import Link from "next/link";
 
 const Header = () => {
   useScroll();
@@ -43,11 +44,11 @@ const Header = () => {
 
       <div
         id="topnav"
-        className="hidden lg:flex items-center justify-between rounded-2xl bg-transparent p-3 "
+        className="hidden lg:flex   items-center justify-between rounded-2xl bg-transparent p-3 "
       >
         {/* Logo */}
-        <a
-          href="index.html"
+        <Link
+          href="/"
           className="inline-flex items-center gap-3 px-3 text-2xl font-semibold text-dark"
         >
           <Loader size="20px" />
@@ -66,7 +67,7 @@ const Header = () => {
             Dico
             {/* <span className="text-primary">Folio</span> */}
           </span>
-        </a>
+        </Link>
 
         {/* Navigation */}
         {/* <nav className="flex gap-5">
@@ -430,8 +431,8 @@ const Header = () => {
         id="mobnav"
       >
         {/* Logo */}
-        <a
-          href="index.html"
+        <Link
+          href="/"
           className="inline-flex items-center gap-3 px-3 text-2xl font-semibold text-dark"
         >
           <Loader size="20px" />
@@ -450,7 +451,7 @@ const Header = () => {
             Dico
             {/* <span className="text-primary">Folio</span> */}
           </span>
-        </a>
+        </Link>
         <div className="flex items-center gap-3">
           {/* Cart */}
           <a
@@ -502,8 +503,8 @@ const Header = () => {
           <div className="flex h-full flex-col justify-between gap-5 p-5">
             <div>
               {/* Logo */}
-              <a
-                href="index.html"
+              <Link
+                href="/"
                 className="inline-flex items-center gap-3 px-3 text-2xl font-semibold text-dark"
               >
                 {" "}
@@ -523,7 +524,7 @@ const Header = () => {
                   Dico
                   {/* <span className="text-primary">Folio</span> */}
                 </span>
-              </a>
+              </Link>
             </div>
 
             <ul className="mt-4 flex flex-1 flex-col gap-2">

@@ -1226,3 +1226,7 @@ input[type="number"] {
   transform: rotateX(90deg) translateZ(-40px);
   filter: blur(12px);
 }
+
+.bg-grad {
+  background: linear-gradient(35deg, #fbcfe8, #bfdbfe);
+}

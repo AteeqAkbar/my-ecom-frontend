@@ -79,7 +79,7 @@ function ProductCard({ style = {}, product }) {
                 >
                   <img
                     src={eye.src}
-                    className=" ri-shopping-bag-4-line transition-all  duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
+                    className=" ri-shopping-bag-4-line transition-all w-[28px] h-[28px] hover:scale-125 duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
                   ></img>
                 </a>
               </li>
@@ -93,7 +93,7 @@ function ProductCard({ style = {}, product }) {
                 >
                   <img
                     src={whatsapp.src}
-                    className=" ri-shopping-bag-4-line transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
+                    className=" ri-shopping-bag-4-line w-[28px] h-[28px] hover:scale-125 transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
                   ></img>
                 </a>
               </li>
@@ -107,7 +107,7 @@ function ProductCard({ style = {}, product }) {
                 >
                   <img
                     src={cart.src}
-                    className=" ri-shopping-bag-4-line transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
+                    className=" ri-shopping-bag-4-line w-[28px] h-[28px] hover:scale-125 transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
                   ></img>
                 </a>
               </li>
