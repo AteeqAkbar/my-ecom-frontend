@@ -7,6 +7,7 @@ import whatsapp from "../image/icons/whatsapp.png";
 import facebook from "../image/icons/facebook2.png";
 import insta from "../image/icons/instagram.png";
 import tiktok from "../image/icons/tiktok.png";
+import Image from "next/image";
 
 const Footer = () => {
   return (
@@ -57,8 +58,8 @@ const Footer = () => {
                         <ul className="align-items-center flex flex-wrap items-center">
                           <li className="bb-footer-link leading-[1.5] flex items-center pr-[5px]">
                             <a className="transition-all bg-white hover:scale-125 cursor-pointer bg-opacity-30 shadow3 backdrop-blur-lg border-[1px] border-solid border-[#eee]  hover:backdrop-blur-none duration-[0.3s] ease-in-out w-[30px] h-[30px] rounded-[5px] capitalize flex items-center justify-center text-[15px] leading-[20px] text-[#686e7d] relative break-all font-normal">
-                              <img
-                                src={tiktok.src}
+                              <Image
+                                src={tiktok}
                                 alt="tikok"
                                 className=" max-[50px]:w-full"
                               />
@@ -66,8 +67,8 @@ const Footer = () => {
                           </li>
                           <li className="bb-footer-link leading-[1.5] flex items-center pr-[5px]">
                             <a className="transition-all bg-white bg-opacity-30 hover:scale-125 cursor-pointer shadow3 backdrop-blur-lg border-[1px] border-solid border-[#eee]  hover:backdrop-blur-none duration-[0.3s] ease-in-out w-[30px] h-[30px] rounded-[5px] capitalize flex items-center justify-center text-[15px] leading-[20px] text-[#686e7d] relative break-all font-normal">
-                              <img
-                                src={insta.src}
+                              <Image
+                                src={insta}
                                 alt="instagram"
                                 className="max-[50px]:w-full"
                               />
@@ -75,8 +76,8 @@ const Footer = () => {
                           </li>
                           <li className="bb-footer-link leading-[1.5] flex items-center pr-[5px]">
                             <a className="transition-all bg-white bg-opacity-30 hover:scale-125 cursor-pointer shadow3 backdrop-blur-lg border-[1px] border-solid border-[#eee]  hover:backdrop-blur-none duration-[0.3s] ease-in-out w-[30px] h-[30px] rounded-[5px] capitalize flex items-center justify-center text-[15px] leading-[20px] text-[#686e7d] relative break-all font-normal">
-                              <img
-                                src={facebook.src}
+                              <Image
+                                src={facebook}
                                 alt="facebook"
                                 className=" max-[50px]:w-full"
                               />
@@ -84,8 +85,8 @@ const Footer = () => {
                           </li>
                           <li className="bb-footer-link leading-[1.5] flex items-center pr-[5px]">
                             <a className="transition-all bg-white bg-opacity-30 hover:scale-125 cursor-pointer shadow3 backdrop-blur-lg border-[1px] border-solid border-[#eee]  hover:backdrop-blur-none duration-[0.3s] ease-in-out w-[30px] h-[30px] rounded-[5px] capitalize flex items-center justify-center text-[15px] leading-[20px] text-[#686e7d] relative break-all font-normal">
-                              <img
-                                src={whatsapp.src}
+                              <Image
+                                src={whatsapp}
                                 alt="whatsapp"
                                 className="max-[50px]:w-full"
                               />
@@ -221,8 +222,8 @@ const Footer = () => {
                       <ul className="align-items-center">
                         <li className="bb-footer-link bb-foo-location flex items-start max-[991px]:mb-[15px] mb-[16px]">
                           <span className="mt-[5px] w-[25px] basis-[auto] grow-[0] shrink-[0]">
-                            <img
-                              src={location.src}
+                            <Image
+                              src={location}
                               alt="location"
                               className="pe-1 max-[50px]:w-full"
                             />
@@ -234,8 +235,8 @@ const Footer = () => {
                         </li>
                         <li className="bb-footer-link bb-foo-call flex items-start max-[991px]:mb-[15px] mb-[16px]">
                           <span className="w-[25px] basis-[auto] grow-[0] shrink-[0]">
-                            <img
-                              src={whatsapp.src}
+                            <Image
+                              src={whatsapp}
                               alt="whatsapp"
                               className="pe-1 max-[50px]:w-full"
                             />
@@ -249,8 +250,8 @@ const Footer = () => {
                         </li>
                         <li className="bb-footer-link bb-foo-mail flex">
                           <span className="w-[25px] basis-[auto] grow-[0] shrink-[0]">
-                            <img
-                              src={email.src}
+                            <Image
+                              src={email}
                               alt="email"
                               className="pe-1 max-[50px]:w-full"
                             />
@@ -304,8 +305,8 @@ const Footer = () => {
                 {/* <div className="footer-bottom-right">
                   <div className="footer-bottom-payment flex justify-center">
                     <div className="payment-link">
-                      <img
-                        src={payment.src}
+                      <Image
+                        src={payment}
                         alt="payment"
                         className="max-[360px]:w-full"
                       />

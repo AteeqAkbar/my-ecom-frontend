@@ -6,6 +6,7 @@ import "swiper/css/pagination";
 import "swiper/css/free-mode";
 
 import { FreeMode, Pagination, Autoplay } from "swiper/modules";
+import Image from "next/image";
 
 export default function CategoriesSlider() {
   return (
@@ -52,7 +53,9 @@ export default function CategoriesSlider() {
               data-aos-delay="200"
             >
               <div className="category-image mb-[12px]">
-                <img
+                <Image
+                  width={50}
+                  height={50}
                   src="https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/category/2.svg"
                   alt="category"
                   className="w-[50px] h-[50px] max-[1399px]:h-[65px] max-[1399px]:w-[65px] max-[1199px]:h-[50px] max-[1199px]:w-[50px]"
@@ -86,7 +89,9 @@ export default function CategoriesSlider() {
               data-aos-delay="200"
             >
               <div className="category-image mb-[12px]">
-                <img
+                <Image
+                  width={50}
+                  height={50}
                   src="https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/category/2.svg"
                   alt="category"
                   className="w-[50px] h-[50px] max-[1399px]:h-[65px] max-[1399px]:w-[65px] max-[1199px]:h-[50px] max-[1199px]:w-[50px]"
@@ -120,7 +125,9 @@ export default function CategoriesSlider() {
               data-aos-delay="200"
             >
               <div className="category-image mb-[12px]">
-                <img
+                <Image
+                  width={50}
+                  height={50}
                   src="https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/category/2.svg"
                   alt="category"
                   className="w-[50px] h-[50px] max-[1399px]:h-[65px] max-[1399px]:w-[65px] max-[1199px]:h-[50px] max-[1199px]:w-[50px]"
@@ -154,7 +161,9 @@ export default function CategoriesSlider() {
               data-aos-delay="200"
             >
               <div className="category-image mb-[12px]">
-                <img
+                <Image
+                  width={50}
+                  height={50}
                   src="https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/category/2.svg"
                   alt="category"
                   className="w-[50px] h-[50px] max-[1399px]:h-[65px] max-[1399px]:w-[65px] max-[1199px]:h-[50px] max-[1199px]:w-[50px]"
@@ -188,7 +197,9 @@ export default function CategoriesSlider() {
               data-aos-delay="200"
             >
               <div className="category-image mb-[12px]">
-                <img
+                <Image
+                  width={50}
+                  height={50}
                   src="https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/category/2.svg"
                   alt="category"
                   className="w-[50px] h-[50px] max-[1399px]:h-[65px] max-[1399px]:w-[65px] max-[1199px]:h-[50px] max-[1199px]:w-[50px]"
@@ -222,7 +233,9 @@ export default function CategoriesSlider() {
               data-aos-delay="200"
             >
               <div className="category-image mb-[12px]">
-                <img
+                <Image
+                  width={50}
+                  height={50}
                   src="https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/category/2.svg"
                   alt="category"
                   className="w-[50px] h-[50px] max-[1399px]:h-[65px] max-[1399px]:w-[65px] max-[1199px]:h-[50px] max-[1199px]:w-[50px]"

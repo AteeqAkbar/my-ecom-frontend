@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import up from "../image/icons/arrow-up3.png";
+import Image from "next/image";
 // import up from "../image/icons/up.svg";
 
 const BackToTop = () => {
@@ -59,7 +60,7 @@ const BackToTop = () => {
         isVisible ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}
     >
-      <img src={up.src} alt="Scroll up" className="w-full h-full" />
+      <Image src={up} alt="Scroll up" className="w-full h-full" />
       <div className="absolute w-full h-full">
         <svg viewBox="0 0 100 100" className="w-[36px] h-[36px]">
           {/* <circle

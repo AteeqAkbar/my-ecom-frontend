@@ -3,6 +3,7 @@ import one from "../image/icons/1.png";
 import two from "../image/icons/2.png";
 import three from "../image/icons/3.png";
 import four from "../image/icons/4.png";
+import Image from "next/image";
 
 export default function Services() {
   return (
@@ -17,7 +18,7 @@ export default function Services() {
           >
             <div className="bb-services-box p-[30px] border-[1px] border-solid border-[#eee] rounded-[20px] text-center">
               <div className="services-img mb-[20px] flex justify-center">
-                <img src={one.src} alt="services-1" className="w-[50px]" />
+                <Image src={one} alt="services-1" className="w-[50px]" />
               </div>
               <div className="services-contact">
                 <h4 className="font-quicksand mb-[8px] text-[18px] font-bold text-[#3d4750] leading-[1.2] tracking-[0.03rem]">
@@ -37,7 +38,7 @@ export default function Services() {
           >
             <div className="bb-services-box p-[30px] border-[1px] border-solid border-[#eee] rounded-[20px] text-center">
               <div className="services-img mb-[20px] flex justify-center">
-                <img src={two.src} alt="services-2" className="w-[50px]" />
+                <Image src={two} alt="services-2" className="w-[50px]" />
               </div>
               <div className="services-contact">
                 <h4 className="font-quicksand mb-[8px] text-[18px] font-bold text-[#3d4750] leading-[1.2] tracking-[0.03rem]">
@@ -57,7 +58,7 @@ export default function Services() {
           >
             <div className="bb-services-box p-[30px] border-[1px] border-solid border-[#eee] rounded-[20px] text-center">
               <div className="services-img mb-[20px] flex justify-center">
-                <img src={three.src} alt="services-3" className="w-[50px]" />
+                <Image src={three} alt="services-3" className="w-[50px]" />
               </div>
               <div className="services-contact">
                 <h4 className="font-quicksand mb-[8px] text-[18px] font-bold text-[#3d4750] leading-[1.2] tracking-[0.03rem]">
@@ -77,7 +78,7 @@ export default function Services() {
           >
             <div className="bb-services-box p-[30px] border-[1px] border-solid border-[#eee] rounded-[20px] text-center">
               <div className="services-img mb-[20px] flex justify-center">
-                <img src={four.src} alt="services-4" className="w-[50px]" />
+                <Image src={four} alt="services-4" className="w-[50px]" />
               </div>
               <div className="services-contact">
                 <h4 className="font-quicksand mb-[8px] text-[18px] font-bold text-[#3d4750] leading-[1.2] tracking-[0.03rem]">

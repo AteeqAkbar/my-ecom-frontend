@@ -7,6 +7,7 @@ import { removeFromCart } from "../../store/cartSlice";
 import { closeCart } from "../../store/cartVisibilitySlice";
 import { addToCart } from "@/app/store/cartSlice";
 import Link from "next/link";
+import Image from "next/image";
 
 const ShoppingCart = () => {
   const isCartOpen = useSelector((state) => state.cartVisibility.isCartOpen);
@@ -78,10 +79,11 @@ const Cart = () => {
             onClick={handleCloseCart}
             className="transition-all  p-[2px]  duration-[0.3s] ease-in-out bg-[#97a0a8] w-[20px] h-[20px] text-[#fff] absolute top-[-3px] right-[-3px] rounded-[50%] flex items-center justify-center opacity-[0.5] text-[15px] bg-opacity-30  backdrop-blur-lg border-[1px] border-solid border-[#eee] cursor-pointer hover:backdrop-blur-none"
           >
-            <img
-              src={cross.src}
+            <Image
+              src={cross}
+              alt="Close Cart"
               className=" ri-shopping-bag-4-line transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
-            ></img>
+            ></Image>
           </a>
         </div>
       </div>
@@ -168,10 +170,11 @@ const CartItem = ({ item }) => {
         title="Close"
         className="transition-all  p-[2px]  duration-[0.3s] ease-in-out bg-[#97a0a8] w-[20px] h-[20px] text-[#fff] absolute top-[-3px] right-[-3px] rounded-[50%] flex items-center justify-center opacity-[0.5] text-[15px] bg-opacity-30  backdrop-blur-lg border-[1px] border-solid border-[#eee] cursor-pointer hover:backdrop-blur-none"
       >
-        <img
-          src={cross.src}
+        <Image
+          src={cross}
+          alt="cross"
           className=" ri-shopping-bag-4-line transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
-        ></img>
+        ></Image>
       </a>
       <a className="bb-cart-pro-img flex grow-[1] shrink-[0] basis-[25%] items-center max-[575px]:flex-[initial]">
         <img

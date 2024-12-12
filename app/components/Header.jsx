@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { openCart } from "../store/cartVisibilitySlice";
 import Loader from "./Loader";
 import Link from "next/link";
+import Image from "next/image";
 
 const Header = () => {
   useScroll();
@@ -417,10 +418,11 @@ const Header = () => {
               {totalItems}
             </div>
           )}
-          <img
-            src={cart.src}
+          <Image
+            alt="cart"
+            src={cart}
             className=" ri-shopping-bag-4-line transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
-          ></img>
+          ></Image>
         </a>
         {/* <li className="bb-btn-group transition-all duration-[0.3s] ease-in-out w-[35px] h-[35px] mx-[2px] my-4 cursor-pointer flex items-center justify-center text-[#fff] bg-white bg-opacity-30  backdrop-blur-lg border-[1px] border-solid border-[#eee] rounded-[10px] hover:backdrop-blur-none"></li> */}
       </div>
@@ -464,10 +466,11 @@ const Header = () => {
                 {totalItems}
               </div>
             )}
-            <img
-              src={cart.src}
+            <Image
+              alt="cart"
+              src={cart}
               className=" ri-shopping-bag-4-line transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
-            ></img>
+            ></Image>
           </a>
           {/* Menu Toggle */}
           <button
@@ -476,17 +479,19 @@ const Header = () => {
           >
             {/* <Cross /> */}
             {isMobileMenuOpen ? (
-              <img
+              <Image
+                alt="cross"
                 onClick={() => setMobileMenuOpen(false)}
-                src={cross.src}
+                src={cross}
                 className=" h-7 w-7 transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
-              ></img>
+              ></Image>
             ) : (
-              <img
+              <Image
                 onClick={() => setMobileMenuOpen(true)}
-                src={menu.src}
+                src={menu}
+                alt="menu"
                 className=" h-8 w-8 transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
-              ></img>
+              ></Image>
             )}
           </button>
         </div>
@@ -592,11 +597,12 @@ const Header = () => {
             className="absolute right-4 top-4 rounded-2xl p-1 cursor-pointer"
           >
             {/* <Cross /> */}
-            <img
+            <Image
               // onClick={() => setMobileMenuOpen(false)}
-              src={cross.src}
+              src={cross}
+              alt="cross"
               className=" h-6 w-6 transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
-            ></img>
+            ></Image>
           </div>
         </div>
       )}

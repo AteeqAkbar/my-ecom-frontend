@@ -12,6 +12,7 @@ import CustomModal from "../CustomModal";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/app/store/cartSlice";
 import { openCart } from "@/app/store/cartVisibilitySlice";
+import Image from "next/image";
 
 function ProductCard({ style = {}, product }) {
   const handleAddToCart = (product) => {
@@ -77,10 +78,11 @@ function ProductCard({ style = {}, product }) {
                   title="View Product"
                   className="w-[35px] h-[35px] flex items-center justify-center"
                 >
-                  <img
-                    src={eye.src}
+                  <Image
+                    alt="eye"
+                    src={eye}
                     className=" ri-shopping-bag-4-line transition-all w-[28px] h-[28px] hover:scale-125 duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
-                  ></img>
+                  ></Image>
                 </a>
               </li>
               <li className="bb-btn-group transition-all duration-[0.3s] ease-in-out w-[35px] h-[35px] mx-[2px] my-4 cursor-pointer flex items-center justify-center text-[#fff] bg-white bg-opacity-30  backdrop-blur-lg border-[1px] border-solid border-[#eee] rounded-[10px] hover:backdrop-blur-none ">
@@ -91,10 +93,11 @@ function ProductCard({ style = {}, product }) {
                   title="Order By Whatsapp"
                   className="w-[35px] h-[35px] flex items-center justify-center"
                 >
-                  <img
-                    src={whatsapp.src}
+                  <Image
+                    src={whatsapp}
+                    alt="whatsapp"
                     className=" ri-shopping-bag-4-line w-[28px] h-[28px] hover:scale-125 transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
-                  ></img>
+                  ></Image>
                 </a>
               </li>
               <li
@@ -105,10 +108,11 @@ function ProductCard({ style = {}, product }) {
                   title="Add To Cart"
                   className="w-[35px] h-[35px] flex items-center justify-center"
                 >
-                  <img
-                    src={cart.src}
+                  <Image
+                    src={cart}
+                    alt="cart"
                     className=" ri-shopping-bag-4-line w-[28px] h-[28px] hover:scale-125 transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
-                  ></img>
+                  ></Image>
                 </a>
               </li>
             </ul>
@@ -123,17 +127,19 @@ function ProductCard({ style = {}, product }) {
               </a>
               <span className="bb-pro-rating">
                 {[...Array(4)].map((_, i) => (
-                  <img
+                  <Image
                     key={i}
-                    src={star.src}
+                    src={star}
+                    alt={"star" + i}
                     className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
-                  ></img>
+                  ></Image>
                 ))}
-                <img
+                <Image
+                  alt="star5"
                   key={Math.random() + 100}
-                  src={starhalf.src}
+                  src={starhalf}
                   className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
-                ></img>
+                ></Image>
               </span>
             </div>
             <h4 className="bb-pro-title mb-[8px] text-[16px] leading-[18px]">

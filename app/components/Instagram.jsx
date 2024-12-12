@@ -11,11 +11,11 @@ export default function Instagram() {
       >
         <div className="instagram-img relative overflow-hidden rounded-[30px]">
           <a>
-            <img
+            {/* <img
               src="assets/img/instagram/1.jpg"
               alt="instagram-1"
               className="w-full rounded-[20px]"
-            />
+            /> */}
           </a>
         </div>
       </div>

@@ -38,7 +38,7 @@ export default function Home() {
         <Loader />
       </div>
       <ProductSlider />
-      <GalleryCarousel />
+      {/* <GalleryCarousel /> */}
     </>
   );
 }

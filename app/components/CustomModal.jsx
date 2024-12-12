@@ -87,10 +87,11 @@ const CustomModal = ({ children, state, close }) => {
             className="h-7 w-7 p-[2px]  absolute top-1 right-1 transition-all duration-[0.3s] ease-in-out cursor-pointer flex items-center justify-center text-[#fff] bg-white bg-opacity-30  backdrop-blur-lg border-[1px] border-solid border-[#eee] rounded-[10px] hover:backdrop-blur-none"
           >
             <a title="Close" className=" flex items-center justify-center">
-              <img
-                src={cross.src}
+              <Image
+                src={cross}
+                alt="cross"
                 className=" ri-shopping-bag-4-line transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
-              ></img>
+              ></Image>
             </a>
           </div>
         </div>

@@ -7,23 +7,23 @@ import ProductSlider from "../components/Swiper/ProductSlider";
 import done from "../image/icons/done.png";
 import star from "../image/icons/star.png";
 import starhalf from "../image/icons/halfstar.png";
+import Image from "next/image";
 
 function ProductItem({ item }) {
   return (
     <div className="pro-items p-[15px] bg-[#f8f8fb] border-[1px] border-solid border-[#eee] rounded-[20px] flex mb-[24px] max-[420px]:flex-col">
       <div className="image mr-[15px] max-[420px]:mr-[0] max-[420px]:mb-[15px]">
-        <img
+        <Image
           src="https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/new-product/4.jpg"
           alt="new-product-1"
+          width={100}
+          height={100}
           className="max-w-max w-[100px] h-[100px] border-[1px] border-solid border-[#eee] rounded-[20px] max-[1399px]:h-[80px] max-[1399px]:w-[80px]"
         />
       </div>
       <div className="items-contact">
         <h4 className="text-[16px]">
-          <a
-            href="javascript:void(0)"
-            className="font-Poppins tracking-[0.03rem] text-[15px] font-medium leading-[18px] text-[#3d4750]"
-          >
+          <a className="font-Poppins tracking-[0.03rem] text-[15px] font-medium leading-[18px] text-[#3d4750]">
             {item.name || " Ground Nuts Oil Pack"}
           </a>
         </h4>
@@ -37,17 +37,23 @@ function ProductItem({ item }) {
         </div>
         <span className="bb-pro-rating flex">
           {[...Array(4)].map((_, i) => (
-            <img
+            <Image
               key={i}
-              src={star.src}
+              src={star}
+              height={24}
+              width={24}
+              alt={"star" + i}
               className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
-            ></img>
+            ></Image>
           ))}
-          <img
+          <Image
             key={Math.random() + 100}
-            src={starhalf.src}
+            src={starhalf}
+            alt={"star5"}
+            height={24}
+            width={24}
             className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
-          ></img>
+          ></Image>
         </span>
       </div>
     </div>
@@ -215,7 +221,7 @@ export default function Checkout() {
                     <div className="bb-del-option mt-[12px] flex max-[480px]:flex-col">
                       <div className="inner-del w-[50%] max-[480px]:w-full">
                         <div className="flex items-center gap-2">
-                          <img src={done.src} alt="done" className="w-8 " />
+                          <Image src={done} alt="done" className="w-8" />
                           <div className="text-[#686e7d]">Cash On Delivery</div>
                         </div>
                       </div>

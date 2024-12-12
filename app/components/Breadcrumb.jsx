@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import right from "../image/icons/double-arrow-right.svg";
+import Image from "next/image";
 
 const Breadcrumb = ({ title = "Cart" }) => {
   return (
@@ -24,10 +25,11 @@ const Breadcrumb = ({ title = "Cart" }) => {
                     </Link>
                   </li>
                   <div className="text-[14px] font-normal flex justify-center items-center px-[5px]">
-                    <img
-                      src={right.src}
-                      className="  transition-all duration-[0.3s] ease-in-out text-[18px] w-3 h-3 leading-[10px]"
-                    ></img>
+                    <Image
+                      src={right}
+                      alt="right arrow"
+                      className="w-3 h-3 transition-all duration-[0.3s] ease-in-out text-[18px] leading-[10px]"
+                    ></Image>
                   </div>
                   <li className="bb-breadcrumb-item font-Poppins text-[#686e7d] text-[14px] leading-[28px] font-normal tracking-[0.03rem] px-[5px] active">
                     {title}

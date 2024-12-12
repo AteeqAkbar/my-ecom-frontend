@@ -11,6 +11,7 @@ import CategoriesSlider from "../components/Swiper/CategoriesSlider";
 import ProductList from "../components/Cards/ProductList";
 import Filter from "../components/Filter/Filter";
 import GalleryCarousel from "../components/CarouselThumbnails/GalleryCarousel";
+import Image from "next/image";
 
 export default function ProductsSingle() {
   const [info, setInfo] = useState("info");
@@ -35,16 +36,18 @@ export default function ProductsSingle() {
                       </div>
                       <div class="bb-single-rating mb-[12px] flex items-center  ">
                         {[...Array(4)].map((_, i) => (
-                          <img
+                          <Image
                             key={i}
-                            src={star.src}
+                            src={star}
+                            alt={"star" + i}
                             className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
-                          ></img>
+                          ></Image>
                         ))}
-                        <img
-                          src={starhalf.src}
+                        <Image
+                          src={starhalf}
+                          alt={"starhalf"}
                           className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
-                        ></img>
+                        ></Image>
                         <span class="bb-read-review">
                           |&nbsp;&nbsp;
                           <a
@@ -177,10 +180,11 @@ export default function ProductsSingle() {
                               title="Add To Cart"
                               className="transition-all  select-none px-[13px] duration-[0.3s] ease-in-out w-auto cursor-pointer   h-[40px] font-light text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow1"
                             >
-                              <img
-                                src={cart.src}
+                              <Image
+                                src={cart}
+                                alt="cart"
                                 className=" ri-shopping-bag-4-line h-9 w-9 transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
-                              ></img>
+                              ></Image>
                               {"  Cart"}
                             </a>
                           </div>
@@ -351,22 +355,30 @@ export default function ProductsSingle() {
                         <div class="bb-reviews">
                           <div class="reviews-bb-box flex mb-[24px] max-[575px]:flex-col">
                             <div class="inner-image mr-[12px] max-[575px]:mr-[0] max-[575px]:mb-[12px]">
-                              <img
+                              {/* <img
                                 src="assets/img/reviews/1.jpg"
                                 alt="img-1"
                                 class="w-[50px] h-[50px] max-w-[50px] rounded-[10px]"
-                              />
+                              /> */}
                             </div>
                             <div class="inner-contact">
                               <h4 class="font-quicksand leading-[1.2] tracking-[0.03rem] mb-[5px] text-[16px] font-bold text-[#3d4750]">
                                 Mariya Lykra
                               </h4>
                               <div class="bb-pro-rating flex">
-                                <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                                <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                                <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                                <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                                <i class="ri-star-line float-left text-[15px] mr-[3px] text-[#777]"></i>
+                                {[...Array(4)].map((_, i) => (
+                                  <Image
+                                    key={i}
+                                    src={star}
+                                    alt={"star" + i}
+                                    className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+                                  ></Image>
+                                ))}
+                                <Image
+                                  src={starhalf}
+                                  alt={"starhalf"}
+                                  className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+                                ></Image>
                               </div>
                               <p class="font-Poppins text-[14px] leading-[26px] font-light tracking-[0.03rem] text-[#686e7d]">
                                 Lorem ipsum dolor sit amet consectetur
@@ -380,22 +392,30 @@ export default function ProductsSingle() {
                           </div>
                           <div class="reviews-bb-box flex mb-[24px] max-[575px]:flex-col">
                             <div class="inner-image mr-[12px] max-[575px]:mr-[0] max-[575px]:mb-[12px]">
-                              <img
+                              {/* <img
                                 src="assets/img/reviews/2.jpg"
                                 alt="img-2"
                                 class="w-[50px] h-[50px] max-w-[50px] rounded-[10px]"
-                              />
+                              /> */}
                             </div>
                             <div class="inner-contact">
                               <h4 class="font-quicksand leading-[1.2] tracking-[0.03rem] mb-[5px] text-[16px] font-bold text-[#3d4750]">
                                 Saddika Alard
                               </h4>
                               <div class="bb-pro-rating flex">
-                                <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                                <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                                <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                                <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                                <i class="ri-star-line float-left text-[15px] mr-[3px] text-[#777]"></i>
+                                {[...Array(4)].map((_, i) => (
+                                  <Image
+                                    key={i}
+                                    src={star}
+                                    alt={"star" + i}
+                                    className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+                                  ></Image>
+                                ))}
+                                <Image
+                                  src={starhalf}
+                                  alt={"starhalf"}
+                                  className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+                                ></Image>
                               </div>
                               <p class="font-Poppins text-[14px] leading-[26px] font-light tracking-[0.03rem] text-[#686e7d]">
                                 Lorem ipsum dolor sit amet consectetur
@@ -417,11 +437,19 @@ export default function ProductsSingle() {
                               Your ratting :
                             </span>
                             <div class="bb-pro-rating">
-                              <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                              <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                              <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                              <i class="ri-star-fill float-left text-[15px] mr-[3px] text-[#fea99a]"></i>
-                              <i class="ri-star-line float-left text-[15px] mr-[3px] text-[#777]"></i>
+                              {[...Array(4)].map((_, i) => (
+                                <Image
+                                  key={i}
+                                  src={star}
+                                  alt={"star" + i}
+                                  className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+                                ></Image>
+                              ))}
+                              <Image
+                                src={starhalf}
+                                alt={"starhalf"}
+                                className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+                              ></Image>
                             </div>
                           </div>
                           <form action="#">

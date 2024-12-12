@@ -3,6 +3,7 @@ import star from "../../image/icons/star.png";
 import cart from "../../image/icons/cart.png";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/app/store/cartSlice";
+import Image from "next/image";
 
 export default function ModalCard({ product, close }) {
   const dispatch = useDispatch();
@@ -37,23 +38,6 @@ export default function ModalCard({ product, close }) {
                       src="https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/product/1.jpg"
                       alt="product-img-1"
                     />
-                    {/* <img
-                      role="presentation"
-                      alt=""
-                      src="https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/product/1.jpg"
-                      className="zoomImg"
-                      style={{
-                        position: "absolute",
-                        top: "-282.273px",
-                        left: "-50.2987px",
-                        opacity: 0,
-                        width: "800px",
-                        height: "800px",
-                        border: "none",
-                        maxWidth: "none",
-                        maxHeight: "none",
-                      }}
-                    /> */}
                   </div>
                 </div>
               </div>
@@ -72,11 +56,12 @@ export default function ModalCard({ product, close }) {
                 <div className="bb-pro-rating flex mb-[10px]">
                   <span className="bb-pro-rating">
                     {[...Array(5)].map((_, i) => (
-                      <img
+                      <Image
                         key={i}
-                        src={star.src}
+                        src={star}
+                        alt={"star" + i}
                         className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
-                      ></img>
+                      ></Image>
                     ))}
                   </span>
                 </div>
@@ -145,10 +130,11 @@ export default function ModalCard({ product, close }) {
                         title="Add To Cart"
                         className="transition-all  select-none px-[13px] duration-[0.3s] ease-in-out w-auto cursor-pointer h-[32px] font-light text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow1"
                       >
-                        <img
-                          src={cart.src}
+                        <Image
+                          src={cart}
+                          alt="cart"
                           className=" ri-shopping-bag-4-line h-9 w-9 transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
-                        ></img>
+                        ></Image>
                         {"  Cart"}
                       </a>
                     </div>
