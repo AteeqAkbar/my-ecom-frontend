@@ -18,23 +18,23 @@ export default function ProductsSingle() {
   return (
     <>
       <Breadcrumb title="Products" />
-      <section class="section-product py-[50px] max-[1199px]:py-[35px]">
-        <div class="flex flex-wrap justify-between relative items-center mx-auto min-[1400px]:max-w-[1320px] min-[1200px]:max-w-[1140px] min-[992px]:max-w-[960px] min-[768px]:max-w-[720px] min-[576px]:max-w-[540px]">
-          <div class="flex flex-wrap w-full mb-[-24px] justify-center">
-            <div class="min-[992px]:w-[85%] w-full px-[12px] mb-[24px]">
-              <div class="bb-single-pro mb-[24px]">
-                <div class="flex flex-wrap mx-[-12px]">
-                  <div class="min-[992px]:w-[41.66%] w-full px-[12px]  mb-[24px]">
+      <section className="section-product py-[50px] max-[1199px]:py-[35px]">
+        <div className="flex flex-wrap justify-between relative items-center mx-auto min-[1400px]:max-w-[1320px] min-[1200px]:max-w-[1140px] min-[992px]:max-w-[960px] min-[768px]:max-w-[720px] min-[576px]:max-w-[540px]">
+          <div className="flex flex-wrap w-full mb-[-24px] justify-center">
+            <div className="min-[992px]:w-[85%] w-full px-[12px] mb-[24px]">
+              <div className="bb-single-pro mb-[24px]">
+                <div className="flex flex-wrap mx-[-12px]">
+                  <div className="min-[992px]:w-[41.66%] w-full px-[12px]  mb-[24px]">
                     <GalleryCarousel />
                   </div>
-                  <div class="min-[992px]:w-[58.33%] w-full px-[12px] mb-[24px]">
-                    <div class="bb-single-pro-contact">
-                      <div class="bb-sub-title mb-[20px]">
-                        <h4 class="font-quicksand text-[22px] tracking-[0.03rem] font-bold leading-[1.2] text-[#3d4750]">
+                  <div className="min-[992px]:w-[58.33%] w-full px-[12px] mb-[24px]">
+                    <div className="bb-single-pro-contact">
+                      <div className="bb-sub-title mb-[20px]">
+                        <h4 className="font-quicksand text-[22px] tracking-[0.03rem] font-bold leading-[1.2] text-[#3d4750]">
                           Ground Nuts Oil Pack 52g
                         </h4>
                       </div>
-                      <div class="bb-single-rating mb-[12px] flex items-center  ">
+                      <div className="bb-single-rating mb-[12px] flex items-center  ">
                         {[...Array(4)].map((_, i) => (
                           <Image
                             key={i}
@@ -48,106 +48,106 @@ export default function ProductsSingle() {
                           alt={"starhalf"}
                           className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
                         ></Image>
-                        <span class="bb-read-review">
+                        <span className="bb-read-review">
                           |&nbsp;&nbsp;
                           <a
                             href="#bb-spt-nav-review"
-                            class="font-Poppins text-[15px] font-light leading-[28px] tracking-[0.03rem] text-[#6c7fd8]"
+                            className="font-Poppins text-[15px] font-light leading-[28px] tracking-[0.03rem] text-[#6c7fd8]"
                           >
                             992 Ratings
                           </a>
                         </span>
                       </div>
-                      <p class="font-Poppins text-[15px] font-light leading-[28px] tracking-[0.03rem]">
+                      <p className="font-Poppins text-[15px] font-light leading-[28px] tracking-[0.03rem]">
                         Lorem ipsum dolor sit amet, consectetur adipisicing
                         elit. Quas nihil laboriosam voluptatem ab consectetur
                         dolorum id, soluta sunt at culpa commodi totam quod
                         natus qui!
                       </p>
-                      <div class="bb-single-price-wrap flex justify-between py-[10px]">
-                        <div class="bb-single-price py-[15px]">
-                          <div class="price mb-[8px]">
-                            <h5 class="font-quicksand leading-[1.2] tracking-[0.03rem] text-[20px] font-extrabold text-[#3d4750]">
+                      <div className="bb-single-price-wrap flex justify-between py-[10px]">
+                        <div className="bb-single-price py-[15px]">
+                          <div className="price mb-[8px]">
+                            <h5 className="font-quicksand leading-[1.2] tracking-[0.03rem] text-[20px] font-extrabold text-[#3d4750]">
                               $923.00{" "}
-                              <span class="text-[#3d4750] text-[20px]">
+                              <span className="text-[#3d4750] text-[20px]">
                                 -78%
                               </span>
                             </h5>
                           </div>
-                          <div class="mrp">
-                            <p class="font-Poppins text-[16px] font-light text-[#686e7d] leading-[28px] tracking-[0.03rem]">
+                          <div className="mrp">
+                            <p className="font-Poppins text-[16px] font-light text-[#686e7d] leading-[28px] tracking-[0.03rem]">
                               M.R.P. :{" "}
-                              <span class="text-[15px] line-through">
+                              <span className="text-[15px] line-through">
                                 $1,999.00
                               </span>
                             </p>
                           </div>
                         </div>
-                        <div class="bb-single-price py-[15px]">
-                          <div class="sku mb-[8px]">
-                            <h5 class="font-quicksand text-[18px] font-extrabold leading-[1.2] tracking-[0.03rem] text-[#3d4750]">
+                        <div className="bb-single-price py-[15px]">
+                          <div className="sku mb-[8px]">
+                            <h5 className="font-quicksand text-[18px] font-extrabold leading-[1.2] tracking-[0.03rem] text-[#3d4750]">
                               SKU#: WH12
                             </h5>
                           </div>
-                          <div class="stock">
-                            <span class="text-[18px] text-[#6c7fd8]">
+                          <div className="stock">
+                            <span className="text-[18px] text-[#6c7fd8]">
                               In stock
                             </span>
                           </div>
                         </div>
                       </div>
-                      <div class="bb-single-list mb-[30px]">
-                        <ul class="my-[-8px] pl-[18px]">
-                          <li class="my-[8px] font-Poppins text-[14px] font-light leading-[28px] tracking-[0.03rem] text-[#777] list-disc">
-                            <span class="font-Poppins text-[#777] text-[14px]">
+                      <div className="bb-single-list mb-[30px]">
+                        <ul className="my-[-8px] pl-[18px]">
+                          <li className="my-[8px] font-Poppins text-[14px] font-light leading-[28px] tracking-[0.03rem] text-[#777] list-disc">
+                            <span className="font-Poppins text-[#777] text-[14px]">
                               Closure :
                             </span>{" "}
                             Hook &amp; Loop
                           </li>
-                          <li class="my-[8px] font-Poppins text-[14px] font-light leading-[28px] tracking-[0.03rem] text-[#777] list-disc">
-                            <span class="font-Poppins text-[#777] text-[14px]">
+                          <li className="my-[8px] font-Poppins text-[14px] font-light leading-[28px] tracking-[0.03rem] text-[#777] list-disc">
+                            <span className="font-Poppins text-[#777] text-[14px]">
                               Sole :
                             </span>{" "}
                             Polyvinyl Chloride
                           </li>
-                          <li class="my-[8px] font-Poppins text-[14px] font-light leading-[28px] tracking-[0.03rem] text-[#777] list-disc">
-                            <span class="font-Poppins text-[#777] text-[14px]">
+                          <li className="my-[8px] font-Poppins text-[14px] font-light leading-[28px] tracking-[0.03rem] text-[#777] list-disc">
+                            <span className="font-Poppins text-[#777] text-[14px]">
                               Width :
                             </span>{" "}
                             Medium
                           </li>
-                          <li class="my-[8px] font-Poppins text-[14px] font-light leading-[28px] tracking-[0.03rem] text-[#777] list-disc">
-                            <span class="font-Poppins text-[#777] text-[14px]">
+                          <li className="my-[8px] font-Poppins text-[14px] font-light leading-[28px] tracking-[0.03rem] text-[#777] list-disc">
+                            <span className="font-Poppins text-[#777] text-[14px]">
                               Outer Material :
                             </span>{" "}
                             A-Grade Standard Quality
                           </li>
                         </ul>
                       </div>
-                      <div class="bb-single-pro-weight mb-[24px]">
-                        <div class="pro-title mb-[12px]">
-                          <h4 class="font-quicksand leading-[1.2] tracking-[0.03rem] text-[16px] font-bold uppercase text-[#3d4750]">
+                      <div className="bb-single-pro-weight mb-[24px]">
+                        <div className="pro-title mb-[12px]">
+                          <h4 className="font-quicksand leading-[1.2] tracking-[0.03rem] text-[16px] font-bold uppercase text-[#3d4750]">
                             Weight
                           </h4>
                         </div>
-                        <div class="bb-pro-variation-contant">
-                          <ul class="flex flex-wrap m-[-2px]">
-                            <li class="my-[10px] mx-[2px] py-[2px] px-[15px] border-[1px] border-solid border-[#eee] rounded-[10px] cursor-pointer active-variation">
+                        <div className="bb-pro-variation-contant">
+                          <ul className="flex flex-wrap m-[-2px]">
+                            <li className="my-[10px] mx-[2px] py-[2px] px-[15px] border-[1px] border-solid border-[#eee] rounded-[10px] cursor-pointer active-variation">
                               <a className="transition-all px-[13px] duration-[0.3s] ease-in-out w-auto cursor-pointer font-light text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow1">
                                 250g
                               </a>
                             </li>
-                            <li class="my-[10px] mx-[2px] py-[2px] px-[15px] border-[1px] border-solid border-[#eee] rounded-[10px] cursor-pointer active-variation">
+                            <li className="my-[10px] mx-[2px] py-[2px] px-[15px] border-[1px] border-solid border-[#eee] rounded-[10px] cursor-pointer active-variation">
                               <a className="transition-all px-[13px] duration-[0.3s] ease-in-out w-auto cursor-pointer font-light text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow1">
                                 250g
                               </a>
                             </li>
-                            <li class="my-[10px] mx-[2px] py-[2px] px-[15px] border-[1px] border-solid border-[#eee] rounded-[10px] cursor-pointer active-variation">
+                            <li className="my-[10px] mx-[2px] py-[2px] px-[15px] border-[1px] border-solid border-[#eee] rounded-[10px] cursor-pointer active-variation">
                               <a className="transition-all px-[13px] duration-[0.3s] ease-in-out w-auto cursor-pointer font-light text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow1">
                                 250g
                               </a>
                             </li>
-                            <li class="my-[10px] mx-[2px] py-[2px] px-[15px] border-[1px] border-solid border-[#eee] rounded-[10px] cursor-pointer active-variation">
+                            <li className="my-[10px] mx-[2px] py-[2px] px-[15px] border-[1px] border-solid border-[#eee] rounded-[10px] cursor-pointer active-variation">
                               <a className="transition-all px-[13px] duration-[0.3s] ease-in-out w-auto cursor-pointer font-light text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow1">
                                 250g
                               </a>
@@ -155,7 +155,7 @@ export default function ProductsSingle() {
                           </ul>
                         </div>
                       </div>
-                      <div class="bb-single-qty flex flex-wrap gap-2  ms-2 m-[-2px]">
+                      <div className="bb-single-qty flex flex-wrap gap-2  ms-2 m-[-2px]">
                         <a className=" transition-all duration-[0.3s] ease-in-out  cursor-pointer  w-[85px] h-[40px] font-normal text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-around items-center rounded-[10px] border-[1px] border-solid border-[#eee]  shadow1">
                           <span
                             // onClick={decreaseQuantity}
@@ -171,7 +171,7 @@ export default function ProductsSingle() {
                             +
                           </span>
                         </a>
-                        <div class="buttons m-[2px] ">
+                        <div className="buttons m-[2px] ">
                           <div
                             // onClick={() => handleAddToCart(product)}
                             className="leading-[28px]"
@@ -194,31 +194,31 @@ export default function ProductsSingle() {
                   </div>
                 </div>
               </div>
-              <div class="bb-single-pro-tab">
-                <div class="bb-pro-tab mb-[24px]">
+              <div className="bb-single-pro-tab">
+                <div className="bb-pro-tab mb-[24px]">
                   <ul
-                    class="bb-pro-tab-nav flex flex-wrap mx-[-20px] max-[991px]:justify-center"
+                    className="bb-pro-tab-nav flex flex-wrap mx-[-20px] max-[991px]:justify-center"
                     id="ProTab"
                   >
-                    <li class="nav-item relative leading-[28px] active">
+                    <li className="nav-item relative leading-[28px] active">
                       <a
-                        class="nav-link cursor-pointer px-[20px] font-Poppins text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block active"
+                        className="nav-link cursor-pointer px-[20px] font-Poppins text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block active"
                         onClick={() => setInfo("detail")}
                       >
                         Detail
                       </a>
                     </li>
-                    <li class="nav-item relative leading-[28px]">
+                    <li className="nav-item relative leading-[28px]">
                       <a
-                        class="nav-link cursor-pointer px-[20px] font-Poppins text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block"
+                        className="nav-link cursor-pointer px-[20px] font-Poppins text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block"
                         onClick={() => setInfo("info")}
                       >
                         Information
                       </a>
                     </li>
-                    <li class="nav-item relative leading-[28px]">
+                    <li className="nav-item relative leading-[28px]">
                       <a
-                        class="nav-link cursor-pointer px-[20px] font-Poppins text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block"
+                        className="nav-link cursor-pointer px-[20px] font-Poppins text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block"
                         onClick={() => setInfo("reviews")}
                       >
                         Reviews
@@ -226,49 +226,49 @@ export default function ProductsSingle() {
                     </li>
                   </ul>
                 </div>
-                <div class="tab-content">
+                <div className="tab-content">
                   {info == "detail" && (
-                    <div class=" tab-pro-pane">
-                      <div class="bb-inner-tabs transition-all duration-[0.3s] ease-in-out border-[1px] border-solid bg-[#f8f8fb] border-[#eee] p-[15px] rounded-[20px]">
-                        <div class="bb-details">
-                          <p class="mb-[12px] font-Poppins text-[#686e7d] leading-[28px] tracking-[0.03rem] font-light">
+                    <div className=" tab-pro-pane">
+                      <div className="bb-inner-tabs transition-all duration-[0.3s] ease-in-out border-[1px] border-solid bg-[#f8f8fb] border-[#eee] p-[15px] rounded-[20px]">
+                        <div className="bb-details">
+                          <p className="mb-[12px] font-Poppins text-[#686e7d] leading-[28px] tracking-[0.03rem] font-light">
                             Lorem ipsum dolor sit amet consectetur adipisicing
                             elit. Libero, voluptatum. Vitae dolores alias
                             repellat eligendi, officiis, exercitationem corporis
                             quisquam delectus cum non recusandae numquam
                             dignissimos molestiae magnam hic natus. Cumque.
                           </p>
-                          <div class="details-info">
-                            <ul class="list-disc pl-[20px] mb-[0]">
-                              <li class="py-[5px] text-[15px] text-[#686e7d] font-Poppins leading-[28px] font-light">
+                          <div className="details-info">
+                            <ul className="list-disc pl-[20px] mb-[0]">
+                              <li className="py-[5px] text-[15px] text-[#686e7d] font-Poppins leading-[28px] font-light">
                                 Any Product types that You want - Simple,
                                 Configurable
                               </li>
-                              <li class="py-[5px] text-[15px] text-[#686e7d] font-Poppins leading-[28px] font-light">
+                              <li className="py-[5px] text-[15px] text-[#686e7d] font-Poppins leading-[28px] font-light">
                                 Downloadable/Digital Products, Virtual Products
                               </li>
-                              <li class="py-[5px] text-[15px] text-[#686e7d] font-Poppins leading-[28px] font-light">
+                              <li className="py-[5px] text-[15px] text-[#686e7d] font-Poppins leading-[28px] font-light">
                                 Inventory Management with Backordered items
                               </li>
-                              <li class="py-[5px] text-[15px] text-[#686e7d] font-Poppins leading-[28px] font-light">
+                              <li className="py-[5px] text-[15px] text-[#686e7d] font-Poppins leading-[28px] font-light">
                                 Flatlock seams throughout.
                               </li>
                             </ul>
-                            <ul class="list-disc pl-[20px] mb-[0]">
-                              <li class="py-[5px] text-[15px] text-[#686e7d] font-Poppins leading-[28px] font-light">
-                                <span class="inline-flex font-medium min-w-[150px]">
+                            <ul className="list-disc pl-[20px] mb-[0]">
+                              <li className="py-[5px] text-[15px] text-[#686e7d] font-Poppins leading-[28px] font-light">
+                                <span className="inline-flex font-medium min-w-[150px]">
                                   Highlights
                                 </span>
                                 Form FactorWhole
                               </li>
-                              <li class="py-[5px] text-[15px] text-[#686e7d] font-Poppins leading-[28px] font-light">
-                                <span class="inline-flex font-medium min-w-[150px]">
+                              <li className="py-[5px] text-[15px] text-[#686e7d] font-Poppins leading-[28px] font-light">
+                                <span className="inline-flex font-medium min-w-[150px]">
                                   Seller
                                 </span>
                                 No Returns Allowed
                               </li>
-                              <li class="py-[5px] text-[15px] text-[#686e7d] font-Poppins leading-[28px] font-light">
-                                <span class="inline-flex font-medium min-w-[150px]">
+                              <li className="py-[5px] text-[15px] text-[#686e7d] font-Poppins leading-[28px] font-light">
+                                <span className="inline-flex font-medium min-w-[150px]">
                                   Services
                                 </span>
                                 Cash on Delivery available
@@ -280,66 +280,66 @@ export default function ProductsSingle() {
                     </div>
                   )}
                   {info == "info" && (
-                    <div class=" tab-pro-pane">
-                      <div class="bb-inner-tabs transition-all duration-[0.3s] ease-in-out border-[1px] border-solid bg-[#f8f8fb] border-[#eee] p-[15px] rounded-[20px]">
-                        <div class="information">
-                          <ul class="list-disc pl-[20px]">
-                            <li class="font-Poppins text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]">
-                              <span class="inline-flex min-w-[130px] font-medium">
+                    <div className=" tab-pro-pane">
+                      <div className="bb-inner-tabs transition-all duration-[0.3s] ease-in-out border-[1px] border-solid bg-[#f8f8fb] border-[#eee] p-[15px] rounded-[20px]">
+                        <div className="information">
+                          <ul className="list-disc pl-[20px]">
+                            <li className="font-Poppins text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]">
+                              <span className="inline-flex min-w-[130px] font-medium">
                                 Weight
                               </span>{" "}
                               500 g
                             </li>
-                            <li class="font-Poppins text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]">
-                              <span class="inline-flex min-w-[130px] font-medium">
+                            <li className="font-Poppins text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]">
+                              <span className="inline-flex min-w-[130px] font-medium">
                                 Dimensions
                               </span>{" "}
                               17 × 15 × 3 cm
                             </li>
-                            <li class="font-Poppins text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]">
-                              <span class="inline-flex min-w-[130px] font-medium">
+                            <li className="font-Poppins text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]">
+                              <span className="inline-flex min-w-[130px] font-medium">
                                 Color
                               </span>{" "}
                               black,yellow,red
                             </li>
-                            <li class="font-Poppins text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]">
-                              <span class="inline-flex min-w-[130px] font-medium">
+                            <li className="font-Poppins text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]">
+                              <span className="inline-flex min-w-[130px] font-medium">
                                 Brand
                               </span>{" "}
                               Wonder Fort
                             </li>
-                            <li class="font-Poppins text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]">
-                              <span class="inline-flex min-w-[130px] font-medium">
+                            <li className="font-Poppins text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]">
+                              <span className="inline-flex min-w-[130px] font-medium">
                                 Form Factor
                               </span>
                               Whole
                             </li>
-                            <li class="font-Poppins text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]">
-                              <span class="inline-flex min-w-[130px] font-medium">
+                            <li className="font-Poppins text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]">
+                              <span className="inline-flex min-w-[130px] font-medium">
                                 Quantity
                               </span>
                               1
                             </li>
-                            <li class="font-Poppins text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]">
-                              <span class="inline-flex min-w-[130px] font-medium">
+                            <li className="font-Poppins text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]">
+                              <span className="inline-flex min-w-[130px] font-medium">
                                 Container Type
                               </span>
                               Pouch
                             </li>
-                            <li class="font-Poppins text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]">
-                              <span class="inline-flex min-w-[130px] font-medium">
+                            <li className="font-Poppins text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]">
+                              <span className="inline-flex min-w-[130px] font-medium">
                                 Shelf Life
                               </span>
                               12 Months
                             </li>
-                            <li class="font-Poppins text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]">
-                              <span class="inline-flex min-w-[130px] font-medium">
+                            <li className="font-Poppins text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]">
+                              <span className="inline-flex min-w-[130px] font-medium">
                                 Ingredients
                               </span>
                               Dalchini, Dhaniya, Badi Elaichi, Laung
                             </li>
-                            <li class="font-Poppins text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]">
-                              <span class="inline-flex min-w-[130px] font-medium">
+                            <li className="font-Poppins text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]">
+                              <span className="inline-flex min-w-[130px] font-medium">
                                 Other Features
                               </span>
                               Ingredient Type: Vegetarian
@@ -350,22 +350,22 @@ export default function ProductsSingle() {
                     </div>
                   )}
                   {info == "reviews" && (
-                    <div class=" tab-pro-pane" id="reviews">
-                      <div class="bb-inner-tabs transition-all duration-[0.3s] ease-in-out border-[1px] border-solid bg-[#f8f8fb] border-[#eee] p-[15px] rounded-[20px]">
-                        <div class="bb-reviews">
-                          <div class="reviews-bb-box flex mb-[24px] max-[575px]:flex-col">
-                            <div class="inner-image mr-[12px] max-[575px]:mr-[0] max-[575px]:mb-[12px]">
+                    <div className=" tab-pro-pane" id="reviews">
+                      <div className="bb-inner-tabs transition-all duration-[0.3s] ease-in-out border-[1px] border-solid bg-[#f8f8fb] border-[#eee] p-[15px] rounded-[20px]">
+                        <div className="bb-reviews">
+                          <div className="reviews-bb-box flex mb-[24px] max-[575px]:flex-col">
+                            <div className="inner-image mr-[12px] max-[575px]:mr-[0] max-[575px]:mb-[12px]">
                               {/* <img
                                 src="assets/img/reviews/1.jpg"
                                 alt="img-1"
-                                class="w-[50px] h-[50px] max-w-[50px] rounded-[10px]"
+                                className="w-[50px] h-[50px] max-w-[50px] rounded-[10px]"
                               /> */}
                             </div>
-                            <div class="inner-contact">
-                              <h4 class="font-quicksand leading-[1.2] tracking-[0.03rem] mb-[5px] text-[16px] font-bold text-[#3d4750]">
+                            <div className="inner-contact">
+                              <h4 className="font-quicksand leading-[1.2] tracking-[0.03rem] mb-[5px] text-[16px] font-bold text-[#3d4750]">
                                 Mariya Lykra
                               </h4>
-                              <div class="bb-pro-rating flex">
+                              <div className="bb-pro-rating flex">
                                 {[...Array(4)].map((_, i) => (
                                   <Image
                                     key={i}
@@ -380,7 +380,7 @@ export default function ProductsSingle() {
                                   className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
                                 ></Image>
                               </div>
-                              <p class="font-Poppins text-[14px] leading-[26px] font-light tracking-[0.03rem] text-[#686e7d]">
+                              <p className="font-Poppins text-[14px] leading-[26px] font-light tracking-[0.03rem] text-[#686e7d]">
                                 Lorem ipsum dolor sit amet consectetur
                                 adipisicing elit. Illo, hic expedita asperiores
                                 eos neque cumque impedit quam, placeat
@@ -390,19 +390,19 @@ export default function ProductsSingle() {
                               </p>
                             </div>
                           </div>
-                          <div class="reviews-bb-box flex mb-[24px] max-[575px]:flex-col">
-                            <div class="inner-image mr-[12px] max-[575px]:mr-[0] max-[575px]:mb-[12px]">
+                          <div className="reviews-bb-box flex mb-[24px] max-[575px]:flex-col">
+                            <div className="inner-image mr-[12px] max-[575px]:mr-[0] max-[575px]:mb-[12px]">
                               {/* <img
                                 src="assets/img/reviews/2.jpg"
                                 alt="img-2"
-                                class="w-[50px] h-[50px] max-w-[50px] rounded-[10px]"
+                                className="w-[50px] h-[50px] max-w-[50px] rounded-[10px]"
                               /> */}
                             </div>
-                            <div class="inner-contact">
-                              <h4 class="font-quicksand leading-[1.2] tracking-[0.03rem] mb-[5px] text-[16px] font-bold text-[#3d4750]">
+                            <div className="inner-contact">
+                              <h4 className="font-quicksand leading-[1.2] tracking-[0.03rem] mb-[5px] text-[16px] font-bold text-[#3d4750]">
                                 Saddika Alard
                               </h4>
-                              <div class="bb-pro-rating flex">
+                              <div className="bb-pro-rating flex">
                                 {[...Array(4)].map((_, i) => (
                                   <Image
                                     key={i}
@@ -417,7 +417,7 @@ export default function ProductsSingle() {
                                   className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
                                 ></Image>
                               </div>
-                              <p class="font-Poppins text-[14px] leading-[26px] font-light tracking-[0.03rem] text-[#686e7d]">
+                              <p className="font-Poppins text-[14px] leading-[26px] font-light tracking-[0.03rem] text-[#686e7d]">
                                 Lorem ipsum dolor sit amet consectetur
                                 adipisicing elit. Illo, hic expedita asperiores
                                 eos neque cumque impedit quam, placeat
@@ -428,15 +428,15 @@ export default function ProductsSingle() {
                             </div>
                           </div>
                         </div>
-                        <div class="bb-reviews-form">
-                          <h3 class="font-quicksand tracking-[0.03rem] leading-[1.2] mb-[8px] text-[20px] font-bold text-[#3d4750]">
+                        <div className="bb-reviews-form">
+                          <h3 className="font-quicksand tracking-[0.03rem] leading-[1.2] mb-[8px] text-[20px] font-bold text-[#3d4750]">
                             Add a Review
                           </h3>
-                          <div class="bb-review-rating flex mb-[12px]">
-                            <span class="pr-[10px] font-Poppins text-[15px] font-semibold leading-[26px] tracking-[0.02rem] text-[#3d4750]">
+                          <div className="bb-review-rating flex mb-[12px]">
+                            <span className="pr-[10px] font-Poppins text-[15px] font-semibold leading-[26px] tracking-[0.02rem] text-[#3d4750]">
                               Your ratting :
                             </span>
-                            <div class="bb-pro-rating">
+                            <div className="bb-pro-rating">
                               {[...Array(4)].map((_, i) => (
                                 <Image
                                   key={i}
@@ -453,33 +453,33 @@ export default function ProductsSingle() {
                             </div>
                           </div>
                           <form action="#">
-                            <div class="input-box mb-[24px]">
+                            <div className="input-box mb-[24px]">
                               <input
                                 type="text"
                                 placeholder="Name"
                                 name="your-name"
-                                class="w-full h-[50px] border-[1px] border-solid border-[#eee] pl-[20px] outline-[0] text-[14px] font-normal text-[#777] rounded-[20px] p-[10px]"
+                                className="w-full h-[50px] border-[1px] border-solid border-[#eee] pl-[20px] outline-[0] text-[14px] font-normal text-[#777] rounded-[20px] p-[10px]"
                               />
                             </div>
-                            <div class="input-box mb-[24px]">
+                            <div className="input-box mb-[24px]">
                               <input
                                 type="email"
                                 placeholder="Email"
                                 name="your-email"
-                                class="w-full h-[50px] border-[1px] border-solid border-[#eee] pl-[20px] outline-[0] text-[14px] font-normal text-[#777] rounded-[20px] p-[10px]"
+                                className="w-full h-[50px] border-[1px] border-solid border-[#eee] pl-[20px] outline-[0] text-[14px] font-normal text-[#777] rounded-[20px] p-[10px]"
                               />
                             </div>
-                            <div class="input-box mb-[24px]">
+                            <div className="input-box mb-[24px]">
                               <textarea
                                 name="your-comment"
                                 placeholder="Enter Your Comment"
-                                class="w-full h-[100px] border-[1px] border-solid border-[#eee] py-[20px] pl-[20px] pr-[10px] outline-[0] text-[14px] font-normal text-[#777] rounded-[20px] p-[10px]"
+                                className="w-full h-[100px] border-[1px] border-solid border-[#eee] py-[20px] pl-[20px] pr-[10px] outline-[0] text-[14px] font-normal text-[#777] rounded-[20px] p-[10px]"
                               ></textarea>
                             </div>
-                            <div class="input-button">
+                            <div className="input-button">
                               <a
                                 href="javascript:void(0)"
-                                class="bb-btn-2 transition-all duration-[0.3s] ease-in-out h-[40px] inline-flex font-Poppins leading-[28px] tracking-[0.03rem] py-[4px] px-[15px] text-[14px] font-normal text-[#fff] bg-[#6c7fd8] rounded-[10px] border-[1px] border-solid border-[#6c7fd8] hover:bg-transparent hover:border-[#3d4750] hover:text-[#3d4750]"
+                                className="bb-btn-2 transition-all duration-[0.3s] ease-in-out h-[40px] inline-flex font-Poppins leading-[28px] tracking-[0.03rem] py-[4px] px-[15px] text-[14px] font-normal text-[#fff] bg-[#6c7fd8] rounded-[10px] border-[1px] border-solid border-[#6c7fd8] hover:bg-transparent hover:border-[#3d4750] hover:text-[#3d4750]"
                               >
                                 View Cart
                               </a>
