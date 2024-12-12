@@ -60,7 +60,7 @@ function ProductCard({ style = {}, product }) {
             <div className="inner-img relative block cursor-pointer overflow-hidden rounded-t-[20px] group">
               <img
                 className="main-img transition-all duration-[0.3s] ease-in-out w-full transform group-hover:scale-105 group-hover:opacity-0"
-                src="https://pyariwalls.pk/cdn/shop/files/WhatsApp_Image_2024-10-23_at_19.35.26_2.jpg"
+                src="https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/new-product/1.jpg"
                 alt="product-6"
               />
               <img

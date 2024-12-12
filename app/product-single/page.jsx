@@ -198,24 +198,24 @@ export default function ProductsSingle() {
                   >
                     <li class="nav-item relative leading-[28px] active">
                       <a
-                        class="nav-link px-[20px] font-Poppins text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block active"
-                        href="#detail"
+                        class="nav-link cursor-pointer px-[20px] font-Poppins text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block active"
+                        onClick={() => setInfo("detail")}
                       >
                         Detail
                       </a>
                     </li>
                     <li class="nav-item relative leading-[28px]">
                       <a
-                        class="nav-link px-[20px] font-Poppins text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block"
-                        href="#information"
+                        class="nav-link cursor-pointer px-[20px] font-Poppins text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block"
+                        onClick={() => setInfo("info")}
                       >
                         Information
                       </a>
                     </li>
                     <li class="nav-item relative leading-[28px]">
                       <a
-                        class="nav-link px-[20px] font-Poppins text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block"
-                        onClick={()=>setInfo("")}
+                        class="nav-link cursor-pointer px-[20px] font-Poppins text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block"
+                        onClick={() => setInfo("reviews")}
                       >
                         Reviews
                       </a>
@@ -224,8 +224,8 @@ export default function ProductsSingle() {
                 </div>
                 <div class="tab-content">
                   {info == "detail" && (
-                    <div class="tab-pro-pane">
-                      <div class="bb-inner-tabs border-[1px] border-solid bg-[#f8f8fb] border-[#eee] p-[15px] rounded-[20px]">
+                    <div class=" tab-pro-pane">
+                      <div class="bb-inner-tabs transition-all duration-[0.3s] ease-in-out border-[1px] border-solid bg-[#f8f8fb] border-[#eee] p-[15px] rounded-[20px]">
                         <div class="bb-details">
                           <p class="mb-[12px] font-Poppins text-[#686e7d] leading-[28px] tracking-[0.03rem] font-light">
                             Lorem ipsum dolor sit amet consectetur adipisicing
@@ -276,8 +276,8 @@ export default function ProductsSingle() {
                     </div>
                   )}
                   {info == "info" && (
-                    <div class="tab-pro-pane">
-                      <div class="bb-inner-tabs border-[1px] border-solid bg-[#f8f8fb] border-[#eee] p-[15px] rounded-[20px]">
+                    <div class=" tab-pro-pane">
+                      <div class="bb-inner-tabs transition-all duration-[0.3s] ease-in-out border-[1px] border-solid bg-[#f8f8fb] border-[#eee] p-[15px] rounded-[20px]">
                         <div class="information">
                           <ul class="list-disc pl-[20px]">
                             <li class="font-Poppins text-[15px] font-light tracking-[0.03rem] leading-[28px] text-[#686e7d] py-[5px]">
@@ -346,8 +346,8 @@ export default function ProductsSingle() {
                     </div>
                   )}
                   {info == "reviews" && (
-                    <div class="tab-pro-pane" id="reviews">
-                      <div class="bb-inner-tabs border-[1px] border-solid bg-[#f8f8fb] border-[#eee] p-[15px] rounded-[20px]">
+                    <div class=" tab-pro-pane" id="reviews">
+                      <div class="bb-inner-tabs transition-all duration-[0.3s] ease-in-out border-[1px] border-solid bg-[#f8f8fb] border-[#eee] p-[15px] rounded-[20px]">
                         <div class="bb-reviews">
                           <div class="reviews-bb-box flex mb-[24px] max-[575px]:flex-col">
                             <div class="inner-image mr-[12px] max-[575px]:mr-[0] max-[575px]:mb-[12px]">
