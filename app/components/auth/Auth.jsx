@@ -1,12 +1,18 @@
+import { login, register } from "@/app/services/api";
+import { setUserToken } from "@/app/store/authSlice";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 function Auth() {
+  const router = useRouter();
   const [state, setState] = useState("login");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     name: "",
   });
+  const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
 
   const validate = () => {
@@ -37,16 +43,36 @@ function Auth() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      // Handle form submission logic
+      try {
+        if (state === "login") {
+          const data = await login({
+            identifier: formData.email,
+            password: formData.password,
+          });
+          dispatch(setUserToken({ token: data.jwt, user: data.user }));
+          router.push("/");
+        } else if (state === "register") {
+          const data = await register({
+            username: formData.name,
+            password: formData.password,
+            email: formData.email,
+          });
+          dispatch(setUserToken({ token: data.jwt, user: data.user }));
+          router.push("/");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+
       console.log("Form submitted:", formData);
     }
   };
 
   return (
-    <section className="section-login py-[50px] max-[1199px]:py-[35px]">
+    <section className="section-login py-[10px] max-[1199px]:py-[5px]">
       <div className="flex flex-wrap justify-between relative items-center mx-auto min-[1400px]:max-w-[1320px] min-[1200px]:max-w-[1140px] min-[992px]:max-w-[960px] min-[768px]:max-w-[720px] min-[576px]:max-w-[540px]">
         <div className="flex flex-wrap w-full">
           <div className="w-full px-[12px]">
@@ -89,7 +115,7 @@ function Auth() {
           </div>
           <div className="w-full px-[12px]">
             <div
-              className="bb-login-contact max-w-[500px] m-[auto] border-[1px] border-solid bg-white border-[#eee] p-[30px] rounded-[20px]"
+              className="bb-login-contact max-w-[500px] m-[auto] border-[1px] border-solid shadow3 bg-white border-[#eee] p-[30px] rounded-[20px]"
               data-aos="fade-up"
               data-aos-duration="1000"
               data-aos-delay="400"
@@ -158,7 +184,7 @@ function Auth() {
                 <div className="bb-login-button m-[-5px] flex justify-between mt-3">
                   <button
                     type="submit"
-                    className="select-none py-[4px] px-[25px] w-auto cursor-pointer font-Poppins text-center align-top border-[1px] border-solid border-[#eee] bg-gradient-to-br from-indigo-200 to-pink-200 via-blue-200 text-white inline-flex items-center justify-center check-btn transition-all duration-[0.3s] ease-in-out font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-normal rounded-[10px]"
+                    className="select-none py-[4px] px-[25px] shadow3 w-auto cursor-pointer font-Poppins text-center align-top border-[1px] border-solid border-[#eee] bg-gradient-to-br from-indigo-200 to-pink-200 via-blue-200 text-white inline-flex items-center justify-center check-btn transition-all duration-[0.3s] ease-in-out font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-normal rounded-[10px]"
                   >
                     {state === "login"
                       ? "Sign In"
