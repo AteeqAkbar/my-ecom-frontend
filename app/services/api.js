@@ -2,7 +2,6 @@
 import axiosInstance from "./axiosInstance";
 
 export const login = async (credentials) => {
-  console.log("in login");
   const response = await axiosInstance.post("/auth/local", credentials);
   return response.data; // Adjust based on your API response
 };
@@ -14,7 +13,22 @@ export const register = async (credentials) => {
   return response.data; // Adjust based on your API response
 };
 
-export const fetchData = async () => {
-  const response = await axiosInstance.get("/data"); // Adjust the endpoint as needed
+export const fetchCategories = async () => {
+  const response = await axiosInstance.get("/categories?populate=*");
+  return response.data;
+};
+export const fetchProducts = async (page = 1) => {
+  console.log(page, "page");
+  const response = await axiosInstance.get(
+    `/products`,
+    // `/products?pagination[page]=${page}&pagination[pageSize]=1&populate=*`,
+    {
+      params: {
+        "pagination[page]": page,
+        "pagination[pageSize]": 10,
+        populate: "*",
+      },
+    }
+  );
   return response.data;
 };

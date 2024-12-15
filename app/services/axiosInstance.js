@@ -1,9 +1,10 @@
 // src/api/axiosInstance.js
 import axios from "axios";
 import Cookies from "js-cookie";
-
+export const baseURL = "http://localhost:1337";
+export const baseURLapi = "http://localhost:1337/api";
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:1337/api", // Replace with your API base URL
+  baseURL: baseURLapi, // Replace with your API base URL
 });
 
 // Add a request interceptor to include JWT in headers

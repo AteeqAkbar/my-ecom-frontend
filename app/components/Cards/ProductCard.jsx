@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "@/app/store/cartSlice";
 import { openCart } from "@/app/store/cartVisibilitySlice";
 import Image from "next/image";
+import { generateImageUrl } from "@/app/utils/helperFun";
 
 function ProductCard({ style = {}, product }) {
   const handleAddToCart = (product) => {
@@ -61,13 +62,20 @@ function ProductCard({ style = {}, product }) {
             <div className="inner-img relative block cursor-pointer overflow-hidden rounded-t-[20px] group">
               <img
                 className="main-img transition-all duration-[0.3s] ease-in-out w-full transform group-hover:scale-105 group-hover:opacity-0"
-                src="https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/new-product/1.jpg"
-                alt="product-6"
+                src={
+                  generateImageUrl(product?.images?.[0]?.url) ||
+                  "https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/new-product/1.jpg"
+                }
+                alt="product1"
               />
               <img
-                className="hover-img transition-all duration-[0.3s] ease-in-out absolute z-[2] top-[0] left-[0] opacity-[0]  transform group-hover:opacity-100 group-hover:scale-105 w-full"
-                src="https://pyariwalls.pk/cdn/shop/files/WhatsApp_Image_2024-10-23_at_19.35.26.jpg"
-                alt="product-6"
+                className="hover-img transition-all duration-[0.3s] ease-in-out absolute z-[2] top-[0] left-[0] opacity-[0]  transform group-hover:opacity-100 group-hover:scale-110 w-full"
+                src={
+                  generateImageUrl(product?.images?.[1]?.url) ||
+                  generateImageUrl(product?.images?.[0]?.url) ||
+                  "https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/new-product/1.jpg"
+                }
+                alt="product2"
               />
             </div>
 
@@ -123,7 +131,9 @@ function ProductCard({ style = {}, product }) {
                 href="shop-left-sidebar-col-3.html"
                 className="transition-all duration-[0.3s] ease-in-out font-Poppins text-[13px] leading-[16px] text-[#777] font-light tracking-[0.03rem]"
               >
-                Spices
+                {product?.categories?.length > 0
+                  ? product?.categories[0]?.name
+                  : "Special"}
               </a>
               <span className="bb-pro-rating">
                 {[...Array(4)].map((_, i) => (
@@ -155,16 +165,17 @@ function ProductCard({ style = {}, product }) {
               {/* <Tag tagclassName="shadow2"> */}
               <div className="inner-price mx-[-3px]">
                 <span className="new-price px-[3px] text-[16px] text-[#686e7d] font-bold">
-                  {product?.price || "$4100"}
+                  RS:{" "}
+                  {product?.discountPrice || product?.price || "Not Available"}
                 </span>
                 <span className="old-price px-[3px] text-[14px] text-[#686e7d] line-through">
-                  $4522
+                  {product?.discountPrice ? "RS: " + product?.price : " "}
                 </span>
               </div>
               {/* </Tag> */}
               {/* <Tag tagclassName="shadow2"> */}
               <span className="last-items text-[14px] text-[#686e7d]">
-                200g
+                {/* 200g */}
               </span>
               {/* </Tag> */}
             </div>

@@ -1,8 +1,11 @@
 import React from "react";
 
-function ProductCardSkeleton() {
+function ProductCardSkeleton({ style = {} }) {
   return (
-    <div className="min-[1200px]:w-[25%] min-[768px]:w-[33.33%] w-[50%] max-[480px]:w-full px-[12px] mb-[24px] ">
+    <div
+      style={style}
+      className="min-[1200px]:w-[25%] min-[768px]:w-[33.33%] w-[50%] max-[480px]:w-full px-[12px] mb-[24px] "
+    >
       <div className="bg-white border border-solid border-gray-200 rounded-[20px] shadow p-4 animate-pulse">
         {/* Image Skeleton */}
         <div className="h-[200px] bg-gray-200 rounded-t-[20px]"></div>

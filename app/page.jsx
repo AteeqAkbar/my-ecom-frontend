@@ -23,24 +23,25 @@ export default function Home() {
       <ExploreCategories />
 
       <ProductList />
-      <button
+      {/* <button
         onClick={toggleModal}
         className="bg-blue-500 text-white px-4 py-2 rounded"
       >
         Open Modal
-      </button>
-
+      </button> */}
+      {/* 
       <Modal state={isOpen} close={closeModal}>
         <ModalCard />
-      </Modal>
+      </Modal> */}
       <Services />
 
-      <div className="w-[200px] h-[200px]">
+      {/* <div className="w-[200px] h-[200px]">
         <Loader />
-      </div>
+      </div> */}
+
       <ProductSlider />
       {/* <GalleryCarousel /> */}
-      <Auth />
+      {/* <Auth /> */}
     </>
   );
 }
