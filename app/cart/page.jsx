@@ -6,6 +6,7 @@ import { addToCart, removeFromCart } from "../store/cartSlice";
 import ProductSlider from "../components/Swiper/ProductSlider";
 import Link from "next/link";
 import Image from "next/image";
+import { generateImageUrl } from "../utils/helperFun";
 
 export default function Cart() {
   const cartItems = useSelector((state) => state.cart.items);
@@ -170,7 +171,10 @@ function Cartitems({ item }) {
         <a href="javascript:void(0)">
           <div className="Product-cart flex items-center">
             <Image
-              src="https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/new-product/4.jpg"
+              src={
+                generateImageUrl(item?.images?.[0]?.url) ||
+                "https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/new-product/1.jpg"
+              }
               alt="new-product-1"
               width={70}
               height={100}

@@ -4,6 +4,7 @@ import cart from "../../image/icons/cart.png";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/app/store/cartSlice";
 import Image from "next/image";
+import { generateImageUrl } from "@/app/utils/helperFun";
 
 export default function ModalCard({ product, close }) {
   const dispatch = useDispatch();
@@ -35,7 +36,10 @@ export default function ModalCard({ product, close }) {
                   >
                     <img
                       className="img-responsive max-w-full block hover:scale-125 transition-all duration-500 cursor-pointer"
-                      src="https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/product/1.jpg"
+                      src={
+                        generateImageUrl(product?.images?.[0]?.url) ||
+                        "https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/new-product/1.jpg"
+                      }
                       alt="product-img-1"
                     />
                   </div>
@@ -66,9 +70,10 @@ export default function ModalCard({ product, close }) {
                   </span>
                 </div>
                 <div className="bb-quickview-desc mb-[10px] text-[15px] leading-[24px] text-[#777] font-light">
-                  Lorem Ipsum is simply dummy text of the printing and
+                  {product?.description ||
+                    `Lorem Ipsum is simply dummy text of the printing and
                   typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1900s,
+                  standard dummy text ever since the 1900s,`}
                 </div>
                 <div className="bb-quickview-price pt-[5px] pb-[10px] flex items-center justify-left">
                   <span className="new-price px-[3px] text-[16px] text-[#686e7d] font-bold">
@@ -79,7 +84,7 @@ export default function ModalCard({ product, close }) {
                   </span>
                 </div>
                 <div className="bb-pro-variation mt-[15px] mb-[25px]">
-                  <ul className="flex flex-wrap m-[-2px]">
+                  {/* <ul className="flex flex-wrap m-[-2px]">
                     <li className=" m-[2px] py-[2px] px-[2px] cursor-pointer  text-[#777] flex items-center justify-center text-[12px] leading-[22px] rounded-[20px] font-normal">
                       <div className="leading-[28px]">
                         <a className="transition-all px-[13px] duration-[0.3s] ease-in-out w-auto cursor-pointer font-light text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow1">
@@ -101,7 +106,7 @@ export default function ModalCard({ product, close }) {
                         </a>
                       </div>
                     </li>
-                  </ul>
+                  </ul> */}
                 </div>
                 <div className="bb-quickview-qty flex max-[360px]:justify-center">
                   <div className="leading-[28px] mr-[6px]">

@@ -9,7 +9,8 @@ import { FreeMode, Pagination, Autoplay } from "swiper/modules";
 import Image from "next/image";
 import { fetchCategories } from "@/app/services/api";
 import { useQuery } from "@tanstack/react-query";
-import { generateImageUrl } from "@/app/utils/helperFun";
+import { generateImageUrl, getRandomColor } from "@/app/utils/helperFun";
+import Link from "next/link";
 
 export default function CategoriesSlider() {
   const { data, error, isLoading } = useQuery({
@@ -56,51 +57,56 @@ export default function CategoriesSlider() {
             </SwiperSlide>
           ))}
         {data &&
-          data?.data?.map((category, index) => (
-            <SwiperSlide key={index}>
-              <div
-                className="owl-item cloned"
-                // style="width: 204px; margin-right: 24px;"
-              >
-                <div
-                  className={`bb-category-box p-[30px] rounded-[20px] flex flex-col items-center text-center max-[1399px]:p-[20px] category-items-1 bg-[#fef1f1] aos-init aos-animate`}
-                  data-aos="flip-left"
-                  data-aos-duration="1000"
-                  data-aos-delay="200"
+          data?.data?.map((category, index) => {
+            const colorClass = getRandomColor(index);
+            return (
+              <SwiperSlide key={index}>
+                <Link
+                  href={`/products?categories=${category.name}`}
+                  className="owl-item cloned"
+                  // style="width: 204px; margin-right: 24px;"
                 >
-                  <div className="category-image mb-[12px]">
-                    <Image
-                      unoptimized={true}
-                      width={50}
-                      height={50}
-                      quality={100}
-                      src={
-                        generateImageUrl(
-                          category?.image?.formats?.small?.url
-                        ) ||
-                        "https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/category/2.svg"
-                      }
-                      alt="category"
-                      className="w-[50px] h-[50px] rounded-xl max-[1399px]:h-[65px] max-[1399px]:w-[65px] max-[1199px]:h-[50px] max-[1199px]:w-[50px]"
-                    />
-                  </div>
-                  <div className="category-sub-contact">
-                    <h5 className="mb-[2px] text-[16px] font-quicksand text-[#3d4750] font-semibold tracking-[0.03rem] leading-[1.2]">
-                      <a
-                        href="shop-left-sidebar-col-3.html"
-                        className="font-Poppins text-[16px] font-medium leading-[1.2] tracking-[0.03rem] text-[#3d4750] capitalize"
-                      >
-                        {category?.name || "category"}
-                      </a>
-                    </h5>
-                    {/* <p className="font-Poppins text-[13px] text-[#686e7d] leading-[25px] font-light tracking-[0.03rem]">
+                  <div
+                    style={{ background: colorClass }}
+                    className={`bb-category-box p-[30px] rounded-[20px] flex flex-col items-center text-center max-[1399px]:p-[20px] category-items-1  aos-init aos-animate bg-opacity-50`}
+                    data-aos="flip-left"
+                    data-aos-duration="1000"
+                    data-aos-delay="200"
+                  >
+                    <div className="category-image mb-[12px]">
+                      <Image
+                        unoptimized={true}
+                        width={70}
+                        height={70}
+                        quality={100}
+                        src={
+                          generateImageUrl(
+                            category?.image?.formats?.small?.url
+                          ) ||
+                          "https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/category/2.svg"
+                        }
+                        alt="category"
+                        className="rounded-xl max-[1399px]:h-[65px] max-[1399px]:w-[65px] max-[1199px]:h-[50px] max-[1199px]:w-[50px]"
+                      />
+                    </div>
+                    <div className="category-sub-contact">
+                      <h5 className="mb-[2px] text-[16px] font-quicksand text-[#3d4750] font-semibold tracking-[0.03rem] leading-[1.2]">
+                        <a
+                          href="shop-left-sidebar-col-3.html"
+                          className="font-Poppins text-[16px] font-medium leading-[1.2] tracking-[0.03rem] text-[#3d4750] capitalize"
+                        >
+                          {category?.name || "category"}
+                        </a>
+                      </h5>
+                      {/* <p className="font-Poppins text-[13px] text-[#686e7d] leading-[25px] font-light tracking-[0.03rem]">
                       485 items
                     </p> */}
+                    </div>
                   </div>
-                </div>
-              </div>
-            </SwiperSlide>
-          ))}
+                </Link>
+              </SwiperSlide>
+            );
+          })}
       </Swiper>
     </div>
   );

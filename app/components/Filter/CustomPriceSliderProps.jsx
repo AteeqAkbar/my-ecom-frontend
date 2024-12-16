@@ -1,8 +1,22 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import React, { useState, useEffect, useRef } from "react";
 
 export function CustomPriceSlider({ min, max, step, onPriceChange }) {
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    if (searchParams.has("minPrice")) {
+      setMinValue(parseInt(searchParams.get("minPrice")));
+    } else {
+      setMinValue(min);
+    }
+    if (searchParams.has("maxPrice")) {
+      setMaxValue(parseInt(searchParams.get("maxPrice")));
+    } else {
+      setMaxValue(max);
+    }
+  }, [searchParams]);
   const [minValue, setMinValue] = useState(min);
   const [maxValue, setMaxValue] = useState(max);
   const rangeRef = useRef(null);

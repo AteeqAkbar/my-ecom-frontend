@@ -8,13 +8,17 @@ import done from "../image/icons/done.png";
 import star from "../image/icons/star.png";
 import starhalf from "../image/icons/halfstar.png";
 import Image from "next/image";
+import { generateImageUrl } from "../utils/helperFun";
 
 function ProductItem({ item }) {
   return (
     <div className="pro-items p-[15px] bg-[#f8f8fb] border-[1px] border-solid border-[#eee] rounded-[20px] flex mb-[24px] max-[420px]:flex-col">
       <div className="image mr-[15px] max-[420px]:mr-[0] max-[420px]:mb-[15px]">
         <Image
-          src="https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/new-product/4.jpg"
+          src={
+            generateImageUrl(item?.images?.[0]?.url) ||
+            "https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/new-product/1.jpg"
+          }
           alt="new-product-1"
           width={100}
           height={100}

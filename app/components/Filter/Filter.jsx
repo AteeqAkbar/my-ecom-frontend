@@ -1,14 +1,54 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CustomPriceSlider } from "./CustomPriceSliderProps";
 import { CustomCheckbox } from "./CustomCheckbox";
+import { fetchCategories } from "@/app/services/api";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter, useSearchParams } from "next/navigation";
 const colors = ["White", "Black", "Blue", "Red"];
 export default function Filter() {
+  const router = useRouter();
+
+  const searchParams = useSearchParams();
+
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["fetchCategories"],
+    queryFn: fetchCategories,
+  });
+  useEffect(() => {
+    if (searchParams.has("categories")) {
+      const categories = searchParams.getAll("categories");
+      setSelectedColors(categories);
+    }
+    if (searchParams.has("minPrice")) {
+      setMinPrice(parseInt(searchParams.get("minPrice")));
+    }
+    if (searchParams.has("maxPrice")) {
+      setMaxPrice(parseInt(searchParams.get("maxPrice")));
+    }
+  }, [searchParams]);
+
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(200);
+  const [maxPrice, setMaxPrice] = useState(10000);
 
   const handlePriceChange = (min, max) => {
     setMinPrice(min);
     setMaxPrice(max);
+  };
+  const handleApplyFilter = (e) => {
+    e.preventDefault();
+    let params = new URLSearchParams();
+
+    selectedColors.forEach((name) => {
+      params.append("categories", name);
+    });
+    if (minPrice > 0) {
+      params.append("minPrice", minPrice);
+    }
+    if (maxPrice < 10000) {
+      params.append("maxPrice", maxPrice);
+    }
+
+    router.push("products" + "?" + params.toString(), { scroll: false });
   };
   const [selectedColors, setSelectedColors] = useState([]);
   const handleColorChange = (color) => {
@@ -23,43 +63,24 @@ export default function Filter() {
       <div className="bb-sidebar-block p-[20px] border-b-[1px] border-solid border-[#eee]">
         <div className="bb-sidebar-title mb-[20px]">
           <h3 className="font-quicksand text-[18px] tracking-[0.03rem] leading-[1.2] font-bold text-[#3d4750]">
-            Category
+            Categories
           </h3>
         </div>
         <div className="bb-sidebar-contact">
-          {colors.map((color) => (
-            <div key={color} className="mb-[14px]">
+          {error && <div>An error occurred: {error.message}</div>}
+          {data?.data?.map((cat) => (
+            <div key={cat?.name} className="mb-[14px]">
               <CustomCheckbox
-                key={color}
-                id={`color-${color.toLowerCase()}`}
-                label={color}
-                checked={selectedColors.includes(color)}
-                onChange={() => handleColorChange(color)}
+                id={`color-${cat?.name.toLowerCase()}`}
+                label={cat?.name}
+                checked={selectedColors.includes(cat?.name)}
+                onChange={() => handleColorChange(cat?.name)}
               />
             </div>
           ))}
         </div>
       </div>
-      <div className="bb-sidebar-block p-[20px] border-b-[1px] border-solid border-[#eee]">
-        <div className="bb-sidebar-title mb-[20px]">
-          <h3 className="font-quicksand text-[18px] tracking-[0.03rem] leading-[1.2] font-bold text-[#3d4750]">
-            Weight
-          </h3>
-        </div>
-        <div className="bb-sidebar-contact">
-          {colors.map((color) => (
-            <div key={color} className="mb-[14px]">
-              <CustomCheckbox
-                key={color}
-                id={`color-${color.toLowerCase()}`}
-                label={color}
-                checked={selectedColors.includes(color)}
-                onChange={() => handleColorChange(color)}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
+
       {/* <div className="bb-sidebar-block p-[20px] border-b-[1px] border-solid border-[#eee]">
         <div className="bb-sidebar-title mb-[20px]">
           <h3 className="font-quicksand text-[18px] tracking-[0.03rem] leading-[1.2] font-bold text-[#3d4750]">
@@ -136,6 +157,21 @@ export default function Filter() {
               onPriceChange={handlePriceChange}
             />
           </div>
+          <button
+            onClick={handleApplyFilter}
+            className="transition-all mt-3 px-[13px] duration-[0.3s] ease-in-out w-full  cursor-pointer h-[40px] font-light text-white leading-[32px] bg-grad font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow3 "
+          >
+            Apply Filter
+          </button>
+          <button
+            onClick={() => {
+              router.push("/products", { scroll: false });
+              setSelectedColors([]);
+            }}
+            className="transition-all mt-3 px-[13px] duration-[0.3s] ease-in-out w-full  cursor-pointer h-[40px] font-light text-white leading-[32px] bg-grad font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow3 "
+          >
+            Clear Filter
+          </button>
         </div>
       </div>
       <div className="bb-sidebar-block p-[20px]">
@@ -148,7 +184,17 @@ export default function Filter() {
           <ul className="flex flex-wrap m-[-5px]">
             <li className="transition-all duration-[0.3s] ease-in-out m-[5px] py-[2px] px-[15px] border-[1px] border-solid border-[#eee] select-none rounded-[10px] hover:bg-gradient-to-r from-[#bfdbfe]  to-[#fbcfe8]  text-[#686e7d]  hover:text-white cursor-pointer">
               <a className="font-Poppins text-[13px] capitalize font-light leading-[28px] tracking-[0.03rem] ">
-                Clothes
+                Clocks
+              </a>
+            </li>
+            <li className="transition-all duration-[0.3s] ease-in-out m-[5px] py-[2px] px-[15px] border-[1px] border-solid border-[#eee] select-none rounded-[10px] hover:bg-gradient-to-r from-[#bfdbfe]  to-[#fbcfe8]  text-[#686e7d]  hover:text-white cursor-pointer">
+              <a className="font-Poppins text-[13px] capitalize font-light leading-[28px] tracking-[0.03rem] ">
+                Decor
+              </a>
+            </li>
+            <li className="transition-all duration-[0.3s] ease-in-out m-[5px] py-[2px] px-[15px] border-[1px] border-solid border-[#eee] select-none rounded-[10px] hover:bg-gradient-to-r from-[#bfdbfe]  to-[#fbcfe8]  text-[#686e7d]  hover:text-white cursor-pointer">
+              <a className="font-Poppins text-[13px] capitalize font-light leading-[28px] tracking-[0.03rem] ">
+                Premium
               </a>
             </li>
           </ul>

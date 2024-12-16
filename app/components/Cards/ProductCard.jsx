@@ -153,13 +153,13 @@ function ProductCard({ style = {}, product }) {
               </span>
             </div>
             <h4 className="bb-pro-title mb-[8px] text-[16px] leading-[18px]">
-              <a
-                title="Small Cardamom Spice Pack"
-                href="product-left-sidebar.html"
+              <div
+                title={product?.name || "Name not available"}
+                // href="product-left-sidebar.html"
                 className="transition-all duration-[0.3s] ease-in-out font-quicksand w-full block whitespace-nowrap overflow-hidden text-ellipsis text-[15px] leading-[18px] text-[#3d4750] font-semibold tracking-[0.03rem]"
               >
-                {product?.name || "Small Cardamom Spice Pack"}
-              </a>
+                {product?.name || "Name not available"}
+              </div>
             </h4>
             <div className="bb-price flex flex-wrap justify-between ">
               {/* <Tag tagclassName="shadow2"> */}

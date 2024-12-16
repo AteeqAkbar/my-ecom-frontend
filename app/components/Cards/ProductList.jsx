@@ -13,21 +13,29 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { fetchProducts } from "@/app/services/api";
+import { useSearchParams } from "next/navigation";
 
 function List(props) {
+  const searchParams = useSearchParams();
+  const categories = searchParams.getAll("categories");
+  const minPrice = searchParams.get("minPrice");
+  const maxPrice = searchParams.get("maxPrice");
+
   const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
   const { isPending, error, data, isFetching, isPlaceholderData } = useQuery({
-    queryKey: ["prducts", page],
-    queryFn: () => fetchProducts(page),
+    queryKey: ["prducts", page, categories, maxPrice, minPrice],
+    queryFn: () => fetchProducts(page, categories, minPrice, maxPrice),
     staleTime: 10000,
     placeholderData: keepPreviousData,
   });
+  const products = data?.data || [];
+  const pagination = data?.meta?.pagination;
   useEffect(() => {
     if (!isPlaceholderData && page < pagination?.pageCount) {
       queryClient.prefetchQuery({
         queryKey: ["projects", page + 1],
-        queryFn: () => fetchProducts(page + 1),
+        queryFn: () => fetchProducts(page + 1, categories, minPrice, maxPrice),
       });
     }
   }, [data, isPlaceholderData, page, queryClient]);
@@ -39,9 +47,6 @@ function List(props) {
       </h1>
     );
   }
-
-  const products = data?.data || [];
-  const pagination = data?.meta?.pagination;
 
   const getPageNumbers = (currentPage, totalPages) => {
     const pages = [];
@@ -117,26 +122,32 @@ function List(props) {
               </div>
             </div>
           </div>
-          {isFetching || isPending
-            ? [...Array(12)].map((value) => {
-                return (
-                  <Fragment key={Math.random()}>
-                    <ProductCardSkeleton />
-                  </Fragment>
-                );
-              })
-            : products.map((product) => {
-                return (
-                  <Fragment key={Math.random()}>
-                    <ProductCard product={product} />
-                  </Fragment>
-                );
-              })}
+          {isFetching || isPending ? (
+            [...Array(12)].map((value) => {
+              return (
+                <Fragment key={Math.random()}>
+                  <ProductCardSkeleton />
+                </Fragment>
+              );
+            })
+          ) : products.length == 0 ? (
+            <h2 className="bb-title py-4 px-3 font-quicksand mb-[0] p-[0] text-[25px] font-medium text-[#3d4750] relative inline capitalize leading-[1] tracking-[0.03rem] max-[767px]:text-[23px]">
+              No products found for the given criteria.
+            </h2>
+          ) : (
+            products?.map((product) => {
+              return (
+                <Fragment key={Math.random()}>
+                  <ProductCard product={product} />
+                </Fragment>
+              );
+            })
+          )}
 
           <div className="w-full px-[12px]">
             <div className="bb-pro-pagination mb-[24px] flex justify-between max-[575px]:flex-col max-[575px]:items-center">
               <p className="font-Poppins text-[15px] text-[#686e7d] font-light leading-[28px] tracking-[0.03rem] max-[575px]:mb-[10px]">
-                Showing {pagination?.page} of {pagination?.total} item(s)
+                Total {pagination?.total} item(s)
               </p>
               <div className="flex">
                 <div className="flex items-center justify-center gap-2">

@@ -8,6 +8,9 @@ import { closeCart } from "../../store/cartVisibilitySlice";
 import { addToCart } from "@/app/store/cartSlice";
 import Link from "next/link";
 import Image from "next/image";
+import { generateImageUrl } from "@/app/utils/helperFun";
+import ProductSlider from "../Swiper/ProductSlider";
+import { useRouter } from "next/navigation";
 
 const ShoppingCart = () => {
   const isCartOpen = useSelector((state) => state.cartVisibility.isCartOpen);
@@ -46,8 +49,9 @@ const RelatedItems = () => {
       <ul>
         <li>
           {/* Related item component */}
+          <ProductSlider showOne={true} />
 
-          <ProductCard style={{ width: "100%" }} />
+          {/* <ProductCard style={{ width: "100%" }} /> */}
         </li>
       </ul>
     </div>
@@ -55,6 +59,7 @@ const RelatedItems = () => {
 };
 
 const Cart = () => {
+  const router = useRouter();
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
   const [totals, setTotals] = useState(0);
@@ -114,7 +119,7 @@ const Cart = () => {
                   Sub-Total :
                 </td>
                 <td className="price text-[#777] text-right p-[.5rem]">
-                  {totals || "0.00"}
+                  RS : {totals || "0.00"}
                 </td>
               </tr>
               {/* <tr>
@@ -130,27 +135,33 @@ const Cart = () => {
                   Total :
                 </td>
                 <td className="price text-[#777] text-right p-[.5rem]">
-                  {totals || "0.00"}
+                  RS : {totals || "0.00"}
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
         <div className="cart-btn flex justify-between mb-[20px]">
-          <Link
-            href="/cart"
+          <button
+            onClick={() => {
+              handleCloseCart();
+              router.push("/cart");
+            }}
             title="View Cart"
             className="transition-all py-[5px] px-[15px] select-none  duration-[0.3s] ease-in-out w-auto cursor-pointer h-[32px] font-light text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow1"
           >
             {"View Cart"}
-          </Link>
-          <Link
-            href="/checkout"
+          </button>
+          <button
+            onClick={() => {
+              handleCloseCart();
+              router.push("/checkout");
+            }}
             title="Checkout"
             className="transition-all py-[5px] px-[15px] select-none  duration-[0.3s] ease-in-out w-auto cursor-pointer h-[32px] font-light text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow1"
           >
             {"Checkout"}
-          </Link>
+          </button>
         </div>
       </div>
     </div>
@@ -178,7 +189,10 @@ const CartItem = ({ item }) => {
       </a>
       <a className="bb-cart-pro-img flex grow-[1] shrink-[0] basis-[25%] items-center max-[575px]:flex-[initial]">
         <img
-          src="https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/new-product/1.jpg"
+          src={
+            generateImageUrl(item?.images?.[0]?.url) ||
+            "https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/new-product/1.jpg"
+          }
           alt="product-img-1"
           className="w-[85px] rounded-[10px] border-[1px] border-solid border-[#eee] max-[575px]:w-[50px]"
         />
@@ -192,9 +206,8 @@ const CartItem = ({ item }) => {
         </a>
         <span className="cart-price mb-[8px] text-[14px] leading-[18px] block font-Poppins text-[#686e7d] font-light tracking-[0.03rem]">
           <span className="new-price px-[3px] text-[15px] leading-[18px] text-[#686e7d] font-bold">
-            {item?.price || "$15"}
+            RS: {item?.price || "$15"}
           </span>
-          x 500 g
         </span>
         <div className=" relative flex items-center justify-between  ">
           <a className=" transition-all duration-[0.3s] ease-in-out w-[70px] cursor-pointer h-[32px] font-normal text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-around items-center rounded-[10px] border-[1px] border-solid border-[#eee]  ">
