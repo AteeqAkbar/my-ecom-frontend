@@ -14,16 +14,23 @@ import { addToCart } from "@/app/store/cartSlice";
 import { openCart } from "@/app/store/cartVisibilitySlice";
 import Image from "next/image";
 import { generateImageUrl } from "@/app/utils/helperFun";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 function ProductCard({ style = {}, product }) {
+  const router = useRouter();
   const handleAddToCart = (product) => {
     // console.log(product);
     dispatch(addToCart(product));
     dispatch(openCart());
   };
+  const baseUrl = `${window.location.protocol}//${window.location.host}`;
+  const productLink = `${baseUrl}/products/${product?.slug}`;
   const phoneNumber = "03114900152"; // Replace with the recipient's phone number in international format
-  const message = encodeURIComponent(`Aoa i want buy ${product?.name}
-    `); // URL-encoded message
+  const message = encodeURIComponent(
+    `Hi I would like to buy ${product?.name} \nLink: ${productLink}`
+  );
+
   const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${message}`;
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
@@ -59,7 +66,10 @@ function ProductCard({ style = {}, product }) {
               </div>
             </span>
 
-            <div className="inner-img relative block cursor-pointer overflow-hidden rounded-t-[20px] group">
+            <div
+              onClick={() => router.push(`/products/${product?.slug}`)}
+              className="inner-img relative block cursor-pointer overflow-hidden rounded-t-[20px] group"
+            >
               <img
                 className="main-img transition-all duration-[0.3s] ease-in-out w-full transform group-hover:scale-105 group-hover:opacity-0"
                 src={
@@ -125,16 +135,16 @@ function ProductCard({ style = {}, product }) {
               </li>
             </ul>
           </div>
-          <div className="bb-pro-contact p-[20px]">
+          <div
+            onClick={() => router.push(`/products/${product?.slug}`)}
+            className="bb-pro-contact p-[20px]"
+          >
             <div className="bb-pro-subtitle mb-[8px] flex flex-wrap justify-between">
-              <a
-                href="shop-left-sidebar-col-3.html"
-                className="transition-all duration-[0.3s] ease-in-out font-Poppins text-[13px] leading-[16px] text-[#777] font-light tracking-[0.03rem]"
-              >
+              <div className="transition-all duration-[0.3s] ease-in-out font-Poppins text-[13px] leading-[16px] text-[#777] font-light tracking-[0.03rem]">
                 {product?.categories?.length > 0
                   ? product?.categories[0]?.name
                   : "Special"}
-              </a>
+              </div>
               <span className="bb-pro-rating">
                 {[...Array(4)].map((_, i) => (
                   <Image
@@ -153,13 +163,14 @@ function ProductCard({ style = {}, product }) {
               </span>
             </div>
             <h4 className="bb-pro-title mb-[8px] text-[16px] leading-[18px]">
-              <div
+              <Link
+                href={`/products/${product?.slug}`}
                 title={product?.name || "Name not available"}
                 // href="product-left-sidebar.html"
                 className="transition-all duration-[0.3s] ease-in-out font-quicksand w-full block whitespace-nowrap overflow-hidden text-ellipsis text-[15px] leading-[18px] text-[#3d4750] font-semibold tracking-[0.03rem]"
               >
                 {product?.name || "Name not available"}
-              </div>
+              </Link>
             </h4>
             <div className="bb-price flex flex-wrap justify-between ">
               {/* <Tag tagclassName="shadow2"> */}

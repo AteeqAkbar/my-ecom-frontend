@@ -141,28 +141,30 @@ const Cart = () => {
             </tbody>
           </table>
         </div>
-        <div className="cart-btn flex justify-between mb-[20px]">
-          <button
-            onClick={() => {
-              handleCloseCart();
-              router.push("/cart");
-            }}
-            title="View Cart"
-            className="transition-all py-[5px] px-[15px] select-none  duration-[0.3s] ease-in-out w-auto cursor-pointer h-[32px] font-light text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow1"
-          >
-            {"View Cart"}
-          </button>
-          <button
-            onClick={() => {
-              handleCloseCart();
-              router.push("/checkout");
-            }}
-            title="Checkout"
-            className="transition-all py-[5px] px-[15px] select-none  duration-[0.3s] ease-in-out w-auto cursor-pointer h-[32px] font-light text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow1"
-          >
-            {"Checkout"}
-          </button>
-        </div>
+        {cartItems?.length > 0 && (
+          <div className="cart-btn flex justify-between mb-[20px]">
+            <button
+              onClick={() => {
+                handleCloseCart();
+                router.push("/cart");
+              }}
+              title="View Cart"
+              className="transition-all py-[5px] px-[15px] select-none duration-[0.3s] ease-in-out w-auto cursor-pointer h-[32px] font-light text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow1"
+            >
+              {"View Cart"}
+            </button>
+            <button
+              onClick={() => {
+                handleCloseCart();
+                router.push("/checkout");
+              }}
+              title="Checkout"
+              className="transition-all py-[5px] px-[15px] select-none animate-bounce duration-[0.3s] ease-in-out w-auto cursor-pointer h-[32px] font-light text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow1"
+            >
+              {"Checkout"}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -364,7 +364,7 @@ export default function Checkout() {
                     {cartItems?.length > 0 && (
                       <button
                         type="submit"
-                        className="select-none py-[4px] px-[25px] w-auto cursor-pointer text-[#777] bg-[#f8f8fb] font-Poppins text-center align-top border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow3 mt-[24px] inline-flex items-center justify-center check-btn transition-all duration-[0.3s] ease-in-out font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-normal rounded-[10px]"
+                        className="select-none animate-bounce py-[4px] px-[25px] w-auto cursor-pointer text-[#777] bg-[#f8f8fb] font-Poppins text-center align-top border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow3 mt-[24px] inline-flex items-center justify-center check-btn transition-all duration-[0.3s] ease-in-out font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-normal rounded-[10px]"
                       >
                         Place Order
                       </button>

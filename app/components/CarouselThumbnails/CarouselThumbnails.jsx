@@ -100,8 +100,26 @@ function App({ slidesData }) {
             width: 100%;
           }
           .slick-prev:before,
+.slick-next:before {
+  background: linear-gradient(to bottom right, #818cf8, #3b82f6, #db2777); /* Gradient colors */
+  -webkit-background-clip: text; /* Clip the gradient to the text */
+  -webkit-text-fill-color: transparent; /* Make the text transparent to show gradient */
+  font-size: 24px; /* Adjust the size of the arrow icons */
+  color: #777777; /* Fallback color if gradients aren't supported */
+  transition: all 0.3s ease; /* Smooth transition */
+}
+
+.slick-prev:hover:before,
+.slick-next:hover:before {
+  background: linear-gradient(to bottom right, #2563eb, #818cf8, #f472b6); /* Different gradient on hover */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #444444; /* Fallback for hover state */
+}
+          .slick-prev:before,
           .slick-next:before {
             color: #777777;
+          
           }
         
         .thumbnail-slider-wrap {

@@ -17,6 +17,12 @@ export const fetchCategories = async () => {
   const response = await axiosInstance.get("/categories?populate=*");
   return response.data;
 };
+export const fetchSingleProduct = async (slug) => {
+  const response = await axiosInstance.get(
+    `/products?populate=*&filters[slug][$eq]=${slug}`
+  );
+  return response.data;
+};
 export const fetchProducts = async (
   page = 1,
   categories = [],

@@ -1,5 +1,6 @@
 // import noImage from "../../public/images/Rectangle-102.png";
 "use client";
+import { generateImageUrl } from "@/app/utils/helperFun";
 import ImageGallery from "./CarouselThumbnails";
 
 const GalleryCarousel = ({ image }) => {
@@ -12,7 +13,7 @@ const GalleryCarousel = ({ image }) => {
     ];
   } else {
     galleryimage = image?.map((item) => ({
-      src: `${process.env.NEXT_PUBLIC_BASE_URL}${item.image}`,
+      src: generateImageUrl(item?.url),
     }));
   }
   let arrayData;

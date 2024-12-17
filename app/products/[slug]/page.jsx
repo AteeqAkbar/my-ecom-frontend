@@ -1,102 +1,148 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Breadcrumb from "../components/Breadcrumb";
-import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeFromCart } from "../store/cartSlice";
-import ProductSlider from "../components/Swiper/ProductSlider";
-import cart from "../image/icons/cart.png";
-import star from "../image/icons/star.png";
-import starhalf from "../image/icons/halfstar.png";
-import CategoriesSlider from "../components/Swiper/CategoriesSlider";
-import ProductList from "../components/Cards/ProductList";
-import Filter from "../components/Filter/Filter";
-import GalleryCarousel from "../components/CarouselThumbnails/GalleryCarousel";
-import Image from "next/image";
 
-export default function ProductsSingle() {
-  const [info, setInfo] = useState("info");
+import cart from "../../image/icons/cart.png";
+import star from "../../image/icons/star.png";
+import starhalf from "../../image/icons/halfstar.png";
+import whatsapp from "../../image/icons/whatsapp.png";
+
+import Image from "next/image";
+import GalleryCarousel from "@/app/components/CarouselThumbnails/GalleryCarousel";
+import Breadcrumb from "@/app/components/Breadcrumb";
+import ProductSlider from "@/app/components/Swiper/ProductSlider";
+import { useParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { fetchSingleProduct } from "@/app/services/api";
+import ProductStats from "@/app/components/Cards/ProductStats";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/app/store/cartSlice";
+import ProductSkeleton from "@/app/components/Cards/ProductSkeleton";
+import Link from "next/link";
+export default function ProductPage() {
+  const { slug } = useParams();
+
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["singleProduct", slug],
+    queryFn: () => fetchSingleProduct(slug),
+  });
+  const product = data?.data?.[0];
+  console.log(data, "data", error, isLoading, product);
+  const [info, setInfo] = useState("reviews");
+
+  const dispatch = useDispatch();
+  const [quantity, setQuantity] = useState(1);
+
+  const increaseQuantity = () => {
+    setQuantity((prevQuantity) => prevQuantity + 1);
+  };
+
+  const decreaseQuantity = () => {
+    setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
+  };
+  const handleAddToCart = (product) => {
+    dispatch(addToCart({ ...product, qty: quantity }));
+  };
+  if (error) {
+    return (
+      <h1 className="text-3xl text-center my-8 font-bold text-gray-400">
+        Error: {error.message}
+      </h1>
+    );
+  }
+  const baseUrl = `${window.location.protocol}//${window.location.host}`;
+  const productLink = `${baseUrl}/products/${product?.slug}`;
+  const phoneNumber = "03114900152"; // Replace with the recipient's phone number in international format
+  const message = encodeURIComponent(
+    `Hi I would like to buy ${product?.name} \nLink: ${productLink}`
+  );
+
+  const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${message}`;
+
   return (
     <>
-      <Breadcrumb title="Products" />
+      <Breadcrumb title={product?.name} />
       <section className="section-product py-[50px] max-[1199px]:py-[35px]">
         <div className="flex flex-wrap justify-between relative items-center mx-auto min-[1400px]:max-w-[1320px] min-[1200px]:max-w-[1140px] min-[992px]:max-w-[960px] min-[768px]:max-w-[720px] min-[576px]:max-w-[540px]">
           <div className="flex flex-wrap w-full mb-[-24px] justify-center">
             <div className="min-[992px]:w-[85%] w-full px-[12px] mb-[24px]">
-              <div className="bb-single-pro mb-[24px]">
-                <div className="flex flex-wrap mx-[-12px]">
-                  <div className="min-[992px]:w-[41.66%] w-full px-[12px]  mb-[24px]">
-                    <GalleryCarousel />
-                  </div>
-                  <div className="min-[992px]:w-[58.33%] w-full px-[12px] mb-[24px]">
-                    <div className="bb-single-pro-contact">
-                      <div className="bb-sub-title mb-[20px]">
-                        <h4 className="font-quicksand text-[22px] tracking-[0.03rem] font-bold leading-[1.2] text-[#3d4750]">
-                          Ground Nuts Oil Pack 52g
-                        </h4>
-                      </div>
-                      <div className="bb-single-rating mb-[12px] flex items-center  ">
-                        {[...Array(4)].map((_, i) => (
+              {isLoading ? (
+                <ProductSkeleton />
+              ) : (
+                <div className="bb-single-pro mb-[24px]">
+                  <div className="flex flex-wrap mx-[-12px]">
+                    <div className="min-[992px]:w-[41.66%] w-full px-[12px]  mb-[24px]">
+                      <GalleryCarousel image={product?.images} />
+                    </div>
+                    <div className="min-[992px]:w-[58.33%] w-full px-[12px] mb-[24px]">
+                      <div className="bb-single-pro-contact">
+                        <div className="bb-sub-title mb-[20px]">
+                          <h4 className="font-quicksand text-[22px] tracking-[0.03rem] font-bold leading-[1.2] text-[#3d4750]">
+                            {product?.name || "Name not available"}
+                          </h4>
+                        </div>
+                        <div className="bb-single-rating mb-[12px] flex items-center  ">
+                          {[...Array(4)].map((_, i) => (
+                            <Image
+                              key={i}
+                              src={star}
+                              alt={"star" + i}
+                              className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+                            ></Image>
+                          ))}
                           <Image
-                            key={i}
-                            src={star}
-                            alt={"star" + i}
+                            src={starhalf}
+                            alt={"starhalf"}
                             className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
                           ></Image>
-                        ))}
-                        <Image
-                          src={starhalf}
-                          alt={"starhalf"}
-                          className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
-                        ></Image>
-                        <span className="bb-read-review">
-                          |&nbsp;&nbsp;
-                          <a
-                            href="#bb-spt-nav-review"
-                            className="font-Poppins text-[15px] font-light leading-[28px] tracking-[0.03rem] text-[#6c7fd8]"
-                          >
-                            992 Ratings
-                          </a>
-                        </span>
-                      </div>
-                      <p className="font-Poppins text-[15px] font-light leading-[28px] tracking-[0.03rem]">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                          <span className="bb-read-review">
+                            |&nbsp;&nbsp;
+                            <a className="font-Poppins text-[15px] font-light leading-[28px] tracking-[0.03rem] text-[#6c7fd8]">
+                              {Math.floor(Math.random() * 200) + 100} Ratings
+                            </a>
+                          </span>
+                        </div>
+                        <p className="font-Poppins text-[15px] font-light leading-[28px] tracking-[0.03rem]">
+                          {product?.description ||
+                            `Lorem ipsum dolor sit amet, consectetur adipisicing
                         elit. Quas nihil laboriosam voluptatem ab consectetur
                         dolorum id, soluta sunt at culpa commodi totam quod
-                        natus qui!
-                      </p>
-                      <div className="bb-single-price-wrap flex justify-between py-[10px]">
-                        <div className="bb-single-price py-[15px]">
-                          <div className="price mb-[8px]">
-                            <h5 className="font-quicksand leading-[1.2] tracking-[0.03rem] text-[20px] font-extrabold text-[#3d4750]">
-                              $923.00{" "}
-                              <span className="text-[#3d4750] text-[20px]">
+                        natus qui!`}
+                        </p>
+                        <ProductStats />
+                        <div className="bb-single-price-wrap flex justify-between py-[10px]">
+                          <div className="bb-single-price py-[15px]">
+                            <div className="price mb-[8px]">
+                              <h5 className="font-quicksand leading-[1.2] tracking-[0.03rem] text-[20px] font-extrabold text-[#3d4750]">
+                                {"RS " + product?.discountPrice ||
+                                  "RS " + product?.price ||
+                                  "Price not available"}
+                                {/* <span className="text-[#3d4750] text-[20px]">
                                 -78%
-                              </span>
-                            </h5>
+                              </span> */}
+                              </h5>
+                            </div>
+                            <div className="mrp">
+                              <p className="font-Poppins line-through text-[16px] font-light text-[#686e7d] leading-[28px] tracking-[0.03rem]">
+                                {"RS " + product?.discountPrice
+                                  ? "RS " + product?.price
+                                  : ""}
+                              </p>
+                            </div>
                           </div>
-                          <div className="mrp">
-                            <p className="font-Poppins text-[16px] font-light text-[#686e7d] leading-[28px] tracking-[0.03rem]">
-                              M.R.P. :{" "}
-                              <span className="text-[15px] line-through">
-                                $1,999.00
+                          <div className="bb-single-price py-[15px]">
+                            <div className="sku mb-[8px]">
+                              <h5 className="font-quicksand text-[18px] font-extrabold leading-[1.2] tracking-[0.03rem] text-[#3d4750]">
+                                SKU#: WH12
+                              </h5>
+                            </div>
+                            <div className="stock">
+                              <span className="text-[18px] text-[#6c7fd8]">
+                                In stock
                               </span>
-                            </p>
+                            </div>
                           </div>
                         </div>
-                        <div className="bb-single-price py-[15px]">
-                          <div className="sku mb-[8px]">
-                            <h5 className="font-quicksand text-[18px] font-extrabold leading-[1.2] tracking-[0.03rem] text-[#3d4750]">
-                              SKU#: WH12
-                            </h5>
-                          </div>
-                          <div className="stock">
-                            <span className="text-[18px] text-[#6c7fd8]">
-                              In stock
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="bb-single-list mb-[30px]">
+                        {/* <div className="bb-single-list mb-[30px]">
                         <ul className="my-[-8px] pl-[18px]">
                           <li className="my-[8px] font-Poppins text-[14px] font-light leading-[28px] tracking-[0.03rem] text-[#777] list-disc">
                             <span className="font-Poppins text-[#777] text-[14px]">
@@ -154,74 +200,101 @@ export default function ProductsSingle() {
                             </li>
                           </ul>
                         </div>
-                      </div>
-                      <div className="bb-single-qty flex flex-wrap gap-2  ms-2 m-[-2px]">
-                        <a className=" transition-all duration-[0.3s] ease-in-out  cursor-pointer  w-[85px] h-[40px] font-normal text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-around items-center rounded-[10px] border-[1px] border-solid border-[#eee]  shadow1">
-                          <span
-                            // onClick={decreaseQuantity}
-                            className=" w-full select-none overflow-hidden rounded-s-[10px]  transition-all duration-[0.3s] ease-in-out hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white"
-                          >
-                            -
-                          </span>
-                          <span className="w-full">{/* {quantity} */}2</span>
-                          <span
-                            // onClick={increaseQuantity}
-                            className="w-full select-none overflow-hidden rounded-e-[10px]  transition-all duration-[0.3s] ease-in-out hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white"
-                          >
-                            +
-                          </span>
-                        </a>
-                        <div className="buttons m-[2px] ">
-                          <div
-                            // onClick={() => handleAddToCart(product)}
-                            className="leading-[28px]"
-                          >
-                            <a
-                              title="Add To Cart"
-                              className="transition-all  select-none px-[13px] duration-[0.3s] ease-in-out w-auto cursor-pointer   h-[40px] font-light text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow1"
+                      </div> */}
+                        <div className="bb-single-qty flex flex-wrap gap-2  ms-2 m-[-2px]">
+                          <a className=" transition-all duration-[0.3s] ease-in-out  cursor-pointer  w-[85px] h-[40px] font-normal text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-around items-center rounded-[10px] border-[1px] border-solid border-[#eee]  shadow1">
+                            <span
+                              onClick={decreaseQuantity}
+                              className=" w-full select-none overflow-hidden rounded-s-[10px]  transition-all duration-[0.3s] ease-in-out hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white"
                             >
-                              <Image
-                                src={cart}
-                                alt="cart"
-                                className=" ri-shopping-bag-4-line h-9 w-9 transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
-                              ></Image>
-                              {"  Cart"}
-                            </a>
+                              -
+                            </span>
+                            <span className="w-full">{quantity}</span>
+                            <span
+                              onClick={increaseQuantity}
+                              className="w-full select-none overflow-hidden rounded-e-[10px]  transition-all duration-[0.3s] ease-in-out hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white"
+                            >
+                              +
+                            </span>
+                          </a>
+                          <div className="buttons m-[2px] ">
+                            <div
+                              onClick={() => handleAddToCart(product)}
+                              className="leading-[28px]"
+                            >
+                              <a
+                                title="Add To Cart"
+                                className="transition-all animate-bounce select-none px-[13px] duration-[0.3s] ease-in-out w-auto cursor-pointer   h-[40px] font-light text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow1"
+                              >
+                                <Image
+                                  src={cart}
+                                  alt="cart"
+                                  className=" ri-shopping-bag-4-line h-9 w-9 transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
+                                ></Image>
+                                {"  Cart"}
+                              </a>
+                            </div>
+                          </div>
+                          <div className="buttons m-[2px] ">
+                            <div
+                              // onClick={() => handleAddToCart(product)}
+                              className="leading-[28px]"
+                            >
+                              <Link
+                                href={whatsappUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                title="Order By Whatsapp"
+                                className="transition-all animate-bounce select-none px-[13px] duration-[0.3s] ease-in-out w-auto cursor-pointer   h-[40px] font-light text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow1"
+                              >
+                                <Image
+                                  src={whatsapp}
+                                  alt="whatsapp"
+                                  className=" ri-shopping-bag-4-line w-[28px] h-[28px] hover:scale-125 transition-all duration-[0.3s] ease-in-out text-[18px] text-[#777] leading-[10px]"
+                                ></Image>
+                              </Link>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
               <div className="bb-single-pro-tab">
                 <div className="bb-pro-tab mb-[24px]">
                   <ul
                     className="bb-pro-tab-nav flex flex-wrap mx-[-20px] max-[991px]:justify-center"
                     id="ProTab"
                   >
-                    <li className="nav-item relative leading-[28px] active">
-                      <a
-                        className="nav-link cursor-pointer px-[20px] font-Poppins text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block active"
-                        onClick={() => setInfo("detail")}
-                      >
-                        Detail
-                      </a>
-                    </li>
-                    <li className="nav-item relative leading-[28px]">
+                    {/* <li className="nav-item relative leading-[28px]">
                       <a
                         className="nav-link cursor-pointer px-[20px] font-Poppins text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block"
                         onClick={() => setInfo("info")}
                       >
                         Information
                       </a>
-                    </li>
+                    </li> */}
                     <li className="nav-item relative leading-[28px]">
                       <a
-                        className="nav-link cursor-pointer px-[20px] font-Poppins text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] block"
+                        className={`nav-link cursor-pointer px-[20px] font-Poppins text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] ${
+                          info == "reviews" &&
+                          " bg-transparent flex items-center bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 "
+                        } `}
                         onClick={() => setInfo("reviews")}
                       >
                         Reviews
+                      </a>
+                    </li>
+                    <li className="nav-item relative leading-[28px] active">
+                      <a
+                        className={`nav-link cursor-pointer px-[20px] font-Poppins text-[16px] text-[#686e7d] font-medium capitalize leading-[28px] tracking-[0.03rem] ${
+                          info == "detail" &&
+                          " bg-transparent flex items-center bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 "
+                        } `}
+                        onClick={() => setInfo("detail")}
+                      >
+                        Detail
                       </a>
                     </li>
                   </ul>
@@ -232,49 +305,13 @@ export default function ProductsSingle() {
                       <div className="bb-inner-tabs transition-all duration-[0.3s] ease-in-out border-[1px] border-solid bg-[#f8f8fb] border-[#eee] p-[15px] rounded-[20px]">
                         <div className="bb-details">
                           <p className="mb-[12px] font-Poppins text-[#686e7d] leading-[28px] tracking-[0.03rem] font-light">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            {product?.description ||
+                              `Lorem ipsum dolor sit amet consectetur adipisicing
                             elit. Libero, voluptatum. Vitae dolores alias
                             repellat eligendi, officiis, exercitationem corporis
                             quisquam delectus cum non recusandae numquam
-                            dignissimos molestiae magnam hic natus. Cumque.
+                            dignissimos molestiae magnam hic natus. Cumque.`}
                           </p>
-                          <div className="details-info">
-                            <ul className="list-disc pl-[20px] mb-[0]">
-                              <li className="py-[5px] text-[15px] text-[#686e7d] font-Poppins leading-[28px] font-light">
-                                Any Product types that You want - Simple,
-                                Configurable
-                              </li>
-                              <li className="py-[5px] text-[15px] text-[#686e7d] font-Poppins leading-[28px] font-light">
-                                Downloadable/Digital Products, Virtual Products
-                              </li>
-                              <li className="py-[5px] text-[15px] text-[#686e7d] font-Poppins leading-[28px] font-light">
-                                Inventory Management with Backordered items
-                              </li>
-                              <li className="py-[5px] text-[15px] text-[#686e7d] font-Poppins leading-[28px] font-light">
-                                Flatlock seams throughout.
-                              </li>
-                            </ul>
-                            <ul className="list-disc pl-[20px] mb-[0]">
-                              <li className="py-[5px] text-[15px] text-[#686e7d] font-Poppins leading-[28px] font-light">
-                                <span className="inline-flex font-medium min-w-[150px]">
-                                  Highlights
-                                </span>
-                                Form FactorWhole
-                              </li>
-                              <li className="py-[5px] text-[15px] text-[#686e7d] font-Poppins leading-[28px] font-light">
-                                <span className="inline-flex font-medium min-w-[150px]">
-                                  Seller
-                                </span>
-                                No Returns Allowed
-                              </li>
-                              <li className="py-[5px] text-[15px] text-[#686e7d] font-Poppins leading-[28px] font-light">
-                                <span className="inline-flex font-medium min-w-[150px]">
-                                  Services
-                                </span>
-                                Cash on Delivery available
-                              </li>
-                            </ul>
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -363,7 +400,7 @@ export default function ProductsSingle() {
                             </div>
                             <div className="inner-contact">
                               <h4 className="font-quicksand leading-[1.2] tracking-[0.03rem] mb-[5px] text-[16px] font-bold text-[#3d4750]">
-                                Mariya Lykra
+                                Malik S.
                               </h4>
                               <div className="bb-pro-rating flex">
                                 {[...Array(4)].map((_, i) => (
@@ -381,12 +418,8 @@ export default function ProductsSingle() {
                                 ></Image>
                               </div>
                               <p className="font-Poppins text-[14px] leading-[26px] font-light tracking-[0.03rem] text-[#686e7d]">
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Illo, hic expedita asperiores
-                                eos neque cumque impedit quam, placeat
-                                laudantium soluta repellendus possimus a
-                                distinctio voluptate veritatis nostrum
-                                perspiciatis est! Commodi!
+                                best best quality. .jldi deliver hogya or size b
+                                perfect hai h
                               </p>
                             </div>
                           </div>
@@ -400,7 +433,7 @@ export default function ProductsSingle() {
                             </div>
                             <div className="inner-contact">
                               <h4 className="font-quicksand leading-[1.2] tracking-[0.03rem] mb-[5px] text-[16px] font-bold text-[#3d4750]">
-                                Saddika Alard
+                                Mehr
                               </h4>
                               <div className="bb-pro-rating flex">
                                 {[...Array(4)].map((_, i) => (
@@ -418,12 +451,78 @@ export default function ProductsSingle() {
                                 ></Image>
                               </div>
                               <p className="font-Poppins text-[14px] leading-[26px] font-light tracking-[0.03rem] text-[#686e7d]">
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Illo, hic expedita asperiores
-                                eos neque cumque impedit quam, placeat
-                                laudantium soluta repellendus possimus a
-                                distinctio voluptate veritatis nostrum
-                                perspiciatis est! Commodi!
+                                osam great nice quality market price say bohut
+                                cam price hay market may is ki price 10 say oper
+                                hay but it's really good 💯
+                              </p>
+                            </div>
+                          </div>
+                          <div className="reviews-bb-box flex mb-[24px] max-[575px]:flex-col">
+                            <div className="inner-image mr-[12px] max-[575px]:mr-[0] max-[575px]:mb-[12px]">
+                              {/* <img
+                                src="assets/img/reviews/2.jpg"
+                                alt="img-2"
+                                className="w-[50px] h-[50px] max-w-[50px] rounded-[10px]"
+                              /> */}
+                            </div>
+                            <div className="inner-contact">
+                              <h4 className="font-quicksand leading-[1.2] tracking-[0.03rem] mb-[5px] text-[16px] font-bold text-[#3d4750]">
+                                Janzaib.
+                              </h4>
+                              <div className="bb-pro-rating flex">
+                                {[...Array(4)].map((_, i) => (
+                                  <Image
+                                    key={i}
+                                    src={star}
+                                    alt={"star" + i}
+                                    className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+                                  ></Image>
+                                ))}
+                                <Image
+                                  src={starhalf}
+                                  alt={"starhalf"}
+                                  className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+                                ></Image>
+                              </div>
+                              <p className="font-Poppins text-[14px] leading-[26px] font-light tracking-[0.03rem] text-[#686e7d]">
+                                Excellent product in this price. Package was
+                                delivered safe and within the time. Will
+                                recommend it
+                              </p>
+                            </div>
+                          </div>
+                          <div className="reviews-bb-box flex mb-[24px] max-[575px]:flex-col">
+                            <div className="inner-image mr-[12px] max-[575px]:mr-[0] max-[575px]:mb-[12px]">
+                              {/* <img
+                                src="assets/img/reviews/2.jpg"
+                                alt="img-2"
+                                className="w-[50px] h-[50px] max-w-[50px] rounded-[10px]"
+                              /> */}
+                            </div>
+                            <div className="inner-contact">
+                              <h4 className="font-quicksand leading-[1.2] tracking-[0.03rem] mb-[5px] text-[16px] font-bold text-[#3d4750]">
+                                Asrar B.
+                              </h4>
+                              <div className="bb-pro-rating flex">
+                                {[...Array(4)].map((_, i) => (
+                                  <Image
+                                    key={i}
+                                    src={star}
+                                    alt={"star" + i}
+                                    className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+                                  ></Image>
+                                ))}
+                                <Image
+                                  src={starhalf}
+                                  alt={"starhalf"}
+                                  className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+                                ></Image>
+                              </div>
+                              <p className="font-Poppins text-[14px] leading-[26px] font-light tracking-[0.03rem] text-[#686e7d]">
+                                Bahoot hi kammal ki product he Dill khush ho gya
+                                Qeemat ke mutabiq bahoot hi zyada kammal ki
+                                cheez he Ma ne bahoot si mangwai he online pr
+                                yeh sb se zaberzast he😍
                               </p>
                             </div>
                           </div>
@@ -476,13 +575,18 @@ export default function ProductsSingle() {
                                 className="w-full h-[100px] border-[1px] border-solid border-[#eee] py-[20px] pl-[20px] pr-[10px] outline-[0] text-[14px] font-normal text-[#777] rounded-[20px] p-[10px]"
                               ></textarea>
                             </div>
-                            <div className="input-button">
-                              <a
-                                href="javascript:void(0)"
-                                className="bb-btn-2 transition-all duration-[0.3s] ease-in-out h-[40px] inline-flex font-Poppins leading-[28px] tracking-[0.03rem] py-[4px] px-[15px] text-[14px] font-normal text-[#fff] bg-[#6c7fd8] rounded-[10px] border-[1px] border-solid border-[#6c7fd8] hover:bg-transparent hover:border-[#3d4750] hover:text-[#3d4750]"
+                            <div className="buttons m-[2px] w-40 ">
+                              <div
+                                // onClick={() => handleAddToCart(product)}
+                                className="leading-[28px]"
                               >
-                                View Cart
-                              </a>
+                                <a
+                                  title="Add Review"
+                                  className="transition-all select-none px-[13px] duration-[0.3s] ease-in-out w-auto cursor-pointer   h-[40px] font-light text-[#777] leading-[32px] bg-[#f8f8fb] font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow1"
+                                >
+                                  {" Add Review"}
+                                </a>
+                              </div>
                             </div>
                           </form>
                         </div>
