@@ -6,6 +6,7 @@ import { store, persistor } from "./store";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import CartSidebar from "./components/Cart/CartSidebar";
 import Loader from "./components/Loader";
+import { ToastContainer } from "react-toastify";
 const queryClient = new QueryClient();
 export default function App({ children }) {
   return (
@@ -20,6 +21,7 @@ export default function App({ children }) {
           persistor={persistor}
         >
           {children}
+          <ToastContainer />
           <CartSidebar />
         </PersistGate>
       </Provider>

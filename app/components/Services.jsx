@@ -25,7 +25,7 @@ export default function Services() {
                   Free Shipping
                 </h4>
                 <p className="font-Poppins font-light text-[14px] leading-[20px] text-[#686e7d] tracking-[0.03rem]">
-                  Free shipping on all Us order or above $200
+                  Free shipping on all Us order or above Rs:5000
                 </p>
               </div>
             </div>

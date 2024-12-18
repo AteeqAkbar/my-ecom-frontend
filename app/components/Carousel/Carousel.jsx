@@ -7,7 +7,8 @@ import img4 from "../../image/img4.jpg";
 const items = [
   {
     id: 0,
-    image: img1?.src,
+    image: `https://paladimstudio.com/cdn/shop/files/vreme-monochrome-grey-wall-clock-oak-wood-handmade-handcrafted-sculpture-timepiece-art-decor-by-paladim-studio-3_copy.jpg?v=1698780025&width=1500`,
+    // image: img1?.src,
     author: "LUNDEV",
     title: "DESIGN SLIDER 1",
     topic: "ANIMAL",
@@ -15,7 +16,8 @@ const items = [
   },
   {
     id: 1,
-    image: img2?.src,
+    image: `https://paladimstudio.com/cdn/shop/files/mashina-slider.jpg?v=1727435212&width=1500`,
+    // image: img2?.src,
     author: "LUNDEV",
     title: "DESIGN SLIDER 2",
     topic: "ANIMAL",
@@ -23,7 +25,8 @@ const items = [
   },
   {
     id: 2,
-    image: img3?.src,
+    // image: img3?.src,
+    image: `https://paladimstudio.com/cdn/shop/files/kletka-oak-wall-clock-by-paladim-interior-banner-ai.jpg?v=1699790857&width=1500`,
     author: "LUNDEV",
     title: "DESIGN SLIDER 3",
     topic: "ANIMAL",
@@ -31,7 +34,8 @@ const items = [
   },
   {
     id: 3,
-    image: img4?.src,
+    image: `https://paladimstudio.com/cdn/shop/files/mixor-oak-wall-clock-handmade-crafted-modern-minimalist-decor-by-paladim-studio-3.jpg?v=1718532869&width=1946`,
+    // image: img4?.src,
     author: "LUNDEV",
     title: "DESIGN SLIDER 4",
     topic: "ANIMAL",

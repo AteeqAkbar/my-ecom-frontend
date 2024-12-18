@@ -2,13 +2,17 @@
 import React, { useEffect, useState } from "react";
 import Breadcrumb from "../components/Breadcrumb";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeFromCart } from "../store/cartSlice";
+import { addToCart, clearCart, removeFromCart } from "../store/cartSlice";
 import ProductSlider from "../components/Swiper/ProductSlider";
 import done from "../image/icons/done.png";
 import star from "../image/icons/star.png";
 import starhalf from "../image/icons/halfstar.png";
 import Image from "next/image";
 import { generateImageUrl } from "../utils/helperFun";
+import { postOrder, register } from "../services/api";
+import { setUserToken } from "../store/authSlice";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 function ProductItem({ item }) {
   return (
@@ -66,9 +70,20 @@ function ProductItem({ item }) {
 
 export default function Checkout() {
   const cartItems = useSelector((state) => state.cart.items);
+  const router = useRouter();
+  const auth = useSelector((state) => state.auth);
+  console.log(auth, "auth");
   const dispatch = useDispatch();
   const [totals, setTotals] = useState(0);
-
+  useEffect(() => {
+    setFormValues((value) => {
+      return {
+        ...value,
+        fullName: auth?.user?.username,
+        email: auth?.user?.email,
+      };
+    });
+  }, [auth]);
   const [formValues, setFormValues] = useState({
     fullName: "",
     phone: "",
@@ -96,27 +111,127 @@ export default function Checkout() {
     } else if (!/\S+@\S+\.\S+/.test(formValues.email)) {
       errors.email = "Email Address is invalid";
     }
-    if (!formValues.password) errors.password = "Password is required";
-    return errors;
+    if (auth?.token) {
+      return errors;
+    } else {
+      if (!formValues.password) errors.password = "Password is required";
+      return errors;
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const errors = validate();
     setFormErrors(errors);
-    if (Object.keys(errors).length === 0) {
-      // Proceed with form submission
-      alert("Form submitted successfully!");
-      // Reset form
-      setFormValues({
-        fullName: "",
-        phone: "",
-        address: "",
-        email: "",
-        password: "",
-        comment: "",
-      });
+    let prodcutIds = [];
+    cartItems.forEach((item) => {
+      prodcutIds.push(Number(item.id));
+    });
+
+    if (auth?.token) {
+      if (Object.keys(errors).length === 0) {
+        const data = {
+          name: formValues.fullName,
+          phone: formValues.phone,
+          address: formValues.address,
+          email: formValues.email,
+          totalPrice: totals,
+          comment: formValues.comment,
+          orderProducts: cartItems,
+          users_permissions_user: auth?.user?.id,
+          products: prodcutIds,
+        };
+
+        try {
+          const response = await postOrder(data);
+          toast("Order received! We’re processing it now.");
+          console.log("Order response:", response);
+          // Reset the cart
+          dispatch(clearCart());
+          //   // Reset form
+          setFormValues({
+            fullName: "",
+            phone: "",
+            address: "",
+            email: "",
+            password: "",
+            comment: "",
+          });
+          router.push("/");
+        } catch (error) {
+          toast.error(error.message);
+          console.error("There was an error adding items to the cart!", error);
+        }
+
+        // Reset form
+        setFormValues({
+          fullName: "",
+          phone: "",
+          address: "",
+          email: "",
+          password: "",
+          comment: "",
+        });
+      }
+      // Add items to the cart using the API
+    } else {
+      try {
+        const data = await register({
+          username: formValues.fullName,
+          password: formValues.password,
+          email: formValues.email,
+        });
+        dispatch(setUserToken({ token: data.jwt, user: data.user }));
+        const data1 = {
+          name: formValues.fullName,
+          phone: formValues.phone,
+          address: formValues.address,
+          email: formValues.email,
+          totalPrice: totals,
+          comment: formValues.comment,
+          orderProducts: cartItems,
+          users_permissions_user: data?.user?.id,
+          products: prodcutIds,
+        };
+
+        const response = await postOrder(data1);
+        console.log("Order response:", response);
+        toast("Order received! We’re processing it now.");
+        // Reset the cart
+        dispatch(clearCart());
+        //   // Reset form
+        setFormValues({
+          fullName: "",
+          phone: "",
+          address: "",
+          email: "",
+          password: "",
+          comment: "",
+        });
+        router.push("/");
+      } catch (error) {
+        toast.error(error.message);
+        console.error("There was an error adding items to the cart!", error);
+      }
     }
+
+    // const errors = validate();
+    // setFormErrors(errors);
+    // if (Object.keys(errors).length === 0) {
+    //   // Proceed with form submission
+    //   alert("Form submitted successfully!");
+
+    //   // Reset form
+    //   setFormValues({
+    //     fullName: "",
+    //     phone: "",
+    //     address: "",
+    //     email: "",
+    //     password: "",
+    //     comment: "",
+    //   });
+    // }
   };
 
   const handleInputChange = (e) => {
@@ -274,9 +389,9 @@ export default function Checkout() {
                           className="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] leading-[26px] outline-[0] rounded-[10px]"
                           // required
                         />
-                        {formErrors.fullName && (
+                        {formErrors?.fullName && (
                           <span className="text-red-500">
-                            {formErrors.fullName}
+                            {formErrors?.fullName}
                           </span>
                         )}
                       </div>
@@ -295,9 +410,9 @@ export default function Checkout() {
                           className="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] leading-[26px] outline-[0] rounded-[10px]"
                           // required
                         />
-                        {formErrors.phone && (
+                        {formErrors?.phone && (
                           <span className="text-red-500">
-                            {formErrors.phone}
+                            {formErrors?.phone}
                           </span>
                         )}
                       </div>
@@ -316,9 +431,9 @@ export default function Checkout() {
                           className="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] leading-[26px] outline-[0] rounded-[10px]"
                           // required
                         />
-                        {formErrors.address && (
+                        {formErrors?.address && (
                           <span className="text-red-500">
-                            {formErrors.address}
+                            {formErrors?.address}
                           </span>
                         )}
                       </div>
@@ -337,8 +452,8 @@ export default function Checkout() {
                       className="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] outline-[0] leading-[26px] rounded-[10px]"
                       // required
                     />
-                    {formErrors.email && (
-                      <span className="text-red-500">{formErrors.email}</span>
+                    {formErrors?.email && (
+                      <span className="text-red-500">{formErrors?.email}</span>
                     )}
                   </div>
                   <div className="input-item mb-[24px]">
@@ -354,9 +469,9 @@ export default function Checkout() {
                       className="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] outline-[0] leading-[26px] rounded-[10px]"
                       // required
                     />
-                    {formErrors.password && (
+                    {formErrors?.password && (
                       <span className="text-red-500">
-                        {formErrors.password}
+                        {formErrors?.password}
                       </span>
                     )}
                   </div>

@@ -1,6 +1,22 @@
 "use client";
 import FlipClockCountdown from "@leenguyen/react-flip-clock-countdown";
 import "@leenguyen/react-flip-clock-countdown/dist/index.css";
+function getEndOfDayTimestamp() {
+  const now = new Date();
+
+  // Set the time to the last millisecond of the current day
+  const endOfDay = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    23,
+    59,
+    59,
+    999
+  );
+
+  return endOfDay.getTime();
+}
 const Countdown = () => {
   return (
     <>
@@ -23,7 +39,8 @@ const Countdown = () => {
 }
 `}</style>
       <FlipClockCountdown
-        to={new Date().getTime() + 24 * 3600 * 1000 + 5000}
+        to={getEndOfDayTimestamp()}
+        // to={new Date().getTime() + 24 * 3600 * 1000 + 5000}
         labels={["DAYS", "HOURS", "MINUTES", "SECONDS"]}
         labelStyle={{
           fontSize: 10,

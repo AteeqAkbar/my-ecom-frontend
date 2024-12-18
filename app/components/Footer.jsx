@@ -8,8 +8,11 @@ import facebook from "../image/icons/facebook2.png";
 import insta from "../image/icons/instagram.png";
 import tiktok from "../image/icons/tiktok.png";
 import Image from "next/image";
+import { fetchCategories } from "../services/api";
+import Link from "next/link";
 
-const Footer = () => {
+const Footer = async () => {
+  const data = await fetchCategories();
   return (
     <footer className="bb-footer mt-[50px] max-[1199px]:mt-[35px] bg-[#f8f8fb] text-[#fff]">
       <div className="footer-container border-t-[1px] border-solid border-[#eee]">
@@ -23,8 +26,8 @@ const Footer = () => {
             >
               <div className="min-[992px]:w-[30%] max-[991px]:w-full w-full px-[12px] bb-footer-toggle bb-footer-cat">
                 <div className="bb-footer-widget bb-footer-company flex flex-col max-[991px]:mb-[24px]">
-                  <a
-                    href="index.html"
+                  <Link
+                    href="/"
                     className="inline-flex items-center gap-3 px-3 text-2xl font-semibold text-[#3d4750] hover:text-[#6c7fd8]"
                   >
                     {" "}
@@ -44,13 +47,13 @@ const Footer = () => {
                       Dico
                       {/* <span className="text-primary">Folio</span> */}
                     </span>
-                  </a>
+                  </Link>
                   <br></br>
 
                   <br></br>
                   <p className="bb-footer-detail max-w-[400px] mb-[30px] p-[0] font-Poppins text-[14px] leading-[27px] font-normal text-[#686e7d] inline-block relative max-[1399px]:text-[15px] max-[1199px]:text-[14px]">
-                    BlueBerry is the biggest market of grocery products. Get
-                    your daily needs from our store.
+                    Dico is the biggest market of Wood products. Get your daily
+                    needs from our store.
                   </p>
                   <div className="bb-footer-social">
                     <div className="bb-footer-widget">
@@ -117,46 +120,23 @@ const Footer = () => {
               <div className="min-[992px]:w-[20%] max-[991px]:w-full w-full px-[12px] bb-footer-toggle bb-footer-info">
                 <div className="bb-footer-widget">
                   <h4 className="bb-footer-heading font-quicksand leading-[1.2] text-[18px] font-bold mb-[20px] text-[#3d4750] tracking-[0] relative block w-full pb-[15px] capitalize border-b-[1px] border-solid border-[#eee] max-[991px]:text-[14px]">
-                    Category
+                    Categories
                     <div className="bb-heading-res">
                       <i className="ri-arrow-down-s-line"></i>
                     </div>
                   </h4>
                   <div className="bb-footer-links bb-footer-dropdown  max-[991px]:mb-[35px]">
                     <ul className="align-items-center">
-                      <li className="bb-footer-link leading-[1.5] flex items-center mb-[16px] max-[991px]:mb-[15px]">
-                        <a
-                          href="shop-left-sidebar-col-3.html"
-                          className="transition-all duration-[0.3s] ease-in-out font-Poppins text-[14px] leading-[20px] text-[#686e7d] hover:text-[#6c7fd8] mb-[0] inline-block break-all tracking-[0] font-normal"
-                        >
-                          Dairy &amp; Milk
-                        </a>
-                      </li>
-                      <li className="bb-footer-link leading-[1.5] flex items-center mb-[16px] max-[991px]:mb-[15px]">
-                        <a
-                          href="shop-banner-left-sidebar-col-3.html"
-                          className="transition-all duration-[0.3s] ease-in-out font-Poppins text-[14px] leading-[20px] text-[#686e7d] hover:text-[#6c7fd8] mb-[0] inline-block break-all tracking-[0] font-normal"
-                        >
-                          Snack &amp; Spice
-                        </a>
-                      </li>
-
-                      <li className="bb-footer-link leading-[1.5] flex items-center mb-[16px] max-[991px]:mb-[15px]">
-                        <a
-                          href="shop-list-full-col-2.html"
-                          className="transition-all duration-[0.3s] ease-in-out font-Poppins text-[14px] leading-[20px] text-[#686e7d] hover:text-[#6c7fd8] mb-[0] inline-block break-all tracking-[0] font-normal"
-                        >
-                          Bakery
-                        </a>
-                      </li>
-                      <li className="bb-footer-link leading-[1.5] flex items-center">
-                        <a
-                          href="shop-banner-right-sidebar-col-4.html"
-                          className="transition-all duration-[0.3s] ease-in-out font-Poppins text-[14px] leading-[20px] text-[#686e7d] hover:text-[#6c7fd8] mb-[0] inline-block break-all tracking-[0] font-normal"
-                        >
-                          Seafood
-                        </a>
-                      </li>
+                      {data?.data?.map((item) => (
+                        <li className="bb-footer-link leading-[1.5] flex items-center mb-[16px] max-[991px]:mb-[15px]">
+                          <Link
+                            href={`/products?categories=${item.name}`}
+                            className="transition-all duration-[0.3s] ease-in-out font-Poppins text-[14px] leading-[20px] text-[#686e7d] hover:text-[#6c7fd8] mb-[0] inline-block break-all tracking-[0] font-normal"
+                          >
+                            {item.name}
+                          </Link>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>
@@ -173,37 +153,45 @@ const Footer = () => {
                   <div className="bb-footer-links bb-footer-dropdown  max-[991px]:mb-[35px]">
                     <ul className="align-items-center">
                       <li className="bb-footer-link leading-[1.5] flex items-center mb-[16px] max-[991px]:mb-[15px]">
-                        <a
-                          href="login.html"
+                        <Link
+                          href="/auth"
                           className="transition-all duration-[0.3s] ease-in-out font-Poppins text-[14px] leading-[20px] text-[#686e7d] hover:text-[#6c7fd8] mb-[0] inline-block break-all tracking-[0] font-normal"
                         >
                           Sign In
-                        </a>
+                        </Link>
                       </li>
                       <li className="bb-footer-link leading-[1.5] flex items-center mb-[16px] max-[991px]:mb-[15px]">
-                        <a
-                          href="cart.html"
+                        <Link
+                          href="/cart"
                           className="transition-all duration-[0.3s] ease-in-out font-Poppins text-[14px] leading-[20px] text-[#686e7d] hover:text-[#6c7fd8] mb-[0] inline-block break-all tracking-[0] font-normal"
                         >
                           View Cart
-                        </a>
+                        </Link>
                       </li>
                       <li className="bb-footer-link leading-[1.5] flex items-center mb-[16px] max-[991px]:mb-[15px]">
+                        <Link
+                          href="/checkout"
+                          className="transition-all duration-[0.3s] ease-in-out font-Poppins text-[14px] leading-[20px] text-[#686e7d] hover:text-[#6c7fd8] mb-[0] inline-block break-all tracking-[0] font-normal"
+                        >
+                          Check Out
+                        </Link>
+                      </li>
+                      {/* <li className="bb-footer-link leading-[1.5] flex items-center mb-[16px] max-[991px]:mb-[15px]">
                         <a
                           href="faq.html"
                           className="transition-all duration-[0.3s] ease-in-out font-Poppins text-[14px] leading-[20px] text-[#686e7d] hover:text-[#6c7fd8] mb-[0] inline-block break-all tracking-[0] font-normal"
                         >
                           Return Policy
                         </a>
-                      </li>
+                      </li> */}
 
                       <li className="bb-footer-link leading-[1.5] flex items-center">
-                        <a
-                          href="checkout.html"
+                        <Link
+                          href="#"
                           className="transition-all duration-[0.3s] ease-in-out font-Poppins text-[14px] leading-[20px] text-[#686e7d] hover:text-[#6c7fd8] mb-[0] inline-block break-all tracking-[0] font-normal"
                         >
                           Payments
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                   </div>
@@ -229,8 +217,7 @@ const Footer = () => {
                             />
                           </span>
                           <p className="m-[0] ps-1 font-Poppins text-[14px] text-[#686e7d] font-normal leading-[28px] tracking-[0.03rem]">
-                            971 Lajamni, Motavarachha, Surat, Gujarat, Bharat
-                            394101.
+                            Nankana Sahib, Punjab, Pakistan
                           </p>
                         </li>
                         <li className="bb-footer-link bb-foo-call flex items-start max-[991px]:mb-[15px] mb-[16px]">
@@ -242,10 +229,10 @@ const Footer = () => {
                             />
                           </span>
                           <a
-                            href="tel:+009876543210"
+                            href="tel:+9231414900152"
                             className="ps-1 transition-all duration-[0.3s] ease-in-out font-Poppins text-[14px] leading-[20px] text-[#686e7d] inline-block relative break-all tracking-[0] font-normal max-[1399px]:text-[15px] max-[1199px]:text-[14px]"
                           >
-                            +00 9876543210
+                            0311-4900152
                           </a>
                         </li>
                         <li className="bb-footer-link bb-foo-mail flex">
@@ -257,10 +244,10 @@ const Footer = () => {
                             />
                           </span>
                           <a
-                            href="mailto:example@email.com"
+                            href="mailto:attiqdoger3@gmail.com"
                             className="ps-1 transition-all duration-[0.3s] ease-in-out font-Poppins text-[14px] leading-[20px] text-[#686e7d] inline-block relative break-all tracking-[0] font-normal max-[1399px]:text-[15px] max-[1199px]:text-[14px]"
                           >
-                            example@email.com
+                            attiqdoger3@gmail.com
                           </a>
                         </li>
                       </ul>
@@ -285,19 +272,19 @@ const Footer = () => {
                       >
                         {new Date().getFullYear()}
                       </span>{" "}
-                      <a
+                      <Link
                         className="site-name transition-all duration-[0.3s] ease-in-out font-medium  text-[#6c7fd8] font-Poppins  tracking-[0.03rem]"
-                        href="index.html"
+                        href="/"
                       >
-                        <a
-                          href="index.html"
+                        <div
+                          // href="index.html"
                           className="inline-flex items-center gap-2 px-1  "
                         >
                           {" "}
                           <Loader size="12px" />
                           <span>Dico</span>
-                        </a>
-                      </a>
+                        </div>
+                      </Link>
                       all rights reserved.
                     </div>
                   </div>

@@ -34,10 +34,13 @@ export const cartSlice = createSlice({
         }
       }
     },
+    clearCart: (state, action) => {
+      state.items = [];
+    },
   },
 });
 
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, clearCart } = cartSlice.actions;
 
 const persistConfig = {
   key: "cart",

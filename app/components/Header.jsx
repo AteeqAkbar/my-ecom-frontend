@@ -12,6 +12,9 @@ import { openCart } from "../store/cartVisibilitySlice";
 import Loader from "./Loader";
 import Link from "next/link";
 import Image from "next/image";
+import { fetchCategories } from "../services/api";
+import { useQuery } from "@tanstack/react-query";
+import { generateImageUrl } from "../utils/helperFun";
 
 const Header = () => {
   useScroll();
@@ -20,6 +23,10 @@ const Header = () => {
   const dispatch = useDispatch();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["fetchCategories"],
+    queryFn: fetchCategories,
+  });
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen((prev) => !prev);
@@ -93,317 +100,69 @@ const Header = () => {
         </nav> */}
         <ul className="flex items-center justify-center font-semibold">
           <li className="relative group px-3 py-2">
-            <button className="hover:opacity-50 cursor-default">
+            <Link href={"/"} className="hover:opacity-50 ">
+              Home
+            </Link>
+          </li>
+          <li className="relative group px-3 py-2">
+            <Link href={"/products"} className="hover:opacity-50 ">
               Products
-            </button>
-            <div className="absolute top-0 -left-48 transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-500 ease-in-out group-hover:transform z-50 min-w-[560px] transform">
+            </Link>
+          </li>
+          <li className="relative group px-3 py-2">
+            <div className="hover:opacity-50 cursor-default">Categories</div>
+            <div className="absolute top-0 -left-48 transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-500 ease-in-out group-hover:transform z-50 min-w-[360px] transform">
               <div className="relative top-6 p-6 bg-white rounded-xl shadow-xl w-full">
                 <div className="w-10 h-10 bg-white transform rotate-45 absolute top-0 z-0 translate-x-0 transition-transform group-hover:translate-x-[12rem] duration-500 ease-in-out rounded-sm"></div>
-
-                <div className="relative z-10">
-                  <div className="grid grid-cols-2 gap-6">
-                    <div>
-                      <p className="uppercase tracking-wider text-gray-500 font-medium text-[13px]">
-                        The Suite
-                      </p>
-                      <ul className="mt-3 text-[15px]">
-                        <li>
-                          <a
-                            href="#"
-                            className="block p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
-                          >
-                            Course Editor
-                            <p className="text-gray-500 font-normal">
-                              All-in-one editor
-                            </p>
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            className="block p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
-                          >
-                            Accept payments
-                            <p className="text-gray-500 font-normal">
-                              Pre-build payments page
-                            </p>
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            className="block p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
-                          >
-                            Closed Captioning
-                            <p className="text-gray-500 font-normal">
-                              Use AI to generate captions
-                            </p>
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="uppercase tracking-wider text-gray-500 font-medium text-[13px]">
-                        Extensions
-                      </p>
-                      <ul className="mt-3 text-[15px]">
-                        <li>
-                          <a
-                            href="#"
-                            className="block p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
-                          >
-                            Plugins
-                            <p className="text-gray-500 font-normal">
-                              Tweak existing functionality
-                            </p>
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            className="block p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
-                          >
-                            Batch uploads
-                            <p className="text-gray-500 font-normal">
-                              Get your time back
-                            </p>
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            className="block p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
-                          >
-                            Social sharing
-                            <p className="text-gray-500 font-normal">
-                              Generate content for socials
-                            </p>
-                          </a>
-                        </li>
-                      </ul>
+                {error ? (
+                  <div>An error occurred: {error.message}</div>
+                ) : isLoading ? (
+                  <Loader size="20px" />
+                ) : (
+                  <div className="relative z-10">
+                    <div className="grid grid-cols-1 gap-6">
+                      <div>
+                        {/* <p className="uppercase tracking-wider text-gray-500 font-medium text-[13px]">
+                          The Suite
+                        </p> */}
+                        <ul className="mt-3 text-[13px] grid grid-cols-2 gap-6">
+                          {data?.data?.map((item) => (
+                            <li>
+                              <Link
+                                href={`/products?categories=${item.name}`}
+                                className="flex items-center gap-2 p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-normal hover:text-indigo-600"
+                              >
+                                <Image
+                                  unoptimized={true}
+                                  width={35}
+                                  height={35}
+                                  quality={100}
+                                  src={
+                                    generateImageUrl(item?.image?.url) ||
+                                    "https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/category/2.svg"
+                                  }
+                                  alt="category"
+                                  className="rounded-xl max-[1399px]:h-[30px] max-[1399px]:w-[30px] max-[1199px]:h-[25px] max-[1199px]:w-[25px]"
+                                />
+                                {item?.name}
+                                <p className="text-gray-500 font-normal">
+                                  {item?.description || " "}
+                                </p>
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </li>
           <li className="relative group px-3 py-2">
-            <button className="hover:opacity-50 cursor-default">
-              Solutions
-            </button>
-            <div className="absolute top-0 -left-2 transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-500 ease-in-out group-hover:transform z-50 min-w-[260px] transform">
-              <div className="relative top-6 p-6 bg-white rounded-xl shadow-xl w-full">
-                <div className="w-10 h-10 bg-white transform rotate-45 absolute top-0 z-0 -translate-x-4 transition-transform group-hover:translate-x-3 duration-500 ease-in-out rounded-sm"></div>
-                <div className="relative z-10">
-                  <p className="uppercase tracking-wider text-gray-500 font-medium text-[13px]">
-                    Use cases
-                  </p>
-                  <ul className="mt-3 text-[15px]">
-                    <li>
-                      <a
-                        href="#"
-                        className="bg-transparent bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 font-semibold hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 py-1 block"
-                      >
-                        Creators
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="bg-transparent bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 font-semibold hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 py-1 block"
-                      >
-                        Streamers
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="bg-transparent bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 font-semibold hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 py-1 block"
-                      >
-                        Influence
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="bg-transparent bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 font-semibold hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 py-1 block"
-                      >
-                        Programming
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="bg-transparent bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 font-semibold hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 py-1 block"
-                      >
-                        Design
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li className="relative group px-3 py-2">
-            <button className="hover:opacity-50 cursor-default">
-              Developers
-            </button>
-            <div className="absolute top-0 -left-48 transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-500 ease-in-out group-hover:transform z-50 min-w-[560px] transform">
-              <div className="relative top-6 p-6 bg-white rounded-xl shadow-xl w-full">
-                <div className="w-10 h-10 bg-white transform rotate-45 absolute top-0 z-0 translate-x-0 transition-transform group-hover:translate-x-[12.65rem] duration-500 ease-in-out rounded-sm"></div>
-
-                <div className="relative z-10">
-                  <a
-                    href="#"
-                    className="block p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
-                  >
-                    Documentation
-                    <p className="text-gray-500 font-normal">
-                      Start integrating in no time
-                    </p>
-                  </a>
-                  <div className="mt-6 grid grid-cols-2 gap-6">
-                    <div>
-                      <p className="uppercase tracking-wider text-gray-500 font-medium text-[13px]">
-                        Get started
-                      </p>
-                      <ul className="mt-3 text-[15px]">
-                        <li>
-                          <a
-                            href="#"
-                            className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
-                          >
-                            Libraries and SDKs
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
-                          >
-                            Plugins
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
-                          >
-                            Code samples
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
-                          >
-                            Tutorials
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="uppercase tracking-wider text-gray-500 font-medium text-[13px]">
-                        Guides
-                      </p>
-                      <ul className="mt-3 text-[15px]">
-                        <li>
-                          <a
-                            href="#"
-                            className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
-                          >
-                            Accept online payments
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
-                          >
-                            Editing video like a pro
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
-                          >
-                            Automation techniques
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
-                          >
-                            Create stunning effects
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li className="relative group px-3 py-2">
-            <button className="hover:opacity-50 cursor-default">
-              Resources
-            </button>
-            <div className="absolute top-0 -left-2 transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-500 ease-in-out group-hover:transform z-50 min-w-[200px] transform">
-              <div className="relative top-6 p-6 bg-white rounded-xl shadow-xl w-full">
-                <div className="w-10 h-10 bg-white transform rotate-45 absolute top-0 z-0 -translate-x-4 transition-transform group-hover:translate-x-3 duration-500 ease-in-out rounded-sm"></div>
-                <div className="relative z-10">
-                  <ul className="text-[15px]">
-                    <li>
-                      <a
-                        href="#"
-                        className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
-                      >
-                        Get Support
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
-                      >
-                        Blog
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
-                      >
-                        Case Studies
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
-                      >
-                        Guides
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
-                      >
-                        News &amp; Events
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li className="relative group px-3 py-2">
-            <a href="#" className="hover:opacity-50 cursor-default">
-              Pricing
-            </a>
+            <Link href={"/checkout"} className="hover:opacity-50 ">
+              Check Out
+            </Link>
           </li>
         </ul>
 
@@ -534,62 +293,60 @@ const Header = () => {
 
             <ul className="mt-4 flex flex-1 flex-col gap-2">
               <li>
-                <a
-                  href="index.html"
-                  className="inline-flex w-full items-center gap-2 rounded-lg px-3 py-2 text-base font-medium text-dark transition hover:bg-light"
+                <Link
+                  href="/"
+                  className="flex items-center gap-2 p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
                 >
                   <span>Home</span>
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="about.html"
-                  className="inline-flex w-full items-center gap-2 rounded-lg px-3 py-2 text-base font-medium text-muted transition hover:bg-light"
+                <Link
+                  href="/products"
+                  className="flex items-center gap-2 p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
                 >
-                  <span>About</span>
-                </a>
+                  <span>Products</span>
+                </Link>
               </li>
               <li>
-                <a
-                  href="services.html"
-                  className="inline-flex w-full items-center gap-2 rounded-lg px-3 py-2 text-base font-medium text-muted transition hover:bg-light"
-                >
-                  <span>Services</span>
-                </a>
+                <div className="flex items-center gap-2 p-2 -mx-2 rounded-lg  text-gray-800 font-semibold ">
+                  <span>Categories</span>
+                </div>
+                <ul className="flex ms-5 flex-col gap-2">
+                  {data?.data?.map((item) => (
+                    <li>
+                      <Link
+                        href={`/products?categories=${item.name}`}
+                        className="flex items-center gap-2 p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-normal hover:text-indigo-600"
+                      >
+                        {item?.name}
+                        <p className="text-gray-500 font-normal">
+                          {item?.description || " "}
+                        </p>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </li>
+
               <li>
-                <a
-                  href="portfolio.html"
-                  className="inline-flex w-full items-center gap-2 rounded-lg px-3 py-2 text-base font-medium text-muted transition hover:bg-light"
+                <Link
+                  href="/checkout"
+                  className="flex items-center gap-2 p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
                 >
-                  <span>Works</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="blog.html"
-                  className="inline-flex w-full items-center gap-2 rounded-lg px-3 py-2 text-base font-medium text-muted transition hover:bg-light"
-                >
-                  <span>Blog</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="contact.html"
-                  className="inline-flex w-full items-center gap-2 rounded-lg px-3 py-2 text-base font-medium text-muted transition hover:bg-light"
-                >
-                  <span>Contact</span>
-                </a>
+                  <span>Check Out</span>
+                </Link>
               </li>
             </ul>
 
             <div className="flex items-center justify-center">
-              <a
-                href="contact.html"
+              <Link
+                // href="contact.html"
+                href={""}
                 className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-dark px-6 py-4 font-semibold leading-tight text-white"
               >
                 Let's Talk
-              </a>
+              </Link>
             </div>
           </div>
           <div

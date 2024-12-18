@@ -1246,3 +1246,25 @@ input[type="number"] {
     transform: scale(1.1);
   }
 }
+
+.bb-team-socials {
+  transition: all 0.3s ease-in-out;
+}
+
+.bb-social-link {
+  position: relative;
+}
+
+.bb-social-link a {
+  display: inline-block;
+  color: #3d4750; /* Default icon color */
+  transition: color 0.3s ease;
+}
+
+.bb-social-link a:hover {
+  color: #6c7fd8; /* Change icon color on hover */
+}
+
+.bb-team-box:hover .bb-team-socials {
+  right: 0; /* Move social icons into view on hover */
+}

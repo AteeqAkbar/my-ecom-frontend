@@ -17,6 +17,12 @@ export const fetchCategories = async () => {
   const response = await axiosInstance.get("/categories?populate=*");
   return response.data;
 };
+export const postOrder = async (data) => {
+  const response = await axiosInstance.post("/orders", {
+    data: data,
+  });
+  return response.data;
+};
 export const fetchSingleProduct = async (slug) => {
   const response = await axiosInstance.get(
     `/products?populate=*&filters[slug][$eq]=${slug}`
@@ -29,8 +35,6 @@ export const fetchProducts = async (
   minPrice = null,
   maxPrice = null
 ) => {
-  console.log(page, "page");
-
   // Build query parameters
   const params = {
     "pagination[page]": page,
