@@ -77,6 +77,14 @@ const Slider = () => {
     );
   };
 
+  const displayCount = 4;
+
+  // Create a new array of items to display based on currentIndex
+  const displayedItems = [];
+
+  for (let i = 0; i < displayCount; i++) {
+    displayedItems.push(items[(currentIndex + i) % items.length]);
+  }
   return (
     <div className={`w-full h-full flex relative`}>
       {/* <!-- carousel --> */}
@@ -123,15 +131,17 @@ const Slider = () => {
         </div>
         {/* <!-- list thumnail --> */}
         <div className="thumbnail">
-          {items.map((item, i) => {
+          {displayedItems.map((item, i) => {
             return (
               <div
-                onClick={() => {
-                  setAnimation("next");
-                  setCurrentIndex(i);
-                }}
+                // onClick={() => {
+                //   setAnimation("next");
+                //   setCurrentIndex(i);
+                // }}
                 key={item.id + item.author}
-                className={`item cursor-pointer`}
+                className={`item 
+                //cursor-pointer
+                `}
               >
                 <img src={item.image} />
                 <div className="content">

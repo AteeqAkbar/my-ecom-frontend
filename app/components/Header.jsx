@@ -129,6 +129,7 @@ const Header = () => {
                           {data?.data?.map((item) => (
                             <li>
                               <Link
+                                key={item?.documentId}
                                 href={`/products?categories=${item.name}`}
                                 className="flex items-center gap-2 p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-normal hover:text-indigo-600"
                               >
@@ -316,6 +317,7 @@ const Header = () => {
                   {data?.data?.map((item) => (
                     <li>
                       <Link
+                        key={item?.documentId}
                         href={`/products?categories=${item.name}`}
                         className="flex items-center gap-2 p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-normal hover:text-indigo-600"
                       >

@@ -1,7 +1,7 @@
 import React from "react";
 import CategoriesSlider from "./Swiper/CategoriesSlider";
 import Image from "next/image";
-import Image1 from "@/app/image/category.jpg";
+import Image1 from "@/app/image/lamp.webp";
 
 function ExploreCategories() {
   return (
@@ -32,11 +32,11 @@ function ExploreCategories() {
                   data-aos-duration="1000"
                   data-aos-delay="600"
                 >
-                  <h2 className="bg-transparent bg-clip-text leading-[1.3] text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500  hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400  text-[124px] font-bold max-[1399px]:text-[95px] max-[1202px]:text-[70px] max-[767px]:text-[142px]">
+                  <h2 className="bg-transparent bg-clip-text leading-[1.3] text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500  hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400  text-[104px] font-bold max-[1399px]:text-[95px] max-[1202px]:text-[70px] max-[767px]:text-[142px]">
                     Explore Categories
                   </h2>
                 </div>
-                <CategoriesSlider />
+                <CategoriesSlider slidesPerView={3} />
               </div>
             </div>
           </div>
