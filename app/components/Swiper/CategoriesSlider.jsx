@@ -64,23 +64,23 @@ export default function CategoriesSlider({ slidesPerView = 4 }) {
                   className="owl-item cloned"
                   // style="width: 204px; margin-right: 24px;"
                 >
-                  <div class="owl-item active me-[30px] w-auto h-[220px]">
+                  <div className="owl-item active me-[30px] w-auto h-[220px]">
                     <div
-                      class="bb-team-box aos-init aos-animate"
+                      className="bb-team-box aos-init aos-animate"
                       data-aos="fade-up"
                       data-aos-duration="1000"
                       data-aos-delay="800"
                     >
-                      <div class="bb-team-img mb-[20px] relative h-full flex items-center overflow-hidden">
-                        <div class="bb-team-socials transition-all duration-[0.3s] ease-in-out bg-[#fff] rounded-tl-[20px] rounded-bl-[20px] absolute right-[-160px]">
-                          <div class="inner-shape relative"></div>
-                          <ul class="mb-[0] py-[20px] px-[10px] flex flex-col items-start">
+                      <div className="bb-team-img mb-[20px] relative h-full flex items-center overflow-hidden">
+                        <div className="bb-team-socials transition-all duration-[0.3s] ease-in-out bg-[#fff] rounded-tl-[20px] rounded-bl-[20px] absolute right-[-160px]">
+                          <div className="inner-shape relative"></div>
+                          <ul className="mb-[0] py-[20px] px-[10px] flex flex-col items-start">
                             {category?.name?.split(" ").map((word, index) => (
                               <li
                                 key={index}
-                                class="bb-social-link text-[14px] text-center flex justify-center items-center font-bold uppercase bg-transparent bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500  hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400"
+                                className="bb-social-link text-[14px] text-center flex justify-center items-center font-bold uppercase bg-transparent bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500  hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400"
                               >
-                                <span class="">{word}</span>
+                                <span className="">{word}</span>
                               </li>
                             ))}
                           </ul>
@@ -94,14 +94,14 @@ export default function CategoriesSlider({ slidesPerView = 4 }) {
                             "https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/category/2.svg"
                           }
                           alt="team-4"
-                          class="w-full h-[220px] object-cover rounded-[20px]"
+                          className="w-full h-[220px] object-cover rounded-[20px]"
                         />
                       </div>
-                      {/* <div class="bb-team-contact text-center">
-                        <h5 class="font-quicksand tracking-[0.03rem] leading-[1.2] text-[18px] font-bold text-[#3d4750]">
+                      {/* <div className="bb-team-contact text-center">
+                        <h5 className="font-quicksand tracking-[0.03rem] leading-[1.2] text-[18px] font-bold text-[#3d4750]">
                           Juliat Hilson
                         </h5>
-                        <p class="font-Poppins font-light leading-[28px] tracking-[0.03rem] text-[15px] text-[#686e7d]">
+                        <p className="font-Poppins font-light leading-[28px] tracking-[0.03rem] text-[15px] text-[#686e7d]">
                           Team Leader
                         </p>
                       </div> */}

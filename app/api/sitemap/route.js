@@ -52,6 +52,16 @@ export async function GET() {
               </url>`
           )
           .join("")}
+          <url>
+                <loc>${baseURLfrontend}</loc>
+                <changefreq>daily</changefreq>
+                <priority>0.8</priority>
+              </url>
+          <url>
+                <loc>${baseURLfrontend}/products</loc>
+                <changefreq>daily</changefreq>
+                <priority>0.8</priority>
+              </url>
       </urlset>`;
 
     // Return the XML as a response

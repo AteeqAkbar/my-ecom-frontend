@@ -25,6 +25,7 @@ function List(props) {
   const searchParams = useSearchParams();
   if (cat?.length > 0) {
     const decodedString = decodeURIComponent(cat);
+
     categories = [decodedString];
   } else {
     categories = searchParams.getAll("categories");
