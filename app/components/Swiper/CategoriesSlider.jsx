@@ -11,12 +11,10 @@ import { fetchCategories } from "@/app/services/api";
 import { useQuery } from "@tanstack/react-query";
 import { generateImageUrl, getRandomColor } from "@/app/utils/helperFun";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 export default function CategoriesSlider({ slidesPerView = 4 }) {
-  const { data, error, isLoading } = useQuery({
-    queryKey: ["fetchCategories"],
-    queryFn: fetchCategories,
-  });
+  const { items, loading, error } = useSelector((state) => state.categories);
 
   if (error) return <div>An error occurred: {error.message}</div>;
   return (
@@ -50,19 +48,19 @@ export default function CategoriesSlider({ slidesPerView = 4 }) {
         className="max-w-full "
         // className="max-w-[90%] lg:max-w-[80%]"
       >
-        {isLoading &&
+        {loading &&
           Array.from({ length: 5 }).map((_, index) => (
             <SwiperSlide key={index}>
               <CardCategorySkeleton />
             </SwiperSlide>
           ))}
-        {data &&
-          data?.data?.map((category, index) => {
+        {items &&
+          items?.data?.map((category, index) => {
             const colorClass = getRandomColor(index);
             return (
               <SwiperSlide key={index}>
                 <Link
-                  href={`/products?categories=${category.name}`}
+                  href={`/${category.name}`}
                   className="owl-item cloned"
                   // style="width: 204px; margin-right: 24px;"
                 >
@@ -99,14 +97,14 @@ export default function CategoriesSlider({ slidesPerView = 4 }) {
                           class="w-full h-[220px] object-cover rounded-[20px]"
                         />
                       </div>
-                      <div class="bb-team-contact text-center">
+                      {/* <div class="bb-team-contact text-center">
                         <h5 class="font-quicksand tracking-[0.03rem] leading-[1.2] text-[18px] font-bold text-[#3d4750]">
                           Juliat Hilson
                         </h5>
                         <p class="font-Poppins font-light leading-[28px] tracking-[0.03rem] text-[15px] text-[#686e7d]">
                           Team Leader
                         </p>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
 

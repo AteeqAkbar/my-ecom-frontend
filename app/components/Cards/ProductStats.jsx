@@ -13,7 +13,7 @@ const ProductStats = () => {
       // Generate random numbers for demonstration
       setViewers(Math.floor(Math.random() * 100) + 50); // Random viewers between 50 and 150
       //   setSold(Math.floor(Math.random() * 200) + 100); // Random sold between 100 and 300
-    }, 2000); // Update every second
+    }, 2500); // Update every second
 
     return () => clearInterval(interval); // Cleanup on unmount
   }, []);

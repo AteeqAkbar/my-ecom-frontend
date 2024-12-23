@@ -11,9 +11,9 @@ const Breadcrumb = ({ title = "Cart" }) => {
           <div className="w-full px-[12px]">
             <div className="flex flex-wrap w-full bb-breadcrumb-inner m-[0] py-[20px] items-center">
               <div className="min-[768px]:w-[50%] min-[576px]:w-full w-full px-[12px]">
-                <h2 className="bb-breadcrumb-title font-quicksand tracking-[0.03rem] leading-[1.2] text-[16px] font-bold text-[#3d4750] max-[767px]:text-center max-[767px]:mb-[10px]">
+                <h1 className="bb-breadcrumb-title font-quicksand tracking-[0.03rem] leading-[1.2] text-[16px] font-bold text-[#3d4750] max-[767px]:text-center max-[767px]:mb-[10px]">
                   {title}
-                </h2>
+                </h1>
               </div>
               <div className="min-[768px]:w-[50%] min-[576px]:w-full w-full px-[12px]">
                 <ul className="bb-breadcrumb-list mx-[-5px] flex justify-end max-[767px]:justify-center">

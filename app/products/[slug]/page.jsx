@@ -18,6 +18,8 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "@/app/store/cartSlice";
 import ProductSkeleton from "@/app/components/Cards/ProductSkeleton";
 import Link from "next/link";
+import { convertJsonToHtml, generateImageUrl } from "@/app/utils/helperFun";
+import FAQPageSchema from "@/app/components/Seo/FAQPageSchema";
 export default function ProductPage() {
   const { slug } = useParams();
 
@@ -60,6 +62,81 @@ export default function ProductPage() {
 
   return (
     <>
+      {/* seo */}
+      <title>{product?.seo?.metaTitle || `Buy ${product?.name} | Deco`}</title>
+      <meta
+        name="description"
+        content={product?.seo?.metaDescription || product?.description}
+      ></meta>
+      <link
+        rel="canonical"
+        href={`${window.location.origin}${window.location.pathname}`}
+      ></link>
+
+      <meta
+        property="og:title"
+        content={product?.seo?.metaTitle || `Buy ${product?.name} | Deco`}
+      ></meta>
+      <meta
+        property="og:description"
+        content={product?.seo?.metaDescription || product?.description}
+      ></meta>
+      <meta
+        property="og:image"
+        content={generateImageUrl(product?.image?.[0]?.url)}
+      ></meta>
+      <meta
+        property="og:url"
+        content={`${window.location.origin}${window.location.pathname}`}
+      ></meta>
+      <meta property="og:type" content="website"></meta>
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta
+        name="twitter:title"
+        content={product?.seo?.metaTitle || `Buy ${product?.name} | Deco`}
+      />
+      <meta
+        name="twitter:description"
+        content={product?.seo?.metaDescription || product?.description}
+      />
+      <meta
+        name="twitter:image"
+        content={generateImageUrl(product?.image?.[0]?.url)}
+      />
+      {/* <FAQPageSchema faqs={product?.faqs} /> */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: product?.name,
+            image: generateImageUrl(product?.images?.[0]?.url),
+            description: product?.description,
+
+            brand: {
+              "@type": "Brand",
+              name: "Dico",
+            },
+            offers: {
+              "@type": "Offer",
+              url: `${window.location.origin}/products/${product?.slug}`,
+              price: product?.discountPrice || product?.price,
+              priceCurrency: "PKR",
+              availability: "https://schema.org/InStock",
+              itemCondition: "https://schema.org/NewCondition",
+            },
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: "4.0",
+              bestRating: "5",
+              worstRating: "1",
+              ratingCount: "50",
+            },
+          }),
+        }}
+      />
+
       <Breadcrumb title={product?.name} />
       <section className="section-product py-[50px] max-[1199px]:py-[35px]">
         <div className="flex flex-wrap justify-between relative items-center mx-auto min-[1400px]:max-w-[1320px] min-[1200px]:max-w-[1140px] min-[992px]:max-w-[960px] min-[768px]:max-w-[720px] min-[576px]:max-w-[540px]">
@@ -304,14 +381,26 @@ export default function ProductPage() {
                     <div className=" tab-pro-pane">
                       <div className="bb-inner-tabs transition-all duration-[0.3s] ease-in-out border-[1px] border-solid bg-[#f8f8fb] border-[#eee] p-[15px] rounded-[20px]">
                         <div className="bb-details">
-                          <p className="mb-[12px] font-Poppins text-[#686e7d] leading-[28px] tracking-[0.03rem] font-light">
-                            {product?.description ||
-                              `Lorem ipsum dolor sit amet consectetur adipisicing
+                          {product?.longDescription ? (
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: convertJsonToHtml(
+                                  product?.longDescription
+                                ),
+                              }}
+                              className="mb-[12px] font-Poppins text-[#686e7d] tracking-[0.03rem] font-light"
+                              //  className="w-full px-[12px] font-Poppins tracking-[0.03rem] mb-[16px] text-[14px] text-[#686e7d] text-xs border-[1px] border-solid bg-[#f8f8fb] border-[#eee] p-[20px] rounded-[20px] aos-init aos-animate"
+                            ></div>
+                          ) : (
+                            <p className="mb-[12px] font-Poppins text-[#686e7d] leading-[28px] tracking-[0.03rem] font-light">
+                              {product?.description ||
+                                `Lorem ipsum dolor sit amet consectetur adipisicing
                             elit. Libero, voluptatum. Vitae dolores alias
                             repellat eligendi, officiis, exercitationem corporis
                             quisquam delectus cum non recusandae numquam
                             dignissimos molestiae magnam hic natus. Cumque.`}
-                          </p>
+                            </p>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -390,142 +479,181 @@ export default function ProductPage() {
                     <div className=" tab-pro-pane" id="reviews">
                       <div className="bb-inner-tabs transition-all duration-[0.3s] ease-in-out border-[1px] border-solid bg-[#f8f8fb] border-[#eee] p-[15px] rounded-[20px]">
                         <div className="bb-reviews">
-                          <div className="reviews-bb-box flex mb-[24px] max-[575px]:flex-col">
-                            <div className="inner-image mr-[12px] max-[575px]:mr-[0] max-[575px]:mb-[12px]">
-                              {/* <img
+                          {product?.reviews?.length > 0 ? (
+                            product?.reviews?.map((review, i) => (
+                              <div className="reviews-bb-box flex mb-[24px] max-[575px]:flex-col">
+                                <div className="inner-image mr-[12px] max-[575px]:mr-[0] max-[575px]:mb-[12px]">
+                                  {/* <img
                                 src="assets/img/reviews/1.jpg"
                                 alt="img-1"
                                 className="w-[50px] h-[50px] max-w-[50px] rounded-[10px]"
                               /> */}
-                            </div>
-                            <div className="inner-contact">
-                              <h4 className="font-quicksand leading-[1.2] tracking-[0.03rem] mb-[5px] text-[16px] font-bold text-[#3d4750]">
-                                Malik S.
-                              </h4>
-                              <div className="bb-pro-rating flex">
-                                {[...Array(4)].map((_, i) => (
-                                  <Image
-                                    key={i}
-                                    src={star}
-                                    alt={"star" + i}
-                                    className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
-                                  ></Image>
-                                ))}
-                                <Image
-                                  src={starhalf}
-                                  alt={"starhalf"}
-                                  className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
-                                ></Image>
+                                </div>
+                                <div className="inner-contact">
+                                  <h4 className="font-quicksand leading-[1.2] tracking-[0.03rem] mb-[5px] text-[16px] font-bold text-[#3d4750]">
+                                    {review?.name}
+                                  </h4>
+                                  <div className="bb-pro-rating flex">
+                                    {[...Array(4)].map((_, i) => (
+                                      <Image
+                                        key={i}
+                                        src={star}
+                                        alt={"star" + i}
+                                        className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+                                      ></Image>
+                                    ))}
+                                    <Image
+                                      src={starhalf}
+                                      alt={"starhalf"}
+                                      className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+                                    ></Image>
+                                  </div>
+                                  <p className="font-Poppins text-[14px] leading-[26px] font-light tracking-[0.03rem] text-[#686e7d]">
+                                    {review?.review}
+                                  </p>
+                                </div>
                               </div>
-                              <p className="font-Poppins text-[14px] leading-[26px] font-light tracking-[0.03rem] text-[#686e7d]">
-                                best best quality. .jldi deliver hogya or size b
-                                perfect hai h
-                              </p>
-                            </div>
-                          </div>
-                          <div className="reviews-bb-box flex mb-[24px] max-[575px]:flex-col">
-                            <div className="inner-image mr-[12px] max-[575px]:mr-[0] max-[575px]:mb-[12px]">
-                              {/* <img
+                            ))
+                          ) : (
+                            <>
+                              <div className="reviews-bb-box flex mb-[24px] max-[575px]:flex-col">
+                                <div className="inner-image mr-[12px] max-[575px]:mr-[0] max-[575px]:mb-[12px]">
+                                  {/* <img
+                                src="assets/img/reviews/1.jpg"
+                                alt="img-1"
+                                className="w-[50px] h-[50px] max-w-[50px] rounded-[10px]"
+                              /> */}
+                                </div>
+                                <div className="inner-contact">
+                                  <h4 className="font-quicksand leading-[1.2] tracking-[0.03rem] mb-[5px] text-[16px] font-bold text-[#3d4750]">
+                                    Malik S.
+                                  </h4>
+                                  <div className="bb-pro-rating flex">
+                                    {[...Array(4)].map((_, i) => (
+                                      <Image
+                                        key={i}
+                                        src={star}
+                                        alt={"star" + i}
+                                        className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+                                      ></Image>
+                                    ))}
+                                    <Image
+                                      src={starhalf}
+                                      alt={"starhalf"}
+                                      className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+                                    ></Image>
+                                  </div>
+                                  <p className="font-Poppins text-[14px] leading-[26px] font-light tracking-[0.03rem] text-[#686e7d]">
+                                    best best quality. .jldi deliver hogya or
+                                    size b perfect hai h
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="reviews-bb-box flex mb-[24px] max-[575px]:flex-col">
+                                <div className="inner-image mr-[12px] max-[575px]:mr-[0] max-[575px]:mb-[12px]">
+                                  {/* <img
                                 src="assets/img/reviews/2.jpg"
                                 alt="img-2"
                                 className="w-[50px] h-[50px] max-w-[50px] rounded-[10px]"
                               /> */}
-                            </div>
-                            <div className="inner-contact">
-                              <h4 className="font-quicksand leading-[1.2] tracking-[0.03rem] mb-[5px] text-[16px] font-bold text-[#3d4750]">
-                                Mehr
-                              </h4>
-                              <div className="bb-pro-rating flex">
-                                {[...Array(4)].map((_, i) => (
-                                  <Image
-                                    key={i}
-                                    src={star}
-                                    alt={"star" + i}
-                                    className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
-                                  ></Image>
-                                ))}
-                                <Image
-                                  src={starhalf}
-                                  alt={"starhalf"}
-                                  className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
-                                ></Image>
+                                </div>
+                                <div className="inner-contact">
+                                  <h4 className="font-quicksand leading-[1.2] tracking-[0.03rem] mb-[5px] text-[16px] font-bold text-[#3d4750]">
+                                    Mehr
+                                  </h4>
+                                  <div className="bb-pro-rating flex">
+                                    {[...Array(4)].map((_, i) => (
+                                      <Image
+                                        key={i}
+                                        src={star}
+                                        alt={"star" + i}
+                                        className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+                                      ></Image>
+                                    ))}
+                                    <Image
+                                      src={starhalf}
+                                      alt={"starhalf"}
+                                      className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+                                    ></Image>
+                                  </div>
+                                  <p className="font-Poppins text-[14px] leading-[26px] font-light tracking-[0.03rem] text-[#686e7d]">
+                                    osam great nice quality market price say
+                                    bohut cam price hay market may is ki price
+                                    10 say oper hay but it's really good 💯
+                                  </p>
+                                </div>
                               </div>
-                              <p className="font-Poppins text-[14px] leading-[26px] font-light tracking-[0.03rem] text-[#686e7d]">
-                                osam great nice quality market price say bohut
-                                cam price hay market may is ki price 10 say oper
-                                hay but it's really good 💯
-                              </p>
-                            </div>
-                          </div>
-                          <div className="reviews-bb-box flex mb-[24px] max-[575px]:flex-col">
-                            <div className="inner-image mr-[12px] max-[575px]:mr-[0] max-[575px]:mb-[12px]">
-                              {/* <img
+                              <div className="reviews-bb-box flex mb-[24px] max-[575px]:flex-col">
+                                <div className="inner-image mr-[12px] max-[575px]:mr-[0] max-[575px]:mb-[12px]">
+                                  {/* <img
                                 src="assets/img/reviews/2.jpg"
                                 alt="img-2"
                                 className="w-[50px] h-[50px] max-w-[50px] rounded-[10px]"
                               /> */}
-                            </div>
-                            <div className="inner-contact">
-                              <h4 className="font-quicksand leading-[1.2] tracking-[0.03rem] mb-[5px] text-[16px] font-bold text-[#3d4750]">
-                                Janzaib.
-                              </h4>
-                              <div className="bb-pro-rating flex">
-                                {[...Array(4)].map((_, i) => (
-                                  <Image
-                                    key={i}
-                                    src={star}
-                                    alt={"star" + i}
-                                    className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
-                                  ></Image>
-                                ))}
-                                <Image
-                                  src={starhalf}
-                                  alt={"starhalf"}
-                                  className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
-                                ></Image>
+                                </div>
+                                <div className="inner-contact">
+                                  <h4 className="font-quicksand leading-[1.2] tracking-[0.03rem] mb-[5px] text-[16px] font-bold text-[#3d4750]">
+                                    Janzaib.
+                                  </h4>
+                                  <div className="bb-pro-rating flex">
+                                    {[...Array(4)].map((_, i) => (
+                                      <Image
+                                        key={i}
+                                        src={star}
+                                        alt={"star" + i}
+                                        className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+                                      ></Image>
+                                    ))}
+                                    <Image
+                                      src={starhalf}
+                                      alt={"starhalf"}
+                                      className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+                                    ></Image>
+                                  </div>
+                                  <p className="font-Poppins text-[14px] leading-[26px] font-light tracking-[0.03rem] text-[#686e7d]">
+                                    Excellent product in this price. Package was
+                                    delivered safe and within the time. Will
+                                    recommend it
+                                  </p>
+                                </div>
                               </div>
-                              <p className="font-Poppins text-[14px] leading-[26px] font-light tracking-[0.03rem] text-[#686e7d]">
-                                Excellent product in this price. Package was
-                                delivered safe and within the time. Will
-                                recommend it
-                              </p>
-                            </div>
-                          </div>
-                          <div className="reviews-bb-box flex mb-[24px] max-[575px]:flex-col">
-                            <div className="inner-image mr-[12px] max-[575px]:mr-[0] max-[575px]:mb-[12px]">
-                              {/* <img
+                              <div className="reviews-bb-box flex mb-[24px] max-[575px]:flex-col">
+                                <div className="inner-image mr-[12px] max-[575px]:mr-[0] max-[575px]:mb-[12px]">
+                                  {/* <img
                                 src="assets/img/reviews/2.jpg"
                                 alt="img-2"
                                 className="w-[50px] h-[50px] max-w-[50px] rounded-[10px]"
                               /> */}
-                            </div>
-                            <div className="inner-contact">
-                              <h4 className="font-quicksand leading-[1.2] tracking-[0.03rem] mb-[5px] text-[16px] font-bold text-[#3d4750]">
-                                Asrar B.
-                              </h4>
-                              <div className="bb-pro-rating flex">
-                                {[...Array(4)].map((_, i) => (
-                                  <Image
-                                    key={i}
-                                    src={star}
-                                    alt={"star" + i}
-                                    className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
-                                  ></Image>
-                                ))}
-                                <Image
-                                  src={starhalf}
-                                  alt={"starhalf"}
-                                  className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
-                                ></Image>
+                                </div>
+                                <div className="inner-contact">
+                                  <h4 className="font-quicksand leading-[1.2] tracking-[0.03rem] mb-[5px] text-[16px] font-bold text-[#3d4750]">
+                                    Asrar B.
+                                  </h4>
+                                  <div className="bb-pro-rating flex">
+                                    {[...Array(4)].map((_, i) => (
+                                      <Image
+                                        key={i}
+                                        src={star}
+                                        alt={"star" + i}
+                                        className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+                                      ></Image>
+                                    ))}
+                                    <Image
+                                      src={starhalf}
+                                      alt={"starhalf"}
+                                      className="ri-star-fill float-left text-[15px] mr-[2px] h-6 w-6 leading-[18px] text-[#fea99a]"
+                                    ></Image>
+                                  </div>
+                                  <p className="font-Poppins text-[14px] leading-[26px] font-light tracking-[0.03rem] text-[#686e7d]">
+                                    Bahoot hi kammal ki product he Dill khush ho
+                                    gya Qeemat ke mutabiq bahoot hi zyada kammal
+                                    ki cheez he Ma ne bahoot si mangwai he
+                                    online pr yeh sb se zaberzast he😍
+                                  </p>
+                                </div>
                               </div>
-                              <p className="font-Poppins text-[14px] leading-[26px] font-light tracking-[0.03rem] text-[#686e7d]">
-                                Bahoot hi kammal ki product he Dill khush ho gya
-                                Qeemat ke mutabiq bahoot hi zyada kammal ki
-                                cheez he Ma ne bahoot si mangwai he online pr
-                                yeh sb se zaberzast he😍
-                              </p>
-                            </div>
-                          </div>
+                            </>
+                          )}
                         </div>
                         <div className="bb-reviews-form">
                           <h3 className="font-quicksand tracking-[0.03rem] leading-[1.2] mb-[8px] text-[20px] font-bold text-[#3d4750]">

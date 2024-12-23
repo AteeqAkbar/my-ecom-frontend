@@ -4,6 +4,7 @@ import persistedReducer from "./cartSlice";
 import { persistStore } from "redux-persist";
 import cartVisibilityReducer from "./cartVisibilitySlice";
 import authSliceReducer from "./authSlice";
+import categoriesReducer from "./categoriesSlice";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     cart: persistedReducer,
     cartVisibility: cartVisibilityReducer,
     auth: authSliceReducer,
+    categories: categoriesReducer,
   },
 });
 

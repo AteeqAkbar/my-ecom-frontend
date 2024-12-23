@@ -2,6 +2,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 export const baseURL = "http://localhost:1337";
+export const baseURLfrontend = "http://localhost:3000";
 export const baseURLapi = "http://localhost:1337/api";
 const axiosInstance = axios.create({
   baseURL: baseURLapi, // Replace with your API base URL

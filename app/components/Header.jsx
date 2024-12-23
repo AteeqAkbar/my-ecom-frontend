@@ -23,10 +23,12 @@ const Header = () => {
   const dispatch = useDispatch();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
-  const { data, error, isLoading } = useQuery({
-    queryKey: ["fetchCategories"],
-    queryFn: fetchCategories,
-  });
+  const { items, loading, error } = useSelector((state) => state.categories); // Update to 'categories'
+
+  // const { data, error, isLoading } = useQuery({
+  //   queryKey: ["fetchCategories"],
+  //   queryFn: fetchCategories,
+  // });
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen((prev) => !prev);
@@ -116,7 +118,7 @@ const Header = () => {
                 <div className="w-10 h-10 bg-white transform rotate-45 absolute top-0 z-0 translate-x-0 transition-transform group-hover:translate-x-[12rem] duration-500 ease-in-out rounded-sm"></div>
                 {error ? (
                   <div>An error occurred: {error.message}</div>
-                ) : isLoading ? (
+                ) : loading ? (
                   <Loader size="20px" />
                 ) : (
                   <div className="relative z-10">
@@ -126,11 +128,11 @@ const Header = () => {
                           The Suite
                         </p> */}
                         <ul className="mt-3 text-[13px] grid grid-cols-2 gap-6">
-                          {data?.data?.map((item) => (
+                          {items?.data?.map((item) => (
                             <li>
                               <Link
                                 key={item?.documentId}
-                                href={`/products?categories=${item.name}`}
+                                href={`/products?categories${item.name}`}
                                 className="flex items-center gap-2 p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-normal hover:text-indigo-600"
                               >
                                 <Image
@@ -314,7 +316,7 @@ const Header = () => {
                   <span>Categories</span>
                 </div>
                 <ul className="flex ms-5 flex-col gap-2">
-                  {data?.data?.map((item) => (
+                  {items?.data?.map((item) => (
                     <li>
                       <Link
                         key={item?.documentId}

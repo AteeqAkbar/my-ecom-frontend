@@ -13,13 +13,24 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { fetchProducts } from "@/app/services/api";
-import { useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
+import { generateImageUrl } from "@/app/utils/helperFun";
 
 function List(props) {
+  let categories;
+  let minPrice;
+  let maxPrice;
+
+  const { cat } = useParams();
   const searchParams = useSearchParams();
-  const categories = searchParams.getAll("categories");
-  const minPrice = searchParams.get("minPrice");
-  const maxPrice = searchParams.get("maxPrice");
+  if (cat?.length > 0) {
+    const decodedString = decodeURIComponent(cat);
+    categories = [decodedString];
+  } else {
+    categories = searchParams.getAll("categories");
+    minPrice = searchParams.get("minPrice");
+    maxPrice = searchParams.get("maxPrice");
+  }
 
   const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
@@ -106,15 +117,25 @@ function List(props) {
               data-aos-delay="200"
             >
               <div className="section-detail max-[991px]:mb-[12px]">
-                <h2 className="bb-title font-quicksand mb-[0] p-[0] text-[25px] font-bold text-[#3d4750] relative inline capitalize leading-[1] tracking-[0.03rem] max-[767px]:text-[23px]">
-                  Day of the{" "}
-                  <span className="bg-transparent h-[36px] bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 ">
-                    Deal
-                  </span>
-                </h2>
-                <p className="font-Poppins max-w-[400px] mt-[10px] text-[14px] text-[#686e7d] leading-[18px] font-light tracking-[0.03rem] max-[991px]:mx-[auto]">
-                  Don't wait. The time will never be just right.
-                </p>
+                {cat?.length > 0 ? (
+                  <h2 className="bg-transparent font-quicksand mb-[0] p-[0] text-[25px] font-bold h-[36px] bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 ">
+                    {/* <h2 className="bb-title font-quicksand mb-[0] p-[0] text-[25px] font-bold text-[#3d4750] relative inline capitalize leading-[1] tracking-[0.03rem] max-[767px]:text-[23px]"> */}
+                    {decodeURIComponent(cat)}
+                    {/* </h2> */}
+                  </h2>
+                ) : (
+                  <>
+                    <h2 className="bb-title font-quicksand mb-[0] p-[0] text-[25px] font-bold text-[#3d4750] relative inline capitalize leading-[1] tracking-[0.03rem] max-[767px]:text-[23px]">
+                      Day of the{" "}
+                      <span className="bg-transparent h-[36px] bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 ">
+                        Deal
+                      </span>
+                    </h2>
+                    <p className="font-Poppins max-w-[400px] mt-[10px] text-[14px] text-[#686e7d] leading-[18px] font-light tracking-[0.03rem] max-[991px]:mx-[auto]">
+                      Don't wait. The time will never be just right.
+                    </p>
+                  </>
+                )}
               </div>
 
               <div className="section-detail max-[991px]:mb-[12px] hidden sm:flex items-center justify-center ">
@@ -143,6 +164,36 @@ function List(props) {
               );
             })
           )}
+
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "ItemList",
+                itemListElement: products?.map((product, index) => ({
+                  "@type": "ListItem",
+                  position: index + 1,
+                  item: {
+                    "@type": "Product",
+                    url: `${window.location.origin}/products/${product?.slug}`,
+
+                    name: product?.name,
+                    image: generateImageUrl(product?.images?.[0]?.url),
+                    description: product?.description,
+
+                    offers: {
+                      "@type": "Offer",
+                      price: product?.discountPrice || product?.price,
+                      priceCurrency: "PKR",
+                      availability: "https://schema.org/InStock",
+                      itemCondition: "https://schema.org/NewCondition",
+                    },
+                  },
+                })),
+              }),
+            }}
+          />
 
           <div className="w-full px-[12px]">
             <div className="bb-pro-pagination mb-[24px] flex justify-between max-[575px]:flex-col max-[575px]:items-center">

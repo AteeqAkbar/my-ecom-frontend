@@ -1,0 +1,25 @@
+
+
+# Allow all crawlers access to all content
+User-agent: *
+Disallow:
+
+# Block access to admin pages
+
+Disallow: /cart/
+Disallow: /auth/
+Disallow: /checkout/
+Disallow: /*?categories=*&minPrice=*&maxPrice=*
+Disallow: /*?categories=*
+Disallow: /*?minPrice=*
+Disallow: /*?maxPrice=*
+Disallow: /*?*
+
+
+# Allow specific crawlers to access all content
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+

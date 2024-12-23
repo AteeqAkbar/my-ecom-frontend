@@ -42,3 +42,88 @@ export function getRandomColor(index) {
   }
   return colors[randomIndex];
 }
+
+export const convertJsonToHtml = (data) => {
+  let html = "";
+
+  data.forEach((item) => {
+    switch (item.type) {
+      case "paragraph":
+        html += `<p>${convertChildrenToHtml(item.children)}</p>`;
+        break;
+      case "heading":
+        html += `<h${item.level}>${convertChildrenToHtml(item.children)}</h${
+          item.level
+        }>`;
+        break;
+      case "list":
+        html += `<${
+          item.format === "unordered" ? "ul" : "ol"
+        }>${convertListChildrenToHtml(item.children)}</${
+          item.format === "unordered" ? "ul" : "ol"
+        }>`;
+        break;
+      default:
+        break;
+    }
+  });
+
+  return html;
+};
+
+const convertChildrenToHtml = (children) => {
+  let html = "";
+
+  children.forEach((child) => {
+    switch (child.type) {
+      case "text":
+        html += formatText(child);
+        break;
+      case "link":
+        html += `<a href="${child.url}">${convertChildrenToHtml(
+          child.children
+        )}</a>`;
+        break;
+      default:
+        break;
+    }
+  });
+
+  return html;
+};
+
+const convertListChildrenToHtml = (children) => {
+  let html = "";
+
+  children.forEach((child) => {
+    html += `<li>${convertChildrenToHtml(child.children)}</li>`;
+  });
+
+  return html;
+};
+
+const formatText = (text) => {
+  let formattedText = text.text;
+
+  if (text.bold) {
+    formattedText = `<strong>${formattedText}</strong>`;
+  }
+
+  if (text.italic) {
+    formattedText = `<em>${formattedText}</em>`;
+  }
+
+  if (text.underline) {
+    formattedText = `<u>${formattedText}</u>`;
+  }
+
+  if (text.strikethrough) {
+    formattedText = `<strike>${formattedText}</strike>`;
+  }
+
+  if (text.code) {
+    formattedText = `<code>${formattedText}</code>`;
+  }
+
+  return formattedText;
+};

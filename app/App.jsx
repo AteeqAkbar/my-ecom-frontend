@@ -1,12 +1,13 @@
 "use client";
-import React from "react";
-import { Provider } from "react-redux";
+import React, { useEffect } from "react";
+import { Provider, useDispatch } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./store";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import CartSidebar from "./components/Cart/CartSidebar";
 import Loader from "./components/Loader";
 import { ToastContainer } from "react-toastify";
+import { fetchCategories } from "./store/categoriesSlice";
 const queryClient = new QueryClient();
 export default function App({ children }) {
   return (
@@ -20,6 +21,7 @@ export default function App({ children }) {
           }
           persistor={persistor}
         >
+          <LoadCategories />
           {children}
           <ToastContainer />
           <CartSidebar />
@@ -28,3 +30,16 @@ export default function App({ children }) {
     </QueryClientProvider>
   );
 }
+
+const LoadCategories = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const loadData = async () => {
+      await dispatch(fetchCategories()); // Update to fetchCategories
+    };
+    loadData();
+  }, [dispatch]);
+
+  return;
+};

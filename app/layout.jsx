@@ -22,21 +22,21 @@ export const metadata = {
     template: "%s | My E-commerce Store",
   },
   description: "Find the best products at great prices in our online store.",
-  openGraph: {
-    title: "My E-commerce Store",
-    description: "Find the best products at great prices in our online store.",
-    url: "https://www.myecommercestore.com",
-    siteName: "My E-commerce Store",
-    images: [
-      {
-        url: "https://www.myecommercestore.com/og-image.jpg",
-        width: 1200,
-        height: 630,
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
+  // openGraph: {
+  //   title: "My E-commerce Store",
+  //   description: "Find the best products at great prices in our online store.",
+  //   url: "https://www.myecommercestore.com",
+  //   siteName: "My E-commerce Store",
+  //   images: [
+  //     {
+  //       url: "https://www.myecommercestore.com/og-image.jpg",
+  //       width: 1200,
+  //       height: 630,
+  //     },
+  //   ],
+  //   locale: "en_US",
+  //   type: "website",
+  // },
   robots: {
     index: true,
     follow: true,
