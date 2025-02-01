@@ -2,9 +2,10 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 // export const baseURL = "http://localhost:1337";
-export const baseURL = "http://159.89.162.207";
-export const baseURLfrontend = "http://localhost:3000";
-export const baseURLapi = "http://159.89.162.207/api";
+export const baseURL = "https:api.dico.pk";
+export const baseURLfrontend = "https://dico.pk";
+// export const baseURLfrontend = "http://localhost:3000";
+export const baseURLapi = "https:api.dico.pk/api";
 // export const baseURLapi = "http://localhost:1337/api";
 const axiosInstance = axios.create({
   baseURL: baseURLapi, // Replace with your API base URL

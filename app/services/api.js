@@ -23,6 +23,12 @@ export const postOrder = async (data) => {
   });
   return response.data;
 };
+export const checkUserExists = async (email, username) => {
+  const response = await axiosInstance.get(
+    `/users?filters[$or][0][email][$eq]=${email}&filters[$or][1][username][$eq]=${username}`
+  );
+  return response.data;
+};
 export const fetchSingleProduct = async (slug) => {
   const response = await axiosInstance.get(
     `/products?populate=*&filters[slug][$eq]=${slug}`

@@ -9,7 +9,7 @@ import star from "../image/icons/star.png";
 import starhalf from "../image/icons/halfstar.png";
 import Image from "next/image";
 import { generateImageUrl } from "../utils/helperFun";
-import { postOrder, register } from "../services/api";
+import { checkUserExists, login, postOrder, register } from "../services/api";
 import { setUserToken } from "../store/authSlice";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
@@ -124,13 +124,57 @@ export default function Checkout() {
 
     const errors = validate();
     setFormErrors(errors);
+    const isValid = Object.keys(errors).length === 0;
     let prodcutIds = [];
     cartItems.forEach((item) => {
       prodcutIds.push(Number(item.id));
     });
 
-    if (auth?.token) {
-      if (Object.keys(errors).length === 0) {
+    const checkUser = await checkUserExists(
+      formValues.email,
+      formValues.fullName
+    );
+    if (checkUser?.length > 0) {
+      try {
+        const data = await login({
+          identifier: formValues.email,
+          password: formValues.password,
+        });
+        dispatch(setUserToken({ token: data.jwt, user: data.user }));
+        const data1 = {
+          name: formValues.fullName,
+          phone: formValues.phone,
+          address: formValues.address,
+          email: formValues.email,
+          totalPrice: totals,
+          comment: formValues.comment,
+          orderProducts: cartItems,
+          users_permissions_user: auth?.user?.id,
+          products: prodcutIds,
+        };
+        const response = await postOrder(data1);
+        toast("Order received! We’re processing it now.");
+        console.log("Order response:", response);
+        // Reset the cart
+        dispatch(clearCart());
+        //   // Reset form
+        setFormValues({
+          fullName: "",
+          phone: "",
+          address: "",
+          email: "",
+          password: "",
+          comment: "",
+        });
+        router.push("/");
+      } catch (error) {
+        toast.error(
+          "User already exists with this Email/User Name. Please use correct credentials"
+        );
+        console.error("There was an error adding items to the cart!", error);
+      }
+    } else if (auth?.token) {
+      if (isValid) {
         const data = {
           name: formValues.fullName,
           phone: formValues.phone,
