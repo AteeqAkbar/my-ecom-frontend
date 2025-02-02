@@ -62,6 +62,16 @@ export async function GET() {
                 <changefreq>daily</changefreq>
                 <priority>0.8</priority>
               </url>
+          <url>
+                <loc>${baseURLfrontend}/terms-of-service</loc>
+                <changefreq>daily</changefreq>
+                <priority>0.8</priority>
+              </url>
+          <url>
+                <loc>${baseURLfrontend}/privacy-policy</loc>
+                <changefreq>daily</changefreq>
+                <priority>0.8</priority>
+              </url>
       </urlset>`;
 
     // Return the XML as a response

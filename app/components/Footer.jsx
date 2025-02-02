@@ -289,6 +289,22 @@ const Footer = async () => {
                     </div>
                   </div>
                 </div>
+                <div className="footer-bottom-right">
+                  <div className="footer-bottom-payment flex justify-center">
+                    <Link
+                      href="/privacy-policy"
+                      className="transition-all duration-[0.3s] me-2 ease-in-out font-Poppins text-[12px] leading-[20px] text-[#686e7d] hover:text-[#6c7fd8] mb-[0] inline-block break-all tracking-[0] font-normal"
+                    >
+                      Privacy Policy
+                    </Link>
+                    <Link
+                      href="/terms-of-service"
+                      className="transition-all duration-[0.3s] ease-in-out font-Poppins text-[12px] leading-[20px] text-[#686e7d] hover:text-[#6c7fd8] mb-[0] inline-block break-all tracking-[0] font-normal"
+                    >
+                      Terms of service
+                    </Link>
+                  </div>
+                </div>
                 {/* <div className="footer-bottom-right">
                   <div className="footer-bottom-payment flex justify-center">
                     <div className="payment-link">
