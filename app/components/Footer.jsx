@@ -229,7 +229,7 @@ const Footer = async () => {
                             />
                           </span>
                           <a
-                            href="tel:+9231414900152"
+                            href="tel:+923114900152"
                             className="ps-1 transition-all duration-[0.3s] ease-in-out font-Poppins text-[14px] leading-[20px] text-[#686e7d] inline-block relative break-all tracking-[0] font-normal max-[1399px]:text-[15px] max-[1199px]:text-[14px]"
                           >
                             0311-4900152

@@ -1,49 +1,54 @@
 "use client";
 import { useEffect, useState } from "react";
-import img1 from "../../image/img1.jpg";
-import img2 from "../../image/img5.jpg";
-import img3 from "../../image/img3.jpg";
+import img1 from "../../image/111.jpg";
+import img2 from "../../image/222.jpg";
+import img3 from "../../image/333.jpg";
 import img4 from "../../image/img4.jpg";
+import { useRouter } from "next/navigation";
 const items = [
   {
     id: 0,
-    image: `https://paladimstudio.com/cdn/shop/files/vreme-monochrome-grey-wall-clock-oak-wood-handmade-handcrafted-sculpture-timepiece-art-decor-by-paladim-studio-3_copy.jpg?v=1698780025&width=1500`,
-    // image: img1?.src,
-    author: "LUNDEV",
-    title: "DESIGN SLIDER 1",
-    topic: "ANIMAL",
-    description: "Lorem ipsum dolor sit amet...",
+    // image: `https://paladimstudio.com/cdn/shop/files/vreme-monochrome-grey-wall-clock-oak-wood-handmade-handcrafted-sculpture-timepiece-art-decor-by-paladim-studio-3_copy.jpg?v=1698780025&width=1500`,
+    image: img1?.src,
+    author: "DICO",
+    title: "MIXOR",
+    topic: "Wall Clock",
+    description: "      ",
+    link: "/products/mixor-wall-clock",
   },
   {
     id: 1,
-    image: `https://paladimstudio.com/cdn/shop/files/mashina-slider.jpg?v=1727435212&width=1500`,
-    // image: img2?.src,
-    author: "LUNDEV",
-    title: "DESIGN SLIDER 2",
-    topic: "ANIMAL",
-    description: "Lorem ipsum dolor sit amet...",
+    // image: `https://paladimstudio.com/cdn/shop/files/mashina-slider.jpg?v=1727435212&width=1500`,
+    image: img2?.src,
+    author: "DICO",
+    title: "KLETKA Organic",
+    topic: "Wall Clock",
+    description: "",
+    link: "/products/kletka-organic-wall-clock",
   },
   {
     id: 2,
-    // image: img3?.src,
-    image: `https://paladimstudio.com/cdn/shop/files/kletka-oak-wall-clock-by-paladim-interior-banner-ai.jpg?v=1699790857&width=1500`,
-    author: "LUNDEV",
-    title: "DESIGN SLIDER 3",
-    topic: "ANIMAL",
-    description: "Lorem ipsum dolor sit amet...",
+    image: img3?.src,
+    // image: `https://paladimstudio.com/cdn/shop/files/kletka-oak-wall-clock-by-paladim-interior-banner-ai.jpg?v=1699790857&width=1500`,
+    author: "DICO",
+    title: "Modern ",
+    topic: "Wooden Clock",
+    description: "",
+    link: "/products/modern-wooden-wall-clock",
   },
-  {
-    id: 3,
-    image: `https://paladimstudio.com/cdn/shop/files/mixor-oak-wall-clock-handmade-crafted-modern-minimalist-decor-by-paladim-studio-3.jpg?v=1718532869&width=1946`,
-    // image: img4?.src,
-    author: "LUNDEV",
-    title: "DESIGN SLIDER 4",
-    topic: "ANIMAL",
-    description: "Lorem ipsum dolor sit amet...",
-  },
+  // {
+  //   id: 3,
+  //   image: `https://paladimstudio.com/cdn/shop/files/mixor-oak-wall-clock-handmade-crafted-modern-minimalist-decor-by-paladim-studio-3.jpg?v=1718532869&width=1946`,
+  //   // image: img4?.src,
+  //   author: "LUNDEV",
+  //   title: "DESIGN SLIDER 4",
+  //   topic: "ANIMAL",
+  //   description: "Lorem ipsum dolor sit amet...",
+  // },
 ];
 
 const Slider = () => {
+  const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [animation, setAnimation] = useState("");
   useEffect(() => {
@@ -104,8 +109,10 @@ const Slider = () => {
                 {items[currentIndex].description}
               </div>
               <div className="buttons">
-                <button>SEE MORE</button>
-                <button>SUBSCRIBE</button>
+                <button onClick={() => router.push(items[currentIndex].link)}>
+                  SEE MORE
+                </button>
+                {/* <button>SUBSCRIBE</button> */}
               </div>
             </div>
           </div>

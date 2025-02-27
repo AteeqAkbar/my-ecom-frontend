@@ -41,7 +41,7 @@ export default function ModalCard({ product, close }) {
         <div className="modal-body mx-[-12px] max-[767px]:mx-[0]">
           <div className="flex flex-wrap mx-[-12px] mb-[-24px]">
             <div className="min-[768px]:w-[41.66%] min-[576px]:w-full px-[12px] mb-[24px]">
-              <div className="single-pro-img single-pro-img-no-sidebar h-full border-[1px] border-solid border-[#eee] overflow-hidden rounded-[20px]">
+              <div className="single-pro-img single-pro-img-no-sidebar max-h-full border-[1px] border-solid border-[#eee] overflow-hidden rounded-[20px]">
                 <div className="single-product-scroll h-full">
                   <div
                     className="single-slide zoom-image-hover h-full bg-[#fff] flex items-center"
@@ -95,7 +95,10 @@ export default function ModalCard({ product, close }) {
                     ))}
                   </span>
                 </div>
-                <div className="bb-quickview-desc mb-[6px] text-[15px] leading-[24px] text-[#777] font-light">
+                <div
+                  // title={product?.description}
+                  className="bb-quickview-desc mb-[6px] text-[15px] leading-[24px] text-[#777] font-light overflow-hidden text-ellipsis whitespace-pre-line [display:-webkit-box] [-webkit-line-clamp:3] [-webkit-box-orient:vertical]"
+                >
                   {product?.description ||
                     `Lorem Ipsum is simply dummy text of the printing and
                   typesetting industry. Lorem Ipsum has been the industry's

@@ -10,7 +10,7 @@ import Image from "next/image";
 import GalleryCarousel from "@/app/components/CarouselThumbnails/GalleryCarousel";
 import Breadcrumb from "@/app/components/Breadcrumb";
 import ProductSlider from "@/app/components/Swiper/ProductSlider";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { fetchSingleProduct } from "@/app/services/api";
 import ProductStats from "@/app/components/Cards/ProductStats";
@@ -28,7 +28,8 @@ export default function ProductPage() {
     queryFn: () => fetchSingleProduct(slug),
   });
   const product = data?.data?.[0];
-  console.log(data, "data", error, isLoading, product);
+  const router = useRouter();
+  // console.log(data, "data", error, isLoading, product);
   const [info, setInfo] = useState("reviews");
 
   const dispatch = useDispatch();
@@ -58,7 +59,11 @@ export default function ProductPage() {
     `Hi I would like to buy ${product?.name} \nLink: ${productLink}`
   );
 
+  const imageUrl = generateImageUrl(product?.images?.[0]?.url);
   const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${message}`;
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [router.pathname]);
 
   return (
     <>
@@ -81,10 +86,7 @@ export default function ProductPage() {
         property="og:description"
         content={product?.seo?.metaDescription || product?.description}
       ></meta>
-      <meta
-        property="og:image"
-        content={generateImageUrl(product?.image?.[0]?.url)}
-      ></meta>
+      <meta property="og:image" content={imageUrl}></meta>
       <meta
         property="og:url"
         content={`${window.location.origin}${window.location.pathname}`}
@@ -99,10 +101,7 @@ export default function ProductPage() {
         name="twitter:description"
         content={product?.seo?.metaDescription || product?.description}
       />
-      <meta
-        name="twitter:image"
-        content={generateImageUrl(product?.image?.[0]?.url)}
-      />
+      <meta name="twitter:image" content={imageUrl} />
       {/* <FAQPageSchema faqs={product?.faqs} /> */}
       <script
         type="application/ld+json"
@@ -111,7 +110,7 @@ export default function ProductPage() {
             "@context": "https://schema.org",
             "@type": "Product",
             name: product?.name,
-            image: generateImageUrl(product?.images?.[0]?.url),
+            image: imageUrl,
             description: product?.description,
 
             brand: {

@@ -919,15 +919,16 @@ input[type="number"] {
   gap: 5px;
   margin-top: 20px;
 }
-.carousel .list .item .buttons button {
-  border: none;
-  background-color: #eee;
-  letter-spacing: 3px;
-  font-family: Poppins;
-  font-weight: 500;
-}
-.carousel .list .item .buttons button:nth-child(2) {
-  background-color: transparent;
+// .carousel .list .item .buttons button {
+//   border: none;
+//   background-color: #eee;
+//   letter-spacing: 3px;
+//   font-family: Poppins;
+//   font-weight: 500;
+// }
+.carousel .list .item .buttons button:nth-child(1) {
+  background-color: rgba(0, 0, 0, 0.3);
+
   border: 1px solid #fff;
   color: #eee;
 }

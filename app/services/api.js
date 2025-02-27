@@ -51,7 +51,7 @@ export const fetchProducts = async (
   // Add category filters if they exist
   if (categories.length > 0) {
     categories.forEach((category, index) => {
-      params[`filters[$or][${index}][categories][name][$eq]`] = category;
+      params[`filters[$or][${index}][category][name][$eq]`] = category;
     });
   }
 

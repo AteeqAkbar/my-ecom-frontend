@@ -18,25 +18,25 @@ const geistMono = localFont({
 
 export const metadata = {
   title: {
-    default: "My E-commerce Store",
-    template: "%s | My E-commerce Store",
+    default: "DICO E-commerce Store",
+    template: "%s | DICO E-commerce Store",
   },
   description: "Find the best products at great prices in our online store.",
-  // openGraph: {
-  //   title: "My E-commerce Store",
-  //   description: "Find the best products at great prices in our online store.",
-  //   url: "https://www.myecommercestore.com",
-  //   siteName: "My E-commerce Store",
-  //   images: [
-  //     {
-  //       url: "https://www.myecommercestore.com/og-image.jpg",
-  //       width: 1200,
-  //       height: 630,
-  //     },
-  //   ],
-  //   locale: "en_US",
-  //   type: "website",
-  // },
+  openGraph: {
+    title: "DICO E-commerce Store",
+    description: "Find the best products at great prices in our online store.",
+    url: "https://www.dico.pk",
+    siteName: "DICO E-commerce Store",
+    images: [
+      {
+        url: "https://www.dico.pk/111.jpg",
+        width: 1440,
+        height: 700,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
   robots: {
     index: true,
     follow: true,
@@ -49,7 +49,7 @@ export const metadata = {
     },
   },
   twitter: {
-    title: "My E-commerce Store",
+    title: "DICO E-commerce Store",
     card: "summary_large_image",
   },
   icons: {

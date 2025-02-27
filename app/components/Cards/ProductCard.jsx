@@ -67,7 +67,9 @@ function ProductCard({ style = {}, product }) {
             </span>
 
             <div
-              onClick={() => router.push(`/products/${product?.slug}`)}
+              onClick={() =>
+                router.push(`/products/${product?.slug}`, { scroll: true })
+              }
               className="inner-img relative block cursor-pointer overflow-hidden rounded-t-[20px] group"
             >
               <img
