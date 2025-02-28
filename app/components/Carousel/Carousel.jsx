@@ -58,13 +58,13 @@ const Slider = () => {
 
     return () => clearTimeout(timer);
   }, [animation]);
-  //   useEffect(() => {
-  //     const timer = setInterval(() => {
-  //       nextSlide();
-  //     }, 3000);
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     nextSlide();
+  //   }, 3500);
 
-  //     return () => clearInterval(timer);
-  //   }, []);
+  //   return () => clearInterval(timer);
+  // }, []);
 
   // Function to handle previous slide
   const prevSlide = () => {
@@ -110,7 +110,7 @@ const Slider = () => {
               </div>
               <div className="buttons">
                 <button onClick={() => router.push(items[currentIndex].link)}>
-                  SEE MORE
+                  Buy Now
                 </button>
                 {/* <button>SUBSCRIBE</button> */}
               </div>

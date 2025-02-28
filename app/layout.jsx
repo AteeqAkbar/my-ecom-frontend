@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import BackToTop from "./components/BackToTop";
 import App from "./App";
 import Footer from "./components/Footer";
+import FacebookPixel from "./components/FacebookPixel";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -91,6 +92,7 @@ export default function RootLayout({ children }) {
           <BackToTop />
           <Footer />
         </App>
+        <FacebookPixel />
       </body>
     </html>
   );
