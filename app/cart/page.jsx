@@ -14,7 +14,10 @@ export default function Cart() {
   const [totals, setTotals] = useState(0);
   useEffect(() => {
     setTotals(
-      cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
+      cartItems.reduce(
+        (acc, item) => acc + (item.discountPrice || item.price) * item.quantity,
+        0
+      )
     );
   }, [cartItems]);
   return (
@@ -44,7 +47,7 @@ export default function Cart() {
                             Sub-Total
                           </span>
                           <span className="text-right font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] text-[#686e7d] font-semibold">
-                            {totals || "0.00"}
+                            RS: {totals || "0.00"}
                           </span>
                         </li>
                         <li className="mb-[12px] flex justify-between leading-[28px]">
@@ -52,7 +55,7 @@ export default function Cart() {
                             Delivery Charges
                           </span>
                           <span className="text-right font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] text-[#686e7d] font-semibold">
-                            250
+                            RS: 250
                           </span>
                         </li>
                         <li className="mb-[12px] flex justify-between leading-[28px]">
@@ -94,7 +97,7 @@ export default function Cart() {
                             Total Amount
                           </span>
                           <span className="text-right font-Poppins text-[16px] leading-[28px] tracking-[0.03rem] font-semibold text-[#686e7d]">
-                            {totals ? totals + 250 : "0.00"}
+                            RS: {totals ? totals + 250 : "0.00"}
                           </span>
                         </li>
                       </ul>
@@ -188,7 +191,12 @@ function Cartitems({ item }) {
       </td>
       <td className="p-[12px]">
         <span className="price font-Poppins text-[15px] font-medium leading-[26px] tracking-[0.02rem] text-[#686e7d]">
-          {item.price || "0.00"}
+          <span className="new-price px-[3px] text-[16px] text-[#686e7d] font-bold">
+            RS: {item?.discountPrice || item?.price || "Not Available"}
+          </span>
+          <span className="old-price px-[3px] text-[14px] text-[#686e7d] line-through">
+            {item?.discountPrice ? "RS: " + item?.price : " "}
+          </span>
         </span>
       </td>
       <td className="p-[12px]">
@@ -210,7 +218,7 @@ function Cartitems({ item }) {
       </td>
       <td className="p-[12px]">
         <span className="price font-Poppins text-[15px] font-medium leading-[26px] tracking-[0.02rem] text-[#686e7d]">
-          {item.price * item.quantity || "0.00"}
+          RS: {(item.discountPrice || item.price) * item.quantity || "0.00"}
         </span>
       </td>
       <td className="p-[12px]">

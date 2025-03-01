@@ -37,7 +37,7 @@ function ProductItem({ item }) {
         </h4>
         <div className="inner-price flex items-center justify-left mb-[4px]">
           <span className="new-price font-Poppins text-[#3d4750] font-normal leading-[26px] tracking-[0.02rem] text-[15px]">
-            {item?.price || "0.00"}
+            RS: {item.discountPrice || item.price || "0.00"}
           </span>
           <span className="old-price ml-[10px] font-Poppins text-[#777] font-normal leading-[26px] tracking-[0.02rem] text-[15px] ">
             {" x "} {item?.quantity}
@@ -97,7 +97,10 @@ export default function Checkout() {
 
   useEffect(() => {
     setTotals(
-      cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
+      cartItems.reduce(
+        (acc, item) => acc + (item.discountPrice || item.price) * item.quantity,
+        0
+      )
     );
   }, [cartItems]);
 
@@ -307,7 +310,7 @@ export default function Checkout() {
                           Sub-total
                         </span>
                         <span className="font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-medium text-[#686e7d]">
-                          {totals || "0.00"}
+                          RS: {totals || "0.00"}
                         </span>
                       </li>
                       <li className="flex justify-between leading-[28px] mb-[8px]">
@@ -315,7 +318,7 @@ export default function Checkout() {
                           Delivery Charges
                         </span>
                         <span className="font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-medium text-[#686e7d]">
-                          {"250"}
+                          {"RS: 250"}
                         </span>
                       </li>
                       <li className="flex justify-between leading-[28px] mb-[8px]">
@@ -323,7 +326,7 @@ export default function Checkout() {
                           Total
                         </span>
                         <span className="font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-medium text-[#686e7d]">
-                          {totals ? totals + 250 : "0.00"}
+                          RS: {totals ? totals + 250 : "0.00"}
                         </span>
                       </li>
                       <li className="flex justify-between leading-[28px] mb-[8px]">

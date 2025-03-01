@@ -927,10 +927,14 @@ input[type="number"] {
 //   font-weight: 500;
 // }
 .carousel .list .item .buttons button:nth-child(1) {
-  background-color: rgba(0, 0, 0, 0.3);
-
+  background-color: #eee4;
+  border: none;
+  color: #fff;
   border: 1px solid #fff;
-  color: #eee;
+}
+.carousel .list .item .buttons button:nth-child(1):hover {
+  background-color: #fff;
+  color: #000;
 }
 /* thumbail */
 .thumbnail {

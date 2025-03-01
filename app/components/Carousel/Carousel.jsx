@@ -5,11 +5,12 @@ import img2 from "../../image/222.jpg";
 import img3 from "../../image/333.jpg";
 import img4 from "../../image/img4.jpg";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 const items = [
   {
     id: 0,
     // image: `https://paladimstudio.com/cdn/shop/files/vreme-monochrome-grey-wall-clock-oak-wood-handmade-handcrafted-sculpture-timepiece-art-decor-by-paladim-studio-3_copy.jpg?v=1698780025&width=1500`,
-    image: img1?.src,
+    image: img1,
     author: "DICO",
     title: "MIXOR",
     topic: "Wall Clock",
@@ -19,7 +20,7 @@ const items = [
   {
     id: 1,
     // image: `https://paladimstudio.com/cdn/shop/files/mashina-slider.jpg?v=1727435212&width=1500`,
-    image: img2?.src,
+    image: img2,
     author: "DICO",
     title: "KLETKA Organic",
     topic: "Wall Clock",
@@ -28,7 +29,7 @@ const items = [
   },
   {
     id: 2,
-    image: img3?.src,
+    image: img3,
     // image: `https://paladimstudio.com/cdn/shop/files/kletka-oak-wall-clock-by-paladim-interior-banner-ai.jpg?v=1699790857&width=1500`,
     author: "DICO",
     title: "Modern ",
@@ -39,7 +40,7 @@ const items = [
   // {
   //   id: 3,
   //   image: `https://paladimstudio.com/cdn/shop/files/mixor-oak-wall-clock-handmade-crafted-modern-minimalist-decor-by-paladim-studio-3.jpg?v=1718532869&width=1946`,
-  //   // image: img4?.src,
+  //   // image: img4,
   //   author: "LUNDEV",
   //   title: "DESIGN SLIDER 4",
   //   topic: "ANIMAL",
@@ -97,7 +98,7 @@ const Slider = () => {
         {/* <!-- list item --> */}
         <div className="list">
           <div className="item">
-            <img
+            <Image
               src={items[currentIndex].image}
               alt={items[currentIndex].title}
             />
@@ -110,7 +111,7 @@ const Slider = () => {
               </div>
               <div className="buttons">
                 <button onClick={() => router.push(items[currentIndex].link)}>
-                  Buy Now
+                  BUY NOW
                 </button>
                 {/* <button>SUBSCRIBE</button> */}
               </div>
@@ -150,7 +151,7 @@ const Slider = () => {
                 //cursor-pointer
                 `}
               >
-                <img src={item.image} />
+                <Image src={item.image} />
                 <div className="content">
                   <div className="title">{item.title}</div>
                   <div className="description">Description</div>

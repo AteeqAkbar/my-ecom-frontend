@@ -65,7 +65,10 @@ const Cart = () => {
   const [totals, setTotals] = useState(0);
   useEffect(() => {
     setTotals(
-      cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
+      cartItems.reduce(
+        (acc, item) => acc + (item.discountPrice || item.price) * item.quantity,
+        0
+      )
     );
   }, [cartItems]);
 
@@ -208,7 +211,10 @@ const CartItem = ({ item }) => {
         </a>
         <span className="cart-price mb-[8px] text-[14px] leading-[18px] block font-Poppins text-[#686e7d] font-light tracking-[0.03rem]">
           <span className="new-price px-[3px] text-[15px] leading-[18px] text-[#686e7d] font-bold">
-            RS: {item?.price || "$15"}
+            RS: {item?.discountPrice || item?.price || "Not Available"}
+          </span>
+          <span className="old-price px-[3px] text-[14px] text-[#686e7d] line-through">
+            {item?.discountPrice ? "RS: " + item?.price : " "}
           </span>
         </span>
         <div className=" relative flex items-center justify-between  ">
