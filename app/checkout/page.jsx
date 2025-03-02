@@ -235,7 +235,7 @@ export default function Checkout() {
           phone: formValues.phone,
           address: formValues.address,
           email: formValues.email,
-          totalPrice: totals,
+          totalPrice: totals + 250,
           comment: formValues.comment,
           orderProducts: cartItems,
           users_permissions_user: data?.user?.id,
