@@ -86,9 +86,9 @@ export default function ProductSlider({ showOne = false }) {
             >
               <div className="section-detail max-[991px]:mb-[12px]">
                 <h2 className="bb-title font-quicksand mb-[0] p-[0] text-[25px] font-bold text-[#3d4750] relative inline capitalize leading-[1] tracking-[0.03rem] max-[767px]:text-[23px]">
-                  Day of the{" "}
+                  Deal of the{" "}
                   <span className="bg-transparent h-[36px] bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 to-pink-700 via-blue-500 hover:from-blue-600 hover:to-indigo-600 hover:via-pink-400 ">
-                    Deal
+                    Day
                   </span>
                 </h2>
                 <p className="font-Poppins max-w-[400px] mt-[10px] text-[14px] text-[#686e7d] leading-[18px] font-light tracking-[0.03rem] max-[991px]:mx-[auto]">

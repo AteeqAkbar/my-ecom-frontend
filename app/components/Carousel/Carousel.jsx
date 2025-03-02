@@ -59,13 +59,13 @@ const Slider = () => {
 
     return () => clearTimeout(timer);
   }, [animation]);
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     nextSlide();
-  //   }, 3500);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      nextSlide();
+    }, 3500);
 
-  //   return () => clearInterval(timer);
-  // }, []);
+    return () => clearInterval(timer);
+  }, []);
 
   // Function to handle previous slide
   const prevSlide = () => {
@@ -151,7 +151,7 @@ const Slider = () => {
                 //cursor-pointer
                 `}
               >
-                <Image src={item.image} />
+                <Image src={item.image} alt={item.title} />
                 <div className="content">
                   <div className="title">{item.title}</div>
                   <div className="description">Description</div>
