@@ -22,6 +22,8 @@ export default function ProductSlider({ showOne = false }) {
   });
 
   if (error) return <div>An error occurred: {error.message}</div>;
+  const products = product?.data || [];
+  const enableLoop = products.length > (showOne ? 1 : 4);
   return (
     <>
       {showOne == true ? (
@@ -31,7 +33,7 @@ export default function ProductSlider({ showOne = false }) {
             delay: 2500,
             // disableOnInteraction: false,
           }}
-          loop={true}
+          loop={enableLoop}
           breakpoints={{
             340: {
               slidesPerView: 1,
@@ -68,8 +70,8 @@ export default function ProductSlider({ showOne = false }) {
                 <ProductCardSkeleton style={{ width: "auto" }} />
               </SwiperSlide>
             ))}
-          {product &&
-            product?.data?.map((_, index) => (
+          {products.length > 0 &&
+            products?.map((_, index) => (
               <SwiperSlide key={index}>
                 <ProductCard product={_} style={{ width: "auto" }} />
               </SwiperSlide>
@@ -107,7 +109,7 @@ export default function ProductSlider({ showOne = false }) {
               delay: 2500,
               // disableOnInteraction: false,
             }}
-            loop={true}
+            loop={enableLoop}
             breakpoints={{
               340: {
                 slidesPerView: 2,
@@ -144,8 +146,8 @@ export default function ProductSlider({ showOne = false }) {
                   <ProductCardSkeleton style={{ width: "auto" }} />
                 </SwiperSlide>
               ))}
-            {product &&
-              product?.data?.map((_, index) => (
+            {products.length > 0 &&
+              products?.map((_, index) => (
                 <SwiperSlide key={index}>
                   <ProductCard product={_} style={{ width: "auto" }} />
                 </SwiperSlide>

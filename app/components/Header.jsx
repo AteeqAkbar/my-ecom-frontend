@@ -9,6 +9,7 @@ import menu from "../image/icons/menu1.png";
 import useScroll from "../hook/useScroll";
 import { useDispatch, useSelector } from "react-redux";
 import { openCart } from "../store/cartVisibilitySlice";
+import { clearUserToken } from "../store/authSlice";
 import Loader from "./Loader";
 import Link from "next/link";
 import Image from "next/image";
@@ -24,6 +25,7 @@ const Header = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
   const { items, loading, error } = useSelector((state) => state.categories); // Update to 'categories'
+  const auth = useSelector((state) => state.auth);
 
   // const { data, error, isLoading } = useQuery({
   //   queryKey: ["fetchCategories"],
@@ -129,10 +131,9 @@ const Header = () => {
                         </p> */}
                         <ul className="mt-3 text-[13px] grid grid-cols-2 gap-6">
                           {items?.data?.map((item) => (
-                            <li>
+                            <li key={item?.id || item?.name}>
                               <Link
-                                key={item?.documentId}
-                                href={`/products?categories${item.name}`}
+                                href={`/products?categories=${item.name}`}
                                 className="flex items-center gap-2 p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-normal hover:text-indigo-600"
                               >
                                 <Image
@@ -167,6 +168,18 @@ const Header = () => {
               Check Out
             </Link>
           </li>
+          <li className="relative group px-3 py-2">
+            <Link href={auth?.token ? "/orders" : "/auth"} className="hover:opacity-50 ">
+              {auth?.token ? "My Orders" : "Sign In"}
+            </Link>
+          </li>
+          {auth?.token && (
+            <li className="relative group px-3 py-2">
+              <button onClick={() => dispatch(clearUserToken())} className="hover:opacity-50 ">
+                Logout
+              </button>
+            </li>
+          )}
         </ul>
 
         {/* Cart */}
@@ -317,9 +330,8 @@ const Header = () => {
                 </div>
                 <ul className="flex ms-5 flex-col gap-2">
                   {items?.data?.map((item) => (
-                    <li>
+                    <li key={item?.id || item?.name}>
                       <Link
-                        key={item?.documentId}
                         href={`/products?categories=${item.name}`}
                         className="flex items-center gap-2 p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-normal hover:text-indigo-600"
                       >
@@ -335,12 +347,22 @@ const Header = () => {
 
               <li>
                 <Link
-                  href="/checkout"
+                  href={auth?.token ? "/orders" : "/auth"}
                   className="flex items-center gap-2 p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600"
                 >
-                  <span>Check Out</span>
+                  <span>{auth?.token ? "My Orders" : "Sign In"}</span>
                 </Link>
               </li>
+              {auth?.token && (
+                <li>
+                  <button
+                    onClick={() => dispatch(clearUserToken())}
+                    className="flex items-center gap-2 p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600 w-full text-left"
+                  >
+                    Logout
+                  </button>
+                </li>
+              )}
             </ul>
 
             <div className="flex items-center justify-center">

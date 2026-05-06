@@ -8,6 +8,9 @@ import CartSidebar from "./components/Cart/CartSidebar";
 import Loader from "./components/Loader";
 import { ToastContainer } from "react-toastify";
 import { fetchCategories } from "./store/categoriesSlice";
+import { clearUserToken, hydrateAuth } from "./store/authSlice";
+import { getMe } from "./services/api";
+import { useRouter } from "next/navigation";
 const queryClient = new QueryClient();
 export default function App({ children }) {
   return (
@@ -33,13 +36,33 @@ export default function App({ children }) {
 
 const LoadCategories = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     const loadData = async () => {
       await dispatch(fetchCategories()); // Update to fetchCategories
+      const token = window.localStorage.getItem("jwtToken");
+      if (!token) return;
+
+      try {
+        const user = await getMe();
+        dispatch(hydrateAuth({ token, user }));
+      } catch {
+        dispatch(clearUserToken());
+      }
     };
     loadData();
   }, [dispatch]);
 
-  return;
+  useEffect(() => {
+    const handleUnauthorized = () => {
+      dispatch(clearUserToken());
+      router.push("/auth");
+    };
+
+    window.addEventListener("auth:unauthorized", handleUnauthorized);
+    return () => window.removeEventListener("auth:unauthorized", handleUnauthorized);
+  }, [dispatch, router]);
+
+  return null;
 };

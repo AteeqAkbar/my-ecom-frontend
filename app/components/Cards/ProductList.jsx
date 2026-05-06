@@ -81,11 +81,8 @@ function List(props) {
   return (
     // <BoxLayout>
     <div className=" w-full px-[12px] mb-[24px]">
-      <div key={Math.random() + 1002} className="bb-shop-pro-inner">
-        <div
-          key={Math.random() + 1002}
-          className="flex flex-wrap mx-[-12px] mb-[-24px]"
-        >
+      <div className="bb-shop-pro-inner">
+        <div className="flex flex-wrap mx-[-12px] mb-[-24px]">
           {/* <div key={Math.random() + 100} className="w-full px-[12px]">
             <div className="bb-pro-list-top mb-[24px] rounded-[20px] flex bg-[#f8f8fb] border-[1px] border-solid border-[#eee] justify-between">
               <div className="flex flex-wrap w-full">
@@ -145,9 +142,9 @@ function List(props) {
             </div>
           </div>
           {isFetching || isPending ? (
-            [...Array(12)].map((value) => {
+            [...Array(12)].map((value, idx) => {
               return (
-                <Fragment key={Math.random()}>
+                <Fragment key={`skeleton-${idx}`}>
                   <ProductCardSkeleton />
                 </Fragment>
               );
@@ -157,9 +154,9 @@ function List(props) {
               No products found for the given criteria.
             </h2>
           ) : (
-            products?.map((product) => {
+            products?.map((product, idx) => {
               return (
-                <Fragment key={Math.random()}>
+                <Fragment key={product?.id || product?.slug || `product-${idx}`}>
                   <ProductCard product={product} />
                 </Fragment>
               );
@@ -177,7 +174,7 @@ function List(props) {
                   position: index + 1,
                   item: {
                     "@type": "Product",
-                    url: `${window.location.origin}/products/${product?.slug}`,
+                    url: `${window.location.origin}/products/${product?.slug || product?.id}`,
 
                     name: product?.name,
                     image: generateImageUrl(product?.images?.[0]?.url),

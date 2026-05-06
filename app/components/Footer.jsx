@@ -127,8 +127,11 @@ const Footer = async () => {
                   </h4>
                   <div className="bb-footer-links bb-footer-dropdown  max-[991px]:mb-[35px]">
                     <ul className="align-items-center">
-                      {data?.data?.map((item) => (
-                        <li className="bb-footer-link leading-[1.5] flex items-center mb-[16px] max-[991px]:mb-[15px]">
+                      {data?.map((item) => (
+                        <li
+                          key={item?.id || item?.name}
+                          className="bb-footer-link leading-[1.5] flex items-center mb-[16px] max-[991px]:mb-[15px]"
+                        >
                           <Link
                             href={`/products?categories=${item.name}`}
                             className="transition-all duration-[0.3s] ease-in-out font-Poppins text-[14px] leading-[20px] text-[#686e7d] hover:text-[#6c7fd8] mb-[0] inline-block break-all tracking-[0] font-normal"

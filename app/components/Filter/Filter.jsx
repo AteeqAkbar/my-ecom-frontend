@@ -68,7 +68,7 @@ export default function Filter() {
         </div>
         <div className="bb-sidebar-contact">
           {error && <div>An error occurred: {error.message}</div>}
-          {data?.data?.map((cat) => (
+          {data?.map((cat) => (
             <div key={cat?.name} className="mb-[14px]">
               <CustomCheckbox
                 id={`color-${cat?.name.toLowerCase()}`}

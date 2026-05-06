@@ -14,6 +14,8 @@ function Auth() {
   });
   const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
+  const [apiError, setApiError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validate = () => {
     const newErrors = {};
@@ -45,29 +47,31 @@ function Auth() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setApiError("");
     if (validate()) {
       try {
+        setIsSubmitting(true);
         if (state === "login") {
           const data = await login({
-            identifier: formData.email,
+            email: formData.email,
             password: formData.password,
           });
-          dispatch(setUserToken({ token: data.jwt, user: data.user }));
+          dispatch(setUserToken({ token: data.token, user: data.user }));
           router.push("/");
         } else if (state === "register") {
           const data = await register({
-            username: formData.name,
+            name: formData.name,
             password: formData.password,
             email: formData.email,
           });
-          dispatch(setUserToken({ token: data.jwt, user: data.user }));
+          dispatch(setUserToken({ token: data.token, user: data.user }));
           router.push("/");
         }
       } catch (err) {
-        console.log(err);
+        setApiError(err.message || "Unable to process your request");
+      } finally {
+        setIsSubmitting(false);
       }
-
-      console.log("Form submitted:", formData);
     }
   };
 
@@ -182,11 +186,17 @@ function Auth() {
                   </a>
                 )}
                 <div className="bb-login-button m-[-5px] flex justify-between mt-3">
+                  {apiError && (
+                    <p className="text-red-500 text-sm w-full mb-2">{apiError}</p>
+                  )}
                   <button
                     type="submit"
+                    disabled={isSubmitting}
                     className="select-none py-[4px] px-[25px] shadow3 w-auto cursor-pointer font-Poppins text-center align-top border-[1px] border-solid border-[#eee] bg-gradient-to-br from-indigo-200 to-pink-200 via-blue-200 text-white inline-flex items-center justify-center check-btn transition-all duration-[0.3s] ease-in-out font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-normal rounded-[10px]"
                   >
-                    {state === "login"
+                    {isSubmitting
+                      ? "Please wait..."
+                      : state === "login"
                       ? "Sign In"
                       : state === "register"
                       ? "Sign Up"

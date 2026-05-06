@@ -135,7 +135,7 @@ export default function Cart() {
                     {cartItems?.length > 0 ? (
                       <>
                         {cartItems.map((item) => (
-                          <Cartitems item={item} />
+                          <Cartitems key={item.id} item={item} />
                         ))}
                       </>
                     ) : (

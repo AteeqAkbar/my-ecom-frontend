@@ -15,6 +15,8 @@ import { useSelector } from "react-redux";
 
 export default function CategoriesSlider({ slidesPerView = 4 }) {
   const { items, loading, error } = useSelector((state) => state.categories);
+  const categoryItems = items?.data || [];
+  const enableLoop = categoryItems.length > slidesPerView;
 
   if (error) return <div>An error occurred: {error.message}</div>;
   return (
@@ -25,7 +27,7 @@ export default function CategoriesSlider({ slidesPerView = 4 }) {
           delay: 1500,
           disableOnInteraction: false,
         }}
-        loop={true}
+        loop={enableLoop}
         breakpoints={{
           340: {
             slidesPerView: 2,
@@ -54,8 +56,8 @@ export default function CategoriesSlider({ slidesPerView = 4 }) {
               <CardCategorySkeleton />
             </SwiperSlide>
           ))}
-        {items &&
-          items?.data?.map((category, index) => {
+        {categoryItems.length > 0 &&
+          categoryItems?.map((category, index) => {
             const colorClass = getRandomColor(index);
             return (
               <SwiperSlide key={index}>

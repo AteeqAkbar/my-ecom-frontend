@@ -19,13 +19,14 @@ import Link from "next/link";
 
 function ProductCard({ style = {}, product }) {
   const router = useRouter();
+  const productPath = `/products/${product?.slug || product?.id}`;
   const handleAddToCart = (product) => {
     // console.log(product);
     dispatch(addToCart(product));
     dispatch(openCart());
   };
   const baseUrl = `${window.location.protocol}//${window.location.host}`;
-  const productLink = `${baseUrl}/products/${product?.slug}`;
+  const productLink = `${baseUrl}${productPath}`;
   const phoneNumber = "03114900152"; // Replace with the recipient's phone number in international format
   const message = encodeURIComponent(
     `Hi I would like to buy ${product?.name} \nLink: ${productLink}`
@@ -68,7 +69,7 @@ function ProductCard({ style = {}, product }) {
 
             <div
               onClick={() =>
-                router.push(`/products/${product?.slug}`, { scroll: true })
+                router.push(productPath, { scroll: true })
               }
               className="inner-img relative block cursor-pointer overflow-hidden rounded-t-[20px] group"
             >
@@ -138,7 +139,7 @@ function ProductCard({ style = {}, product }) {
             </ul>
           </div>
           <div
-            onClick={() => router.push(`/products/${product?.slug}`)}
+            onClick={() => router.push(productPath)}
             className="bb-pro-contact p-[20px]"
           >
             <div className="bb-pro-subtitle mb-[8px] flex flex-wrap justify-between">
@@ -166,7 +167,7 @@ function ProductCard({ style = {}, product }) {
             </div>
             <h4 className="bb-pro-title mb-[8px] text-[16px] leading-[18px]">
               <Link
-                href={`/products/${product?.slug}`}
+                href={productPath}
                 title={product?.name || "Name not available"}
                 // href="product-left-sidebar.html"
                 className="transition-all duration-[0.3s] ease-in-out font-quicksand w-full block whitespace-nowrap overflow-hidden text-ellipsis text-[15px] leading-[18px] text-[#3d4750] font-semibold tracking-[0.03rem]"

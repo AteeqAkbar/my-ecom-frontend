@@ -9,7 +9,10 @@ export function generateRandomColor() {
 }
 export function generateImageUrl(url) {
   if (url) {
-    return `${baseURL}${url}`;
+    if (url.startsWith("http://") || url.startsWith("https://")) {
+      return url;
+    }
+    return `${baseURL}${url.startsWith("/") ? "" : "/"}${url}`;
   }
 }
 

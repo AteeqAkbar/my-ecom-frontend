@@ -9,8 +9,7 @@ import star from "../image/icons/star.png";
 import starhalf from "../image/icons/halfstar.png";
 import Image from "next/image";
 import { generateImageUrl } from "../utils/helperFun";
-import { checkUserExists, login, postOrder, register } from "../services/api";
-import { setUserToken } from "../store/authSlice";
+import { postOrder } from "../services/api";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
@@ -72,14 +71,14 @@ export default function Checkout() {
   const cartItems = useSelector((state) => state.cart.items);
   const router = useRouter();
   const auth = useSelector((state) => state.auth);
-  console.log(auth, "auth");
+  const [submitting, setSubmitting] = useState(false);
   const dispatch = useDispatch();
   const [totals, setTotals] = useState(0);
   useEffect(() => {
     setFormValues((value) => {
       return {
         ...value,
-        fullName: auth?.user?.username,
+        fullName: auth?.user?.name || auth?.user?.username || "",
         email: auth?.user?.email,
       };
     });
@@ -128,139 +127,52 @@ export default function Checkout() {
     const errors = validate();
     setFormErrors(errors);
     const isValid = Object.keys(errors).length === 0;
-    let prodcutIds = [];
-    cartItems.forEach((item) => {
-      prodcutIds.push(Number(item.id));
-    });
+    if (!auth?.token) {
+      toast.error("Please sign in to place an order.");
+      router.push("/auth");
+      return;
+    }
 
-    const checkUser = await checkUserExists(
-      formValues.email,
-      formValues.fullName
-    );
-    if (checkUser?.length > 0) {
-      try {
-        const data = await login({
-          identifier: formValues.email,
-          password: formValues.password,
-        });
-        dispatch(setUserToken({ token: data.jwt, user: data.user }));
-        const data1 = {
-          name: formValues.fullName,
-          phone: formValues.phone,
+    if (!isValid || cartItems.length === 0) return;
+
+    try {
+      setSubmitting(true);
+      const deliveryCharges = 250;
+      const payload = {
+        items: cartItems.map((item) => ({
+          productId: Number(item.id),
+          name: item.name || "Product",
+          price: Number(item.discountPrice || item.price || 0),
+          quantity: Number(item.quantity || 1),
+        })),
+        shippingAddress: {
+          city: "N/A",
           address: formValues.address,
-          email: formValues.email,
-          totalPrice: totals,
-          comment: formValues.comment,
-          orderProducts: cartItems,
-          users_permissions_user: auth?.user?.id,
-          products: prodcutIds,
-        };
-        const response = await postOrder(data1);
-        toast("Order received! We’re processing it now.");
-        console.log("Order response:", response);
-        // Reset the cart
-        dispatch(clearCart());
-        //   // Reset form
-        setFormValues({
-          fullName: "",
-          phone: "",
-          address: "",
-          email: "",
-          password: "",
-          comment: "",
-        });
-        router.push("/");
-      } catch (error) {
-        toast.error(
-          "User already exists with this Email/User Name. Please use correct credentials"
-        );
-        console.error("There was an error adding items to the cart!", error);
-      }
-    } else if (auth?.token) {
-      if (isValid) {
-        const data = {
-          name: formValues.fullName,
           phone: formValues.phone,
-          address: formValues.address,
+          fullName: formValues.fullName,
           email: formValues.email,
-          totalPrice: totals,
-          comment: formValues.comment,
-          orderProducts: cartItems,
-          users_permissions_user: auth?.user?.id,
-          products: prodcutIds,
-        };
+          note: formValues.comment,
+        },
+        paymentMethod: "cod",
+        totalAmount: Number(totals + deliveryCharges),
+      };
 
-        try {
-          const response = await postOrder(data);
-          toast("Order received! We’re processing it now.");
-          console.log("Order response:", response);
-          // Reset the cart
-          dispatch(clearCart());
-          //   // Reset form
-          setFormValues({
-            fullName: "",
-            phone: "",
-            address: "",
-            email: "",
-            password: "",
-            comment: "",
-          });
-          router.push("/");
-        } catch (error) {
-          toast.error(error.message);
-          console.error("There was an error adding items to the cart!", error);
-        }
-
-        // Reset form
-        setFormValues({
-          fullName: "",
-          phone: "",
-          address: "",
-          email: "",
-          password: "",
-          comment: "",
-        });
-      }
-      // Add items to the cart using the API
-    } else {
-      try {
-        const data = await register({
-          username: formValues.fullName,
-          password: formValues.password,
-          email: formValues.email,
-        });
-        dispatch(setUserToken({ token: data.jwt, user: data.user }));
-        const data1 = {
-          name: formValues.fullName,
-          phone: formValues.phone,
-          address: formValues.address,
-          email: formValues.email,
-          totalPrice: totals + 250,
-          comment: formValues.comment,
-          orderProducts: cartItems,
-          users_permissions_user: data?.user?.id,
-          products: prodcutIds,
-        };
-
-        const response = await postOrder(data1);
-        console.log("Order response:", response);
-        toast("Order received! We’re processing it now.");
-        // Reset the cart
-        dispatch(clearCart());
-        //   // Reset form
-        setFormValues({
-          fullName: "",
-          phone: "",
-          address: "",
-          email: "",
-          password: "",
-          comment: "",
-        });
-        router.push("/");
-      } catch (error) {
-        toast.error(error.message);
-        console.error("There was an error adding items to the cart!", error);
-      }
+      await postOrder(payload);
+      toast("Order received! We’re processing it now.");
+      dispatch(clearCart());
+      setFormValues({
+        fullName: "",
+        phone: "",
+        address: "",
+        email: "",
+        password: "",
+        comment: "",
+      });
+      router.push("/orders");
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setSubmitting(false);
     }
 
     // const errors = validate();
@@ -516,7 +428,7 @@ export default function Checkout() {
                       className="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] outline-[0] leading-[26px] rounded-[10px]"
                       // required
                     />
-                    {formErrors?.password && (
+                    {!auth?.token && formErrors?.password && (
                       <span className="text-red-500">
                         {formErrors?.password}
                       </span>
@@ -526,9 +438,10 @@ export default function Checkout() {
                     {cartItems?.length > 0 && (
                       <button
                         type="submit"
+                        disabled={submitting}
                         className="select-none animate-bounce py-[4px] px-[25px] w-auto cursor-pointer text-[#777] bg-[#f8f8fb] font-Poppins text-center align-top border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow3 mt-[24px] inline-flex items-center justify-center check-btn transition-all duration-[0.3s] ease-in-out font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-normal rounded-[10px]"
                       >
-                        Place Order
+                        {submitting ? "Placing Order..." : "Place Order"}
                       </button>
                     )}
                   </div>

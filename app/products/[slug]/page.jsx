@@ -27,7 +27,7 @@ export default function ProductPage() {
     queryKey: ["singleProduct", slug],
     queryFn: () => fetchSingleProduct(slug),
   });
-  const product = data?.data?.[0];
+  const product = data;
   const router = useRouter();
   // console.log(data, "data", error, isLoading, product);
   const [info, setInfo] = useState("reviews");

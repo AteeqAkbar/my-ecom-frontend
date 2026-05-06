@@ -146,7 +146,7 @@ const Slider = () => {
                 //   setAnimation("next");
                 //   setCurrentIndex(i);
                 // }}
-                key={item.id + item.author}
+                key={`${item.id}-${i}`}
                 className={`item 
                 //cursor-pointer
                 `}
