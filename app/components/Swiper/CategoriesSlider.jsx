@@ -7,8 +7,6 @@ import "swiper/css/free-mode";
 
 import { FreeMode, Pagination, Autoplay } from "swiper/modules";
 import Image from "next/image";
-import { fetchCategories } from "@/app/services/api";
-import { useQuery } from "@tanstack/react-query";
 import { generateImageUrl, getRandomColor } from "@/app/utils/helperFun";
 import Link from "next/link";
 import { useSelector } from "react-redux";
@@ -20,25 +18,34 @@ export default function CategoriesSlider({ slidesPerView = 4 }) {
 
   if (error) return <div>An error occurred: {error.message}</div>;
   return (
-    <div className="flex items-center justify-center flex-col  py-2 ">
+    <div className="w-full py-2 mx-auto">
       <Swiper
-        // centeredSlides={true}
+        observer={true}
+        observeParents={true}
+        updateOnWindowResize={true}
+        centeredSlides={false}
+        centerInsufficientSlides={true}
         autoplay={{
           delay: 1500,
           disableOnInteraction: false,
         }}
         loop={enableLoop}
+        slidesPerView={1.2}
         breakpoints={{
-          340: {
+          480: {
             slidesPerView: 2,
+            spaceBetween: 12,
+          },
+          768: {
+            slidesPerView: 3,
             spaceBetween: 15,
           },
-          700: {
+          1200: {
             slidesPerView: slidesPerView,
             spaceBetween: 15,
           },
         }}
-        freeMode={true}
+        freeMode={false}
         // pagination={{
         //   clickable: true,
         // }}
@@ -47,7 +54,8 @@ export default function CategoriesSlider({ slidesPerView = 4 }) {
           Autoplay,
           // Pagination
         ]}
-        className="max-w-full "
+        className="w-full mx-auto"
+        style={{ width: "100%" }}
         // className="max-w-[90%] lg:max-w-[80%]"
       >
         {loading &&
@@ -63,17 +71,16 @@ export default function CategoriesSlider({ slidesPerView = 4 }) {
               <SwiperSlide key={index}>
                 <Link
                   href={`/${category.name}`}
-                  className="owl-item cloned"
-                  // style="width: 204px; margin-right: 24px;"
+                  className="block"
                 >
-                  <div className="owl-item active me-[30px] w-auto h-[220px]">
+                  <div className="w-full h-[140px] min-[768px]:h-[170px] min-[1200px]:h-[190px]">
                     <div
-                      className="bb-team-box aos-init aos-animate"
+                      className="bb-team-box aos-init aos-animate h-full"
                       data-aos="fade-up"
                       data-aos-duration="1000"
                       data-aos-delay="800"
                     >
-                      <div className="bb-team-img mb-[20px] relative h-full flex items-center overflow-hidden">
+                      <div className="bb-team-img relative h-full flex items-center overflow-hidden rounded-[16px] border border-[#eee]">
                         <div className="bb-team-socials transition-all duration-[0.3s] ease-in-out bg-[#fff] rounded-tl-[20px] rounded-bl-[20px] absolute right-[-160px]">
                           <div className="inner-shape relative"></div>
                           <ul className="mb-[0] py-[20px] px-[10px] flex flex-col items-start">
@@ -96,8 +103,14 @@ export default function CategoriesSlider({ slidesPerView = 4 }) {
                             "https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/category/2.svg"
                           }
                           alt="team-4"
-                          className="w-full h-[220px] object-cover rounded-[20px]"
+                          className="w-full h-full object-cover"
                         />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#00000099] to-transparent" />
+                        <div className="absolute left-4 bottom-4">
+                          <p className="text-white text-[13px] min-[768px]:text-[15px] font-semibold">
+                            {category?.name || "Category"}
+                          </p>
+                        </div>
                       </div>
                       {/* <div className="bb-team-contact text-center">
                         <h5 className="font-quicksand tracking-[0.03rem] leading-[1.2] text-[18px] font-bold text-[#3d4750]">

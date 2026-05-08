@@ -43,14 +43,28 @@ function List(props) {
   });
   const products = data?.data || [];
   const pagination = data?.meta?.pagination;
+
+  useEffect(() => {
+    setPage(1);
+  }, [searchParams, cat]);
+
   useEffect(() => {
     if (!isPlaceholderData && page < pagination?.pageCount) {
       queryClient.prefetchQuery({
-        queryKey: ["projects", page + 1],
+        queryKey: ["prducts", page + 1, categories, maxPrice, minPrice],
         queryFn: () => fetchProducts(page + 1, categories, minPrice, maxPrice),
       });
     }
-  }, [data, isPlaceholderData, page, queryClient]);
+  }, [
+    data,
+    isPlaceholderData,
+    page,
+    queryClient,
+    categories,
+    minPrice,
+    maxPrice,
+    pagination?.pageCount,
+  ]);
 
   if (error) {
     return (
@@ -157,7 +171,19 @@ function List(props) {
             products?.map((product, idx) => {
               return (
                 <Fragment key={product?.id || product?.slug || `product-${idx}`}>
-                  <ProductCard product={product} />
+                  <ProductCard
+                    product={product}
+                    gridClassName={
+                      props?.boxLayoutUse
+                        ? "lg:w-1/3 md:w-1/2 w-1/2 max-[480px]:w-full"
+                        : "xl:w-1/4 md:w-1/3 w-1/2 max-[480px]:w-full"
+                    }
+                    imageHeightClassName={
+                      props?.boxLayoutUse
+                        ? "h-[160px] min-[768px]:h-[185px] min-[1200px]:h-[210px]"
+                        : "h-[180px] min-[768px]:h-[210px] min-[1200px]:h-[240px]"
+                    }
+                  />
                 </Fragment>
               );
             })
@@ -265,10 +291,10 @@ function ProductList({ boxLayoutUse = false }) {
   return (
     <>
       {boxLayoutUse ? (
-        <List />
+        <List boxLayoutUse={boxLayoutUse} />
       ) : (
         <BoxLayout>
-          <List></List>
+          <List boxLayoutUse={boxLayoutUse}></List>
         </BoxLayout>
       )}
     </>

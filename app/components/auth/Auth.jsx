@@ -11,6 +11,7 @@ function Auth() {
     email: "",
     password: "",
     name: "",
+    phone: "",
   });
   const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
@@ -36,6 +37,15 @@ function Auth() {
       newErrors.name = "Full name is required.";
     }
 
+    if (state === "register") {
+      const digits = String(formData.phone || "").replace(/\D/g, "");
+      if (!digits) {
+        newErrors.phone = "Phone number is required.";
+      } else if (digits.length < 10) {
+        newErrors.phone = "Enter a valid phone number (at least 10 digits).";
+      }
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -59,10 +69,12 @@ function Auth() {
           dispatch(setUserToken({ token: data.token, user: data.user }));
           router.push("/");
         } else if (state === "register") {
+          const phoneDigits = String(formData.phone || "").replace(/\D/g, "");
           const data = await register({
             name: formData.name,
             password: formData.password,
             email: formData.email,
+            phone: phoneDigits,
           });
           dispatch(setUserToken({ token: data.token, user: data.user }));
           router.push("/");
@@ -140,6 +152,24 @@ function Auth() {
                     />
                     {errors.name && (
                       <p className="text-red-500 text-sm">{errors.name}</p>
+                    )}
+                  </div>
+                )}
+                {state === "register" && (
+                  <div className="bb-login-wrap mb-[24px]">
+                    <label className="inline-block font-Poppins text-[15px] font-normal text-[#686e7d] leading-[26px] tracking-[0.02rem]">
+                      Phone number*
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      placeholder="e.g. 03001234567"
+                      className="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] outline-[0] leading-[26px] rounded-[10px]"
+                      value={formData.phone}
+                      onChange={handleChange}
+                    />
+                    {errors.phone && (
+                      <p className="text-red-500 text-sm">{errors.phone}</p>
                     )}
                   </div>
                 )}

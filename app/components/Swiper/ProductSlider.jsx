@@ -10,6 +10,8 @@ import ProductCard from "../Cards/ProductCard";
 import { useQuery } from "@tanstack/react-query";
 import ProductCardSkeleton from "../Cards/ProductCardSkeleton";
 import { fetchProducts } from "@/app/services/api";
+import { generateImageUrl } from "@/app/utils/helperFun";
+import Link from "next/link";
 
 export default function ProductSlider({ showOne = false }) {
   const {
@@ -27,56 +29,54 @@ export default function ProductSlider({ showOne = false }) {
   return (
     <>
       {showOne == true ? (
-        <Swiper
-          // centeredSlides={true}
-          autoplay={{
-            delay: 2500,
-            // disableOnInteraction: false,
-          }}
-          loop={enableLoop}
-          breakpoints={{
-            340: {
-              slidesPerView: 1,
-              spaceBetween: 6,
-            },
-            700: {
-              slidesPerView: 1,
-              spaceBetween: 12,
-            },
-            1040: {
-              slidesPerView: 1,
-              spaceBetween: 15,
-            },
-            1440: {
-              slidesPerView: 1,
-              spaceBetween: 15,
-            },
-          }}
-          freeMode={true}
-          // pagination={{
-          //   clickable: true,
-          // }}
-          modules={[
-            FreeMode,
-            Autoplay,
-            //  Pagination
-          ]}
-          className="max-w-full "
-          // className="max-w-[90%] lg:max-w-[80%]"
-        >
-          {isLoading &&
-            Array.from({ length: 5 }).map((_, index) => (
-              <SwiperSlide key={index}>
-                <ProductCardSkeleton style={{ width: "auto" }} />
-              </SwiperSlide>
-            ))}
-          {products.length > 0 &&
-            products?.map((_, index) => (
-              <SwiperSlide key={index}>
-                <ProductCard product={_} style={{ width: "auto" }} />
-              </SwiperSlide>
-            ))}
-        </Swiper>
+        <div className="w-full">
+          <Swiper
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+            }}
+            loop={enableLoop}
+            slidesPerView={1}
+            spaceBetween={0}
+            freeMode={false}
+            modules={[Autoplay]}
+            className="w-full rounded-[16px] overflow-hidden"
+          >
+            {isLoading &&
+              Array.from({ length: 3 }).map((_, index) => (
+                <SwiperSlide key={index}>
+                  <div className="w-full h-[200px] min-[768px]:h-[280px] min-[1200px]:h-[340px] rounded-[16px] bg-[#f3f4f6] animate-pulse" />
+                </SwiperSlide>
+              ))}
+            {products.length > 0 &&
+              products?.map((item, index) => (
+                <SwiperSlide key={index}>
+                  <Link
+                    href={`/products/${item?.slug || item?.id}`}
+                    className="block relative w-full h-[200px] min-[768px]:h-[280px] min-[1200px]:h-[340px] rounded-[16px] overflow-hidden border border-[#eee]"
+                  >
+                    <img
+                      src={
+                        generateImageUrl(item?.images?.[0]?.url) ||
+                        "https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/new-product/1.jpg"
+                      }
+                      alt={item?.name || "product-banner"}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#00000099] via-[#00000044] to-transparent" />
+                    <div className="absolute left-4 min-[768px]:left-8 bottom-4 min-[768px]:bottom-8 text-white max-w-[80%]">
+                      <p className="text-[12px] min-[768px]:text-[14px] uppercase tracking-[2px] opacity-90">
+                        Featured Product
+                      </p>
+                      <h3 className="text-[18px] min-[768px]:text-[28px] font-bold leading-tight mt-1">
+                        {item?.name || "New Arrival"}
+                      </h3>
+                    </div>
+                  </Link>
+                </SwiperSlide>
+              ))}
+          </Swiper>
+        </div>
       ) : (
         <div className="flex items-center justify-center flex-col bg-transparent  mx-auto w-full max-w-screen-md  lg:max-w-screen-lg">
           <div className="w-full px-[12px]">

@@ -17,7 +17,12 @@ import { generateImageUrl } from "@/app/utils/helperFun";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-function ProductCard({ style = {}, product }) {
+function ProductCard({
+  style = {},
+  product,
+  gridClassName = "min-[1200px]:w-[25%] min-[768px]:w-[33.33%] w-[50%] max-[480px]:w-full",
+  imageHeightClassName = "h-[180px] min-[768px]:h-[210px] min-[1200px]:h-[240px]",
+}) {
   const router = useRouter();
   const productPath = `/products/${product?.slug || product?.id}`;
   const handleAddToCart = (product) => {
@@ -42,7 +47,7 @@ function ProductCard({ style = {}, product }) {
     <>
       <div
         style={style}
-        className="min-[1200px]:w-[25%] min-[768px]:w-[33.33%] w-[50%] max-[480px]:w-full px-[12px] mb-[24px] aos-init aos-animate"
+        className={`${gridClassName} px-[12px] mb-[24px] aos-init aos-animate`}
         data-aos="fade-up"
         data-aos-duration="1000"
         data-aos-delay="400"
@@ -71,10 +76,10 @@ function ProductCard({ style = {}, product }) {
               onClick={() =>
                 router.push(productPath, { scroll: true })
               }
-              className="inner-img relative block cursor-pointer overflow-hidden rounded-t-[20px] group"
+              className={`inner-img relative block cursor-pointer overflow-hidden rounded-t-[20px] group ${imageHeightClassName}`}
             >
               <img
-                className="main-img transition-all duration-[0.3s] ease-in-out w-full transform group-hover:scale-105 group-hover:opacity-0"
+                className="main-img transition-all duration-[0.3s] ease-in-out w-full h-full object-cover transform group-hover:scale-105 group-hover:opacity-0"
                 src={
                   generateImageUrl(product?.images?.[0]?.url) ||
                   "https://maraviyainfotech.com/projects/blueberry-tailwind/assets/img/new-product/1.jpg"
@@ -82,7 +87,7 @@ function ProductCard({ style = {}, product }) {
                 alt="product1"
               />
               <img
-                className="hover-img transition-all duration-[0.3s] ease-in-out absolute z-[2] top-[0] left-[0] opacity-[0]  transform group-hover:opacity-100 group-hover:scale-110 w-full"
+                className="hover-img transition-all duration-[0.3s] ease-in-out absolute z-[2] top-[0] left-[0] opacity-[0] transform group-hover:opacity-100 group-hover:scale-110 w-full h-full object-cover"
                 src={
                   generateImageUrl(product?.images?.[1]?.url) ||
                   generateImageUrl(product?.images?.[0]?.url) ||

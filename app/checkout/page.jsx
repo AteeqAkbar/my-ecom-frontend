@@ -2,16 +2,20 @@
 import React, { useEffect, useState } from "react";
 import Breadcrumb from "../components/Breadcrumb";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, clearCart, removeFromCart } from "../store/cartSlice";
+import { clearCart } from "../store/cartSlice";
 import ProductSlider from "../components/Swiper/ProductSlider";
 import done from "../image/icons/done.png";
 import star from "../image/icons/star.png";
 import starhalf from "../image/icons/halfstar.png";
 import Image from "next/image";
 import { generateImageUrl } from "../utils/helperFun";
-import { postOrder } from "../services/api";
+import { fetchDeliveryCharge, postOrder } from "../services/api";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+
+function normalizePhoneDigits(value) {
+  return String(value || "").replace(/\D/g, "");
+}
 
 function ProductItem({ item }) {
   return (
@@ -45,7 +49,7 @@ function ProductItem({ item }) {
         <span className="bb-pro-rating flex">
           {[...Array(4)].map((_, i) => (
             <Image
-              key={i}
+              key={`star-${item.id}-${i}`}
               src={star}
               height={24}
               width={24}
@@ -54,7 +58,7 @@ function ProductItem({ item }) {
             ></Image>
           ))}
           <Image
-            key={Math.random() + 100}
+            key={`star-half-${item.id}`}
             src={starhalf}
             alt={"star5"}
             height={24}
@@ -71,7 +75,9 @@ export default function Checkout() {
   const cartItems = useSelector((state) => state.cart.items);
   const router = useRouter();
   const auth = useSelector((state) => state.auth);
+  const isAuthenticated = Boolean(auth?.token || auth?.user?.id || auth?.user?.email);
   const [submitting, setSubmitting] = useState(false);
+  const [deliveryCharge, setDeliveryCharge] = useState(250);
   const dispatch = useDispatch();
   const [totals, setTotals] = useState(0);
   useEffect(() => {
@@ -79,13 +85,18 @@ export default function Checkout() {
       return {
         ...value,
         fullName: auth?.user?.name || auth?.user?.username || "",
-        email: auth?.user?.email,
+        email: auth?.user?.email || "",
+        phone:
+          value.phone ||
+          normalizePhoneDigits(auth?.user?.phone) ||
+          "",
       };
     });
   }, [auth]);
   const [formValues, setFormValues] = useState({
     fullName: "",
     phone: "",
+    city: "",
     address: "",
     email: "",
     password: "",
@@ -103,41 +114,66 @@ export default function Checkout() {
     );
   }, [cartItems]);
 
+  useEffect(() => {
+    let mounted = true;
+    const loadDeliveryCharge = async () => {
+      const charge = await fetchDeliveryCharge();
+      if (mounted) setDeliveryCharge(charge);
+    };
+    loadDeliveryCharge();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   const validate = () => {
     const errors = {};
-    if (!formValues.fullName) errors.fullName = "Full Name is required";
-    if (!formValues.phone) errors.phone = "Phone Number is required";
-    if (!formValues.address) errors.address = "Address is required";
+    if (!formValues.fullName?.trim()) errors.fullName = "Full name is required";
+    const phoneDigits = normalizePhoneDigits(formValues.phone);
+    if (!phoneDigits) {
+      errors.phone = "Phone number is required";
+    } else if (phoneDigits.length < 10) {
+      errors.phone = "Enter a valid phone number (at least 10 digits)";
+    }
+    if (!formValues.city?.trim()) errors.city = "City is required";
+    if (!formValues.address?.trim()) errors.address = "Street address is required";
     if (!formValues.email) {
-      errors.email = "Email Address is required";
+      errors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formValues.email)) {
-      errors.email = "Email Address is invalid";
+      errors.email = "Email is invalid";
     }
-    if (auth?.token) {
-      return errors;
-    } else {
-      if (!formValues.password) errors.password = "Password is required";
-      return errors;
+    if (!isAuthenticated && !formValues.password) {
+      errors.password = "Password is required";
     }
+    return errors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const errors = validate();
-    setFormErrors(errors);
-    const isValid = Object.keys(errors).length === 0;
-    if (!auth?.token) {
+    if (!isAuthenticated) {
       toast.error("Please sign in to place an order.");
       router.push("/auth");
       return;
     }
 
-    if (!isValid || cartItems.length === 0) return;
+    if (cartItems.length === 0) {
+      toast.error("Your cart is empty.");
+      router.push("/cart");
+      return;
+    }
+
+    const errors = validate();
+    setFormErrors(errors);
+    if (Object.keys(errors).length > 0) {
+      const firstError = Object.values(errors)[0];
+      toast.error(firstError || "Please complete all required fields.");
+      return;
+    }
 
     try {
       setSubmitting(true);
-      const deliveryCharges = 250;
+      const phoneDigits = normalizePhoneDigits(formValues.phone);
       const payload = {
         items: cartItems.map((item) => ({
           productId: Number(item.id),
@@ -146,51 +182,35 @@ export default function Checkout() {
           quantity: Number(item.quantity || 1),
         })),
         shippingAddress: {
-          city: "N/A",
-          address: formValues.address,
-          phone: formValues.phone,
-          fullName: formValues.fullName,
-          email: formValues.email,
-          note: formValues.comment,
+          city: formValues.city.trim(),
+          address: formValues.address.trim(),
+          phone: phoneDigits,
+          fullName: formValues.fullName.trim(),
+          email: formValues.email.trim(),
+          note: formValues.comment?.trim() || "",
         },
         paymentMethod: "cod",
-        totalAmount: Number(totals + deliveryCharges),
+        totalAmount: Number(totals + deliveryCharge),
       };
 
-      await postOrder(payload);
-      toast("Order received! We’re processing it now.");
+      const order = await postOrder(payload);
+      toast.success(`Order #${order.id} placed successfully.`);
       dispatch(clearCart());
       setFormValues({
-        fullName: "",
-        phone: "",
+        fullName: auth?.user?.name || "",
+        phone: normalizePhoneDigits(auth?.user?.phone) || "",
+        city: "",
         address: "",
-        email: "",
+        email: auth?.user?.email || "",
         password: "",
         comment: "",
       });
-      router.push("/orders");
+      router.push(`/orders/${order.id}?placed=1`);
     } catch (error) {
       toast.error(error.message);
     } finally {
       setSubmitting(false);
     }
-
-    // const errors = validate();
-    // setFormErrors(errors);
-    // if (Object.keys(errors).length === 0) {
-    //   // Proceed with form submission
-    //   alert("Form submitted successfully!");
-
-    //   // Reset form
-    //   setFormValues({
-    //     fullName: "",
-    //     phone: "",
-    //     address: "",
-    //     email: "",
-    //     password: "",
-    //     comment: "",
-    //   });
-    // }
   };
 
   const handleInputChange = (e) => {
@@ -230,7 +250,7 @@ export default function Checkout() {
                           Delivery Charges
                         </span>
                         <span className="font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-medium text-[#686e7d]">
-                          {"RS: 250"}
+                          RS: {deliveryCharge}
                         </span>
                       </li>
                       <li className="flex justify-between leading-[28px] mb-[8px]">
@@ -238,7 +258,7 @@ export default function Checkout() {
                           Total
                         </span>
                         <span className="font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] font-medium text-[#686e7d]">
-                          RS: {totals ? totals + 250 : "0.00"}
+                          RS: {totals ? totals + deliveryCharge : "0.00"}
                         </span>
                       </li>
                       <li className="flex justify-between leading-[28px] mb-[8px]">
@@ -397,43 +417,64 @@ export default function Checkout() {
                         )}
                       </div>
                     </div>
+                    <div className="min-[992px]:w-[50%] w-full px-[12px]">
+                      <div className="input-item mb-[24px]">
+                        <label className="inline-block font-Poppins leading-[26px] tracking-[0.02rem] mb-[8px] text-[14px] font-medium text-[#3d4750]">
+                          City *
+                        </label>
+                        <input
+                          type="text"
+                          name="city"
+                          value={formValues.city}
+                          onChange={handleInputChange}
+                          placeholder="Enter your city"
+                          className="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] leading-[26px] outline-[0] rounded-[10px]"
+                        />
+                        {formErrors?.city && (
+                          <span className="text-red-500">{formErrors?.city}</span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="min-[992px]:w-[50%] w-full px-[12px]">
+                      <div className="input-item mb-[24px]">
+                        <label className="inline-block font-Poppins leading-[26px] tracking-[0.02rem] mb-[8px] text-[14px] font-medium text-[#3d4750]">
+                          Email Address
+                        </label>
+                        <input
+                          type="text"
+                          name="email"
+                          value={formValues.email}
+                          onChange={handleInputChange}
+                          placeholder="Enter your email address"
+                          className="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] outline-[0] leading-[26px] rounded-[10px]"
+                          // required
+                        />
+                        {formErrors?.email && (
+                          <span className="text-red-500">{formErrors?.email}</span>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <div className="input-item mb-[24px]">
-                    <label className="inline-block font-Poppins leading-[26px] tracking-[0.02rem] mb-[8px] text-[14px] font-medium text-[#3d4750]">
-                      Email Address
-                    </label>
-                    <input
-                      type="text"
-                      name="email"
-                      value={formValues.email}
-                      onChange={handleInputChange}
-                      placeholder="Enter your email address"
-                      className="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] outline-[0] leading-[26px] rounded-[10px]"
-                      // required
-                    />
-                    {formErrors?.email && (
-                      <span className="text-red-500">{formErrors?.email}</span>
-                    )}
-                  </div>
-                  <div className="input-item mb-[24px]">
-                    <label className="inline-block font-Poppins leading-[26px] tracking-[0.02rem] mb-[8px] text-[14px] font-medium text-[#3d4750]">
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      name="password"
-                      value={formValues.password}
-                      onChange={handleInputChange}
-                      placeholder="Enter your password"
-                      className="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] outline-[0] leading-[26px] rounded-[10px]"
-                      // required
-                    />
-                    {!auth?.token && formErrors?.password && (
-                      <span className="text-red-500">
-                        {formErrors?.password}
-                      </span>
-                    )}
-                  </div>
+                  {!isAuthenticated && (
+                    <div className="input-item mb-[24px]">
+                      <label className="inline-block font-Poppins leading-[26px] tracking-[0.02rem] mb-[8px] text-[14px] font-medium text-[#3d4750]">
+                        Password
+                      </label>
+                      <input
+                        type="password"
+                        name="password"
+                        value={formValues.password}
+                        onChange={handleInputChange}
+                        placeholder="Enter your password"
+                        className="w-full p-[10px] text-[14px] font-normal text-[#686e7d] border-[1px] border-solid border-[#eee] outline-[0] leading-[26px] rounded-[10px]"
+                      />
+                      {formErrors?.password && (
+                        <span className="text-red-500">
+                          {formErrors?.password}
+                        </span>
+                      )}
+                    </div>
+                  )}
                   <div className="w-full px-[12px]">
                     {cartItems?.length > 0 && (
                       <button

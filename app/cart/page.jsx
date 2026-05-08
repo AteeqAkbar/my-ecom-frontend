@@ -2,16 +2,18 @@
 import React, { useEffect, useState } from "react";
 import Breadcrumb from "../components/Breadcrumb";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeFromCart } from "../store/cartSlice";
+import { addToCart, removeFromCart, removeItemFromCart } from "../store/cartSlice";
 import ProductSlider from "../components/Swiper/ProductSlider";
 import Link from "next/link";
 import Image from "next/image";
 import { generateImageUrl } from "../utils/helperFun";
+import { fetchDeliveryCharge } from "../services/api";
 
 export default function Cart() {
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
   const [totals, setTotals] = useState(0);
+  const [deliveryCharge, setDeliveryCharge] = useState(250);
   useEffect(() => {
     setTotals(
       cartItems.reduce(
@@ -20,6 +22,18 @@ export default function Cart() {
       )
     );
   }, [cartItems]);
+
+  useEffect(() => {
+    let mounted = true;
+    const loadDeliveryCharge = async () => {
+      const charge = await fetchDeliveryCharge();
+      if (mounted) setDeliveryCharge(charge);
+    };
+    loadDeliveryCharge();
+    return () => {
+      mounted = false;
+    };
+  }, []);
   return (
     <>
       <Breadcrumb />
@@ -55,7 +69,7 @@ export default function Cart() {
                             Delivery Charges
                           </span>
                           <span className="text-right font-Poppins leading-[28px] tracking-[0.03rem] text-[14px] text-[#686e7d] font-semibold">
-                            RS: 250
+                            RS: {deliveryCharge}
                           </span>
                         </li>
                         <li className="mb-[12px] flex justify-between leading-[28px]">
@@ -97,7 +111,7 @@ export default function Cart() {
                             Total Amount
                           </span>
                           <span className="text-right font-Poppins text-[16px] leading-[28px] tracking-[0.03rem] font-semibold text-[#686e7d]">
-                            RS: {totals ? totals + 250 : "0.00"}
+                            RS: {totals ? totals + deliveryCharge : "0.00"}
                           </span>
                         </li>
                       </ul>
@@ -223,9 +237,13 @@ function Cartitems({ item }) {
       </td>
       <td className="p-[12px]">
         <div className="pro-remove">
-          <a href="javascript:void(0)">
+          <button
+            type="button"
+            onClick={() => dispatch(removeItemFromCart(item.id))}
+            aria-label={`Remove ${item.name || "item"} from cart`}
+          >
             <i className="ri-delete-bin-line transition-all duration-[0.3s] ease-in-out text-[20px] text-[#686e7d] hover:text-[#ff0000]"></i>
-          </a>
+          </button>
         </div>
       </td>
     </tr>

@@ -1,16 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CustomPriceSlider } from "./CustomPriceSliderProps";
 import { CustomCheckbox } from "./CustomCheckbox";
 import { fetchCategories } from "@/app/services/api";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
-const colors = ["White", "Black", "Blue", "Red"];
 export default function Filter() {
   const router = useRouter();
 
   const searchParams = useSearchParams();
 
-  const { data, error, isLoading } = useQuery({
+  const { data, error } = useQuery({
     queryKey: ["fetchCategories"],
     queryFn: fetchCategories,
   });
@@ -36,7 +35,7 @@ export default function Filter() {
   };
   const handleApplyFilter = (e) => {
     e.preventDefault();
-    let params = new URLSearchParams();
+    const params = new URLSearchParams();
 
     selectedColors.forEach((name) => {
       params.append("categories", name);
@@ -48,9 +47,11 @@ export default function Filter() {
       params.append("maxPrice", maxPrice);
     }
 
-    router.push("products" + "?" + params.toString(), { scroll: false });
+    const query = params.toString();
+    router.push(query ? `/products?${query}` : "/products", { scroll: false });
   };
   const [selectedColors, setSelectedColors] = useState([]);
+  const categoryItems = useMemo(() => (Array.isArray(data) ? data : []), [data]);
   const handleColorChange = (color) => {
     setSelectedColors((prevColors) =>
       prevColors.includes(color)
@@ -68,7 +69,7 @@ export default function Filter() {
         </div>
         <div className="bb-sidebar-contact">
           {error && <div>An error occurred: {error.message}</div>}
-          {data?.map((cat) => (
+          {categoryItems?.map((cat) => (
             <div key={cat?.name} className="mb-[14px]">
               <CustomCheckbox
                 id={`color-${cat?.name.toLowerCase()}`}
@@ -167,6 +168,8 @@ export default function Filter() {
             onClick={() => {
               router.push("/products", { scroll: false });
               setSelectedColors([]);
+              setMinPrice(0);
+              setMaxPrice(10000);
             }}
             className="transition-all mt-3 px-[13px] duration-[0.3s] ease-in-out w-full  cursor-pointer h-[40px] font-light text-white leading-[32px] bg-grad font-Poppins tracking-[0.03rem] text-[15px] flex text-center align-top justify-center items-center rounded-[10px] border-[1px] border-solid border-[#eee] hover:bg-gradient-to-br hover:from-indigo-200 hover:to-pink-200 hover:via-blue-200 hover:text-white shadow3 "
           >

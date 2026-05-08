@@ -92,13 +92,17 @@ const normalizeProduct = (product) => {
 
   const categoriesRaw = asList(
     product.categories ||
+      product.Categories ||
       product.category ||
       product.Category ||
       product.categoryName ||
       product.categoryNames
   );
   const subcategoriesRaw = asList(
-    product.subcategories || product.subcategory || product.Subcategory
+    product.subcategories ||
+      product.Subcategories ||
+      product.subcategory ||
+      product.Subcategory
   );
   const categories = categoriesRaw
     .map((item) => (typeof item === "string" ? { name: item } : normalizeCategory(item)))
@@ -122,8 +126,24 @@ const normalizeProduct = (product) => {
 };
 
 const getAuthPayload = (payload) => {
-  const token = payload?.token || payload?.jwt || payload?.accessToken || null;
-  const user = payload?.user || payload?.profile || payload?.data || null;
+  if (!payload || typeof payload !== "object") {
+    return { token: null, user: null };
+  }
+  const token = payload.token || payload.jwt || payload.accessToken || null;
+  // Backend returns { id, name, email, role, phone?, token } in `data`
+  if (token && (payload.id != null || payload.email)) {
+    return {
+      token,
+      user: {
+        id: payload.id,
+        name: payload.name,
+        email: payload.email,
+        role: payload.role,
+        phone: payload.phone ?? null,
+      },
+    };
+  }
+  const user = payload.user || payload.profile || payload.data || null;
   return { token, user };
 };
 
@@ -225,9 +245,21 @@ export const fetchProducts = async (
   pageSize = 10
 ) => {
   try {
+    const normalizedCategories = ensureArray(categories).map((item) =>
+      String(item || "").trim().toLowerCase()
+    );
+    const normalizedSubcategories = ensureArray(subcategories).map((item) =>
+      String(item || "").trim().toLowerCase()
+    );
+    const hasFilters =
+      normalizedCategories.length > 0 ||
+      normalizedSubcategories.length > 0 ||
+      minPrice !== null ||
+      maxPrice !== null;
+
     const params = {
-      page,
-      limit: pageSize,
+      page: hasFilters ? 1 : page,
+      limit: hasFilters ? 500 : pageSize,
     };
     if (categories.length) params.categories = categories.join(",");
     if (subcategories.length) params.subcategories = subcategories.join(",");
@@ -236,20 +268,48 @@ export const fetchProducts = async (
 
     const response = await axiosInstance.get("/products", { params });
     const payload = unwrap(response);
-    const items = ensureArray(payload?.rows ?? payload?.items ?? payload)
+    const serverItems = ensureArray(payload?.rows ?? payload?.items ?? payload)
       .map(normalizeProduct)
       .filter(Boolean);
-    const total =
-      payload?.total ??
-      payload?.count ??
-      payload?.pagination?.totalItems ??
-      payload?.pagination?.total ??
-      items.length;
-    const totalPages =
-      payload?.pagination?.totalPages || Math.max(1, Math.ceil(total / pageSize));
+
+    const filteredItems = hasFilters
+      ? serverItems.filter((product) => {
+          const productCategories = ensureArray(product?.categories)
+            .map((cat) => String(cat?.name || "").trim().toLowerCase())
+            .filter(Boolean);
+          const productSubcategories = ensureArray(product?.subcategories)
+            .map((subcat) => String(subcat?.name || "").trim().toLowerCase())
+            .filter(Boolean);
+          const productPrice = toNumber(product?.discountPrice ?? product?.price, 0);
+
+          const matchCategory =
+            normalizedCategories.length === 0 ||
+            normalizedCategories.some((name) => productCategories.includes(name));
+          const matchSubcategory =
+            normalizedSubcategories.length === 0 ||
+            normalizedSubcategories.some((name) => productSubcategories.includes(name));
+          const matchMinPrice = minPrice === null || productPrice >= Number(minPrice);
+          const matchMaxPrice = maxPrice === null || productPrice <= Number(maxPrice);
+
+          return matchCategory && matchSubcategory && matchMinPrice && matchMaxPrice;
+        })
+      : serverItems;
+
+    const total = hasFilters
+      ? filteredItems.length
+      : payload?.total ??
+        payload?.count ??
+        payload?.pagination?.totalItems ??
+        payload?.pagination?.total ??
+        filteredItems.length;
+    const totalPages = Math.max(1, Math.ceil(total / pageSize));
+    const start = (page - 1) * pageSize;
+    const paginatedItems = hasFilters
+      ? filteredItems.slice(start, start + pageSize)
+      : filteredItems;
 
     return {
-      data: items,
+      data: paginatedItems,
       meta: {
         pagination: {
           page,
@@ -288,6 +348,18 @@ export const fetchOrderById = async (id) => {
     return unwrap(response);
   } catch (error) {
     throw formatApiError(error, "Unable to fetch order");
+  }
+};
+
+export const fetchDeliveryCharge = async () => {
+  try {
+    const response = await axiosInstance.get("/settings/delivery-charge");
+    const data = unwrap(response);
+    const charge = Number(data?.deliveryCharge);
+    return Number.isFinite(charge) && charge >= 0 ? charge : 250;
+  } catch (error) {
+    // Fallback to default if settings endpoint is unavailable.
+    return 250;
   }
 };
 
